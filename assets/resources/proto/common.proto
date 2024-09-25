@@ -1,0 +1,66 @@
+syntax = "proto3";
+option java_package = "com.rooollerslot.protobuf";
+option java_outer_classname = "Common";
+
+//===========================================公用错误提示==================
+enum ErrorCode{
+     NORMAL = 0;                         //正常
+     SYSTEM_ERR = 404;                //系统错误
+     ARGS_ERR = 1;                       //参数错误
+     TOKEN_ERR = 2;                    //token错误
+     OTHER_LOGIN_ERR = 3;        //你的账号在其他地方登录
+     BALANCE_NOT_ENOUGH = 4;        //余额不足
+}
+
+//错误提示消息体
+message Error{
+	int32 code = 1;				            //错误码
+	repeated string args = 2;			//参数
+}
+//==============================功能逻辑通信协议=======================================
+//通信协议号枚举
+enum SubCmd{
+    Cmd_ReqHeartBeat                =0;              //推送心跳
+    Cmd_PushHeartBeat              =1;              //返回心跳
+    Cmd_Error                             =404;          //推送错误消息
+
+    Cmd_Slot_ReqLogin                   =1000;             //登录游戏服
+    Cmd_Slot_PushLogin                 =1001;             //登录游戏服返回
+    Cmd_Slot_ReqBet                      =1002;             //下注
+    Cmd_Slot_PushBetResult           =1003;             //下注结果返回
+    Cmd_Slot_ReqSettlementBounsSuccess = 1004;          //请求结算bounsGame完成
+    Cmd_Slot_PushSettlementBounsSuccess = 1005;        //请求结算bounsGame完成 返回
+
+    Cmd_Slot_ReqChooseSubGame = 1006;                   //埃及游戏里玩家选择进入freegame或者bounsgame
+    Cmd_Slot_PushChooseSubGame = 1007;                 // 埃及游戏玩家进入游戏返回
+
+    Cmd_Slot_ReqAcceptCollectAward = 1008;               //请求领取收集玩法奖励 对应
+    Cmd_Slot_PushAcceptCollectAward = 1009;             //请求领取收集玩法奖励返回
+
+    Cmd_Slot_ReqCollectShopExchangeAward = 1010;               //收集玩法中，用积分兑换商店里的奖励
+    Cmd_Slot_PushCollectShopExchangeAward = 1011;             //收集玩法中，用积分兑换商店里的奖励返回
+
+    Cmd_Slot_ReqBingoReward = 1012;                           //爱尔兰游戏中， 请求初始化bingo 奖励图标
+    Cmd_Slot_PushBingoReward = 1013;                         //爱尔兰游戏中， 请求初始化bingo 奖励图标返回
+
+    Cmd_Slot_ReqJackpotAmount = 1014;                         //请求当前场景的奖池信息
+    Cmd_Slot_PushJackpotAmount = 1015;                         //请求当前场景的奖池信息 返回
+
+    Cmd_Slot_ReqLastBetInfo = 1016;                         //请求游戏最后一次下注信息
+    Cmd_Slot_PushLastBetInfo = 1017;                         //请求游戏最后一次下注信息 返回 结构体是先前的PushBetResult
+
+    Cmd_Hall_ReqLogin                   =2000;             //请求登录大厅服
+    Cmd_Hall_PushLogin                 =2001;             //登录游戏服返回
+
+    Cmd_Hall_PushApiCallBackMessage                =2002;             //推送返回的pai 回调接口信息
+}
+//==============================心跳==========================================
+//心跳请求消息体
+message ReqHeartBeat{
+}
+//心跳返回消息体
+message PushHeartBeat{
+    int64 serverTime = 1;                    //服务器当前时间
+}
+
+

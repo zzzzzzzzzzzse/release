@@ -1,0 +1,186 @@
+{
+"skeleton": { "hash": "ey/fY1sFPRPO6ymDH2PhmzhsOB4", "spine": "3.8.99", "x": -226, "y": -38.51, "width": 452, "height": 79.09 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "1", "parent": "root" }
+],
+"slots": [
+	{ "name": "1", "bone": "1", "color": "ffffff91", "blend": "additive" },
+	{ "name": "guang2", "bone": "root", "color": "ffffff6c", "attachment": "guang" },
+	{ "name": "guang", "bone": "root", "color": "ffffff91", "attachment": "guang", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"1": {
+				"totalwin_00000": { "width": 520, "height": 120 },
+				"totalwin_00001": { "width": 520, "height": 120 },
+				"totalwin_00002": { "width": 520, "height": 120 },
+				"totalwin_00003": { "width": 520, "height": 120 },
+				"totalwin_00004": { "width": 520, "height": 120 },
+				"totalwin_00005": { "width": 520, "height": 120 },
+				"totalwin_00006": { "width": 520, "height": 120 },
+				"totalwin_00007": { "width": 520, "height": 120 },
+				"totalwin_00008": { "width": 520, "height": 120 },
+				"totalwin_00009": { "width": 520, "height": 120 },
+				"totalwin_00010": { "width": 520, "height": 120 },
+				"totalwin_00011": { "width": 520, "height": 120 },
+				"totalwin_00012": { "width": 520, "height": 120 },
+				"totalwin_00013": { "width": 520, "height": 120 },
+				"totalwin_00014": { "width": 520, "height": 120 },
+				"totalwin_00015": { "width": 520, "height": 120 },
+				"totalwin_00016": { "width": 520, "height": 120 },
+				"totalwin_00017": { "width": 520, "height": 120 },
+				"totalwin_00018": { "width": 520, "height": 120 },
+				"totalwin_00019": { "width": 520, "height": 120 },
+				"totalwin_00020": { "width": 520, "height": 120 },
+				"totalwin_00021": { "width": 520, "height": 120 },
+				"totalwin_00022": { "width": 520, "height": 120 },
+				"totalwin_00023": { "width": 520, "height": 120 },
+				"totalwin_00024": { "width": 520, "height": 120 },
+				"totalwin_00025": { "width": 520, "height": 120 },
+				"totalwin_00026": { "width": 520, "height": 120 },
+				"totalwin_00027": { "width": 520, "height": 120 },
+				"totalwin_00028": { "width": 520, "height": 120 },
+				"totalwin_00029": { "width": 520, "height": 120 },
+				"totalwin_00030": { "width": 520, "height": 120 },
+				"totalwin_00031": { "width": 520, "height": 120 },
+				"totalwin_00032": { "width": 520, "height": 120 },
+				"totalwin_00033": { "width": 520, "height": 120 },
+				"totalwin_00034": { "width": 520, "height": 120 },
+				"totalwin_00035": { "width": 520, "height": 120 },
+				"totalwin_00036": { "width": 520, "height": 120 },
+				"totalwin_00037": { "width": 520, "height": 120 },
+				"totalwin_00038": { "width": 520, "height": 120 },
+				"totalwin_00039": { "width": 520, "height": 120 },
+				"totalwin_00040": { "width": 520, "height": 120 },
+				"totalwin_00041": { "width": 520, "height": 120 },
+				"totalwin_00042": { "width": 520, "height": 120 },
+				"totalwin_00043": { "width": 520, "height": 120 },
+				"totalwin_00044": { "width": 520, "height": 120 },
+				"totalwin_00045": { "width": 520, "height": 120 },
+				"totalwin_00046": { "width": 520, "height": 120 },
+				"totalwin_00047": { "width": 520, "height": 120 },
+				"totalwin_00048": { "width": 520, "height": 120 },
+				"totalwin_00049": { "width": 520, "height": 120 },
+				"totalwin_00050": { "width": 520, "height": 120 },
+				"totalwin_00051": { "width": 520, "height": 120 },
+				"totalwin_00052": { "width": 520, "height": 120 },
+				"totalwin_00053": { "width": 520, "height": 120 },
+				"totalwin_00054": { "width": 520, "height": 120 },
+				"totalwin_00055": { "width": 520, "height": 120 },
+				"totalwin_00056": { "width": 520, "height": 120 },
+				"totalwin_00057": { "width": 520, "height": 120 },
+				"totalwin_00058": { "width": 520, "height": 120 },
+				"totalwin_00059": { "width": 520, "height": 120 }
+			},
+			"guang": {
+				"guang": { "y": 1.03, "scaleY": 1.3636, "width": 452, "height": 58 }
+			},
+			"guang2": {
+				"guang": { "y": 1.03, "scaleY": 1.3636, "width": 452, "height": 58 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"1": {
+				"attachment": [
+					{ "name": "totalwin_00000" },
+					{ "time": 0.0667, "name": "totalwin_00001" },
+					{ "time": 0.1333, "name": "totalwin_00002" },
+					{ "time": 0.2, "name": "totalwin_00003" },
+					{ "time": 0.2667, "name": "totalwin_00004" },
+					{ "time": 0.3333, "name": "totalwin_00005" },
+					{ "time": 0.4, "name": "totalwin_00006" },
+					{ "time": 0.4667, "name": "totalwin_00007" },
+					{ "time": 0.5333, "name": "totalwin_00008" },
+					{ "time": 0.6, "name": "totalwin_00009" },
+					{ "time": 0.6667, "name": "totalwin_00010" },
+					{ "time": 0.7333, "name": "totalwin_00011" },
+					{ "time": 0.8, "name": "totalwin_00012" },
+					{ "time": 0.8667, "name": "totalwin_00013" },
+					{ "time": 0.9333, "name": "totalwin_00014" },
+					{ "time": 1, "name": "totalwin_00015" },
+					{ "time": 1.0667, "name": "totalwin_00016" },
+					{ "time": 1.1333, "name": "totalwin_00017" },
+					{ "time": 1.2, "name": "totalwin_00018" },
+					{ "time": 1.2667, "name": "totalwin_00019" },
+					{ "time": 1.3333, "name": "totalwin_00020" },
+					{ "time": 1.4, "name": "totalwin_00021" },
+					{ "time": 1.4667, "name": "totalwin_00022" },
+					{ "time": 1.5333, "name": "totalwin_00023" },
+					{ "time": 1.6, "name": "totalwin_00024" },
+					{ "time": 1.6667, "name": "totalwin_00025" },
+					{ "time": 1.7333, "name": "totalwin_00026" },
+					{ "time": 1.8, "name": "totalwin_00027" },
+					{ "time": 1.8667, "name": "totalwin_00028" },
+					{ "time": 1.9333, "name": "totalwin_00029" },
+					{ "time": 2, "name": "totalwin_00030" },
+					{ "time": 2.0667, "name": "totalwin_00031" },
+					{ "time": 2.1333, "name": "totalwin_00032" },
+					{ "time": 2.2, "name": "totalwin_00033" },
+					{ "time": 2.2667, "name": "totalwin_00034" },
+					{ "time": 2.3333, "name": "totalwin_00035" },
+					{ "time": 2.4, "name": "totalwin_00036" },
+					{ "time": 2.4667, "name": "totalwin_00037" },
+					{ "time": 2.5333, "name": "totalwin_00038" },
+					{ "time": 2.6, "name": "totalwin_00039" },
+					{ "time": 2.6667, "name": "totalwin_00040" },
+					{ "time": 2.7333, "name": "totalwin_00041" },
+					{ "time": 2.8, "name": "totalwin_00042" },
+					{ "time": 2.8667, "name": "totalwin_00043" },
+					{ "time": 2.9333, "name": "totalwin_00044" },
+					{ "time": 3, "name": "totalwin_00045" },
+					{ "time": 3.0667, "name": "totalwin_00046" },
+					{ "time": 3.1333, "name": "totalwin_00047" },
+					{ "time": 3.2, "name": "totalwin_00048" },
+					{ "time": 3.2667, "name": "totalwin_00049" },
+					{ "time": 3.3333, "name": "totalwin_00050" },
+					{ "time": 3.4, "name": "totalwin_00051" },
+					{ "time": 3.4667, "name": "totalwin_00052" },
+					{ "time": 3.5333, "name": "totalwin_00053" },
+					{ "time": 3.6, "name": "totalwin_00054" },
+					{ "time": 3.6667, "name": "totalwin_00055" },
+					{ "time": 3.7333, "name": "totalwin_00056" },
+					{ "time": 3.8, "name": "totalwin_00057" },
+					{ "time": 3.8667, "name": "totalwin_00058" },
+					{ "time": 3.9333, "name": "totalwin_00059" },
+					{ "time": 4, "name": null }
+				]
+			},
+			"guang": {
+				"color": [
+					{ "color": "ffffff00", "curve": 0.25, "c3": 0.75 },
+					{ "time": 1, "color": "ffffff97", "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "color": "ffffff00", "curve": 0.25, "c3": 0.75 },
+					{ "time": 3, "color": "ffffff98", "curve": 0.25, "c3": 0.75 },
+					{ "time": 4, "color": "ffffff00" }
+				]
+			},
+			"guang2": {
+				"color": [
+					{ "color": "ffffff00", "curve": 0.25, "c3": 0.75 },
+					{ "time": 1, "color": "ffffff5a", "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "color": "ffffff00", "curve": 0.25, "c3": 0.75 },
+					{ "time": 3, "color": "ffffff5a", "curve": 0.25, "c3": 0.75 },
+					{ "time": 4, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"1": {
+				"translate": [
+					{ "x": 4.62 }
+				],
+				"scale": [
+					{ "x": 0.85, "y": 0.757 }
+				]
+			}
+		}
+	}
+}
+}

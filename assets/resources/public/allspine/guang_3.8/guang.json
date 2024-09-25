@@ -1,0 +1,46 @@
+{
+"skeleton": { "hash": "0BGaEoGvJrV7KFBqJnBMCGa16CI", "spine": "3.8.99", "x": -109.5, "y": -92.5, "width": 219, "height": 185 },
+"bones": [
+	{ "name": "root", "x": 421.7, "y": -152.44 },
+	{ "name": "zhuanguang", "parent": "root", "x": -421.7, "y": 152.44 }
+],
+"slots": [
+	{ "name": "zhuanguang", "bone": "zhuanguang", "attachment": "zhuanguang" },
+	{ "name": "zhuanguang2", "bone": "zhuanguang", "attachment": "zhuanguang", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"zhuanguang": {
+				"zhuanguang": { "width": 219, "height": 185 }
+			},
+			"zhuanguang2": {
+				"zhuanguang": { "width": 219, "height": 185 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"zhuanguang2": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 1.1667, "color": "ffffff7b" },
+					{ "time": 2.3333, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"zhuanguang": {
+				"scale": [
+					{},
+					{ "time": 1.1667, "x": 1.084, "y": 1.084 },
+					{ "time": 2.3333 }
+				]
+			}
+		}
+	}
+}
+}

@@ -1,0 +1,97 @@
+{
+"skeleton": { "hash": "QzNaMixKAJVk8SYwjpCZ/49T/sk", "spine": "3.8.99", "x": -65.98, "y": -65.98, "width": 131.04, "height": 131.04 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "椭圆 537", "parent": "root", "x": -0.42, "y": -0.42 }
+],
+"slots": [
+	{ "name": "子游戏横版界面1560x720-1", "bone": "root" },
+	{ "name": "kuang", "bone": "root", "attachment": "kuang" },
+	{ "name": "yuan", "bone": "椭圆 537", "attachment": "yuan" },
+	{ "name": "shu", "bone": "root", "attachment": "shu" },
+	{ "name": "guang", "bone": "椭圆 537", "attachment": "guang" },
+	{ "name": "guang2", "bone": "椭圆 537", "color": "ffffff18", "attachment": "guang", "blend": "additive" },
+	{ "name": "guang_shu", "bone": "root", "attachment": "guang_shu", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"guang": {
+				"guang": { "x": -0.04, "y": -0.04, "scaleX": 1.04, "scaleY": 1.04, "width": 126, "height": 126 }
+			},
+			"guang2": {
+				"guang": { "x": -0.04, "y": -0.04, "scaleX": 1.04, "scaleY": 1.04, "width": 126, "height": 126 }
+			},
+			"guang_shu": {
+				"guang_shu": { "x": 2.54, "y": -1.27, "width": 76, "height": 75 }
+			},
+			"kuang": {
+				"kuang": { "width": 99, "height": 100 }
+			},
+			"shu": {
+				"shu": { "x": 2.54, "y": -1.27, "width": 76, "height": 75 }
+			},
+			"yuan": {
+				"yuan": { "width": 100, "height": 100 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"guang": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.5, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			},
+			"guang2": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.5, "color": "ffffff23" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			},
+			"guang_shu": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.5, "color": "006dffff" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			},
+			"kuang": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"shu": {
+				"attachment": [
+					{ "name": null }
+				]
+			}
+		}
+	},
+	"jingzhen": {
+		"slots": {
+			"guang": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"guang2": {
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"guang_shu": {
+				"attachment": [
+					{ "name": null }
+				]
+			}
+		}
+	}
+}
+}

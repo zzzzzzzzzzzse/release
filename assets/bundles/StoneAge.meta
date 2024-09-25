@@ -1,0 +1,13 @@
+{
+  "ver": "1.1.3",
+  "uuid": "fff8d35b-a13a-4946-89b7-57acd491e633",
+  "importer": "folder",
+  "isBundle": true,
+  "bundleName": "StoneAge",
+  "priority": 1,
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
+  "subMetas": {}
+}

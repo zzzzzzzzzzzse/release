@@ -1,0 +1,55 @@
+{
+  "ver": "2.3.7",
+  "uuid": "7395c228-0385-471f-9f0c-c78020367f71",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 237,
+  "height": 25,
+  "platformSettings": {
+    "android": {
+      "formats": [
+        {
+          "name": "astc_6x6",
+          "quality": "medium"
+        }
+      ]
+    },
+    "ios": {
+      "formats": [
+        {
+          "name": "astc_6x6",
+          "quality": "medium"
+        }
+      ]
+    }
+  },
+  "subMetas": {
+    "Hall_profile_img_apple_login": {
+      "ver": "1.0.6",
+      "uuid": "2584d494-ab41-4677-8f7d-ffed38c35973",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "7395c228-0385-471f-9f0c-c78020367f71",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0.5,
+      "trimX": 3,
+      "trimY": 2,
+      "width": 231,
+      "height": 20,
+      "rawWidth": 237,
+      "rawHeight": 25,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

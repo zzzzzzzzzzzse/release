@@ -1,0 +1,112 @@
+{
+"skeleton": {
+	"hash": "2Iz51DlcL0SeLq3J53eSobIdnbc",
+	"spine": "3.6.53",
+	"width": 512,
+	"height": 512,
+	"images": "C:\\Users\\qaz12\\Desktop\\slots\\theme10059\\spine动画\\shoujikuangshuzi"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "all", "parent": "root" },
+	{ "name": "fx1", "parent": "all" },
+	{ "name": "fx2", "parent": "all" },
+	{ "name": "fx3", "parent": "all" }
+],
+"slots": [
+	{ "name": "1", "bone": "fx1", "attachment": "baodian1/baodian1_00023", "blend": "additive" },
+	{ "name": "baodian1/baodian12_00000", "bone": "fx2", "attachment": "baodian1/baodian12_00000", "blend": "additive" },
+	{ "name": "baodian1/baodian13_00000", "bone": "fx3", "attachment": "baodian1/baodian13_00000", "blend": "additive" }
+],
+"skins": {
+	"default": {
+		"1": {
+			"baodian1/baodian1_00000": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00001": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00002": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00003": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00004": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00005": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00006": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00007": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00008": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00009": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00010": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00011": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00012": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00013": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00014": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00015": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00016": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00017": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00018": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00019": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00020": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00021": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00022": { "width": 512, "height": 512 },
+			"baodian1/baodian1_00023": { "width": 512, "height": 512 }
+		},
+		"baodian1/baodian12_00000": {
+			"baodian1/baodian12_00000": { "width": 256, "height": 256 }
+		},
+		"baodian1/baodian13_00000": {
+			"baodian1/baodian13_00000": { "width": 256, "height": 256 }
+		}
+	}
+},
+"animations": {
+	"animation": {
+		"slots": {
+			"1": {
+				"attachment": [
+					{ "time": 0, "name": "baodian1/baodian1_00000" },
+					{ "time": 0.0333, "name": "baodian1/baodian1_00001" },
+					{ "time": 0.0667, "name": "baodian1/baodian1_00002" },
+					{ "time": 0.1, "name": "baodian1/baodian1_00003" },
+					{ "time": 0.1333, "name": "baodian1/baodian1_00004" },
+					{ "time": 0.1667, "name": "baodian1/baodian1_00005" },
+					{ "time": 0.2, "name": "baodian1/baodian1_00006" },
+					{ "time": 0.2333, "name": "baodian1/baodian1_00007" },
+					{ "time": 0.2667, "name": "baodian1/baodian1_00008" },
+					{ "time": 0.3, "name": "baodian1/baodian1_00009" },
+					{ "time": 0.3333, "name": "baodian1/baodian1_00010" },
+					{ "time": 0.3667, "name": "baodian1/baodian1_00011" },
+					{ "time": 0.4, "name": "baodian1/baodian1_00012" },
+					{ "time": 0.4333, "name": "baodian1/baodian1_00013" },
+					{ "time": 0.4667, "name": "baodian1/baodian1_00014" },
+					{ "time": 0.5, "name": "baodian1/baodian1_00015" },
+					{ "time": 0.5333, "name": "baodian1/baodian1_00016" },
+					{ "time": 0.5667, "name": "baodian1/baodian1_00017" },
+					{ "time": 0.6, "name": "baodian1/baodian1_00018" },
+					{ "time": 0.6333, "name": "baodian1/baodian1_00019" },
+					{ "time": 0.6667, "name": "baodian1/baodian1_00020" },
+					{ "time": 0.7, "name": "baodian1/baodian1_00021" },
+					{ "time": 0.7333, "name": "baodian1/baodian1_00022" },
+					{ "time": 0.7667, "name": "baodian1/baodian1_00023" },
+					{ "time": 0.8, "name": null }
+				]
+			},
+			"baodian1/baodian13_00000": {
+				"color": [
+					{ "time": 0, "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"fx3": {
+				"scale": [
+					{ "time": 0, "x": 6, "y": 6 }
+				]
+			},
+			"fx2": {
+				"scale": [
+					{ "time": 0, "x": 3, "y": 3 },
+					{ "time": 0.1667, "x": 0.05, "y": 0.05 },
+					{ "time": 0.2, "x": 0, "y": 0 }
+				]
+			}
+		}
+	}
+}
+}

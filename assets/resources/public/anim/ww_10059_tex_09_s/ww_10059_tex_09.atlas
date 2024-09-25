@@ -1,0 +1,69 @@
+
+ww_10059_tex_09.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ww_10059_tex_09_01
+  rotate: false
+  xy: 529, 3
+  size: 85, 85
+  orig: 85, 85
+  offset: 0, 0
+  index: -1
+ww_10059_tex_09_02
+  rotate: false
+  xy: 90, 3
+  size: 86, 85
+  orig: 86, 85
+  offset: 0, 0
+  index: -1
+ww_10059_tex_09_03
+  rotate: false
+  xy: 616, 3
+  size: 85, 85
+  orig: 85, 85
+  offset: 0, 0
+  index: -1
+ww_10059_tex_09_04
+  rotate: true
+  xy: 178, 3
+  size: 85, 86
+  orig: 85, 86
+  offset: 0, 0
+  index: -1
+ww_10059_tex_09_05
+  rotate: false
+  xy: 2, 2
+  size: 86, 86
+  orig: 86, 86
+  offset: 0, 0
+  index: -1
+ww_10059_tex_09_06
+  rotate: true
+  xy: 266, 3
+  size: 85, 86
+  orig: 85, 86
+  offset: 0, 0
+  index: -1
+ww_10059_tex_09_07
+  rotate: false
+  xy: 703, 3
+  size: 85, 85
+  orig: 85, 85
+  offset: 0, 0
+  index: -1
+ww_10059_tex_09_08
+  rotate: false
+  xy: 354, 3
+  size: 86, 85
+  orig: 86, 85
+  offset: 0, 0
+  index: -1
+ww_10059_tex_09_09
+  rotate: false
+  xy: 442, 3
+  size: 85, 85
+  orig: 85, 85
+  offset: 0, 0
+  index: -1

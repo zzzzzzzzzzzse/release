@@ -1,0 +1,55 @@
+{
+  "ver": "2.3.7",
+  "uuid": "411ac59f-9337-42ba-8cda-30e100c3e39d",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 286,
+  "height": 166,
+  "platformSettings": {
+    "android": {
+      "formats": [
+        {
+          "name": "astc_6x6",
+          "quality": "medium"
+        }
+      ]
+    },
+    "ios": {
+      "formats": [
+        {
+          "name": "astc_6x6",
+          "quality": "medium"
+        }
+      ]
+    }
+  },
+  "subMetas": {
+    "Hall_game_fuwa_rule1": {
+      "ver": "1.0.6",
+      "uuid": "b0b1b7cb-d792-4a1a-8e4d-67c1ed3eec84",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "411ac59f-9337-42ba-8cda-30e100c3e39d",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 286,
+      "height": 166,
+      "rawWidth": 286,
+      "rawHeight": 166,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

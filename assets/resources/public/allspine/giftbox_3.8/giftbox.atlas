@@ -1,0 +1,132 @@
+
+giftbox.png
+size: 271,271
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: true
+  xy: 34, 243
+  size: 28, 30
+  orig: 74, 78
+  offset: 5, 45
+  index: -1
+10
+  rotate: false
+  xy: 192, 104
+  size: 61, 60
+  orig: 74, 78
+  offset: 7, 8
+  index: -1
+11
+  rotate: false
+  xy: 0, 51
+  size: 60, 60
+  orig: 74, 78
+  offset: 9, 8
+  index: -1
+12
+  rotate: true
+  xy: 63, 109
+  size: 59, 60
+  orig: 74, 78
+  offset: 10, 8
+  index: -1
+13
+  rotate: false
+  xy: 180, 167
+  size: 58, 57
+  orig: 74, 78
+  offset: 11, 8
+  index: -1
+14
+  rotate: false
+  xy: 60, 176
+  size: 55, 52
+  orig: 74, 78
+  offset: 13, 8
+  index: -1
+15
+  rotate: false
+  xy: 206, 227
+  size: 49, 44
+  orig: 74, 78
+  offset: 19, 8
+  index: -1
+16
+  rotate: false
+  xy: 106, 231
+  size: 42, 40
+  orig: 74, 78
+  offset: 26, 8
+  index: -1
+17
+  rotate: false
+  xy: 0, 245
+  size: 31, 26
+  orig: 74, 78
+  offset: 33, 8
+  index: -1
+2
+  rotate: true
+  xy: 67, 241
+  size: 30, 36
+  orig: 74, 78
+  offset: 5, 39
+  index: -1
+3
+  rotate: false
+  xy: 151, 229
+  size: 52, 42
+  orig: 74, 78
+  offset: 5, 33
+  index: -1
+4
+  rotate: false
+  xy: 0, 190
+  size: 57, 50
+  orig: 74, 78
+  offset: 5, 25
+  index: -1
+5
+  rotate: false
+  xy: 118, 171
+  size: 59, 55
+  orig: 74, 78
+  offset: 5, 20
+  index: -1
+6
+  rotate: true
+  xy: 0, 114
+  size: 59, 60
+  orig: 74, 78
+  offset: 5, 15
+  index: -1
+7
+  rotate: false
+  xy: 63, 38
+  size: 63, 63
+  orig: 74, 78
+  offset: 5, 12
+  index: -1
+8
+  rotate: true
+  xy: 129, 38
+  size: 63, 64
+  orig: 74, 78
+  offset: 5, 10
+  index: -1
+9
+  rotate: false
+  xy: 126, 104
+  size: 63, 60
+  orig: 74, 78
+  offset: 5, 9
+  index: -1
+giftbox
+  rotate: true
+  xy: 196, 31
+  size: 70, 75
+  orig: 74, 78
+  offset: 2, 2
+  index: -1

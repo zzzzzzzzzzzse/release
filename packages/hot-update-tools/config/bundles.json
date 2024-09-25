@@ -1,0 +1,50 @@
+{
+    "packageUrl": "http://local.fanyouonline.cloud:8800/hotupdate",
+    "forceIncludeAllGameToApk": false,
+    "version": "1",
+    "description": "主包,其实只包含了登录界面，该字段只是做说明使用，无实际意义，注意版本号必须>=1",
+    "bundles": [
+        {
+            "id": "0",
+            "name": "Christmas",
+            "dir": "Christmas",
+            "version": "1",
+            "includeApk": false
+        },
+        {
+            "id": "1",
+            "name": "NewEgypt",
+            "dir": "NewEgypt",
+            "version": "1",
+            "includeApk": false
+        },
+        {
+            "id": "2",
+            "name": "Poseidon",
+            "dir": "Poseidon",
+            "version": "1",
+            "includeApk": false
+        },
+        {
+            "id": "3",
+            "name": "Rich",
+            "dir": "Rich",
+            "version": "1",
+            "includeApk": false
+        },
+        {
+            "id": "4",
+            "name": "StoneAge",
+            "dir": "StoneAge",
+            "version": "1",
+            "includeApk": false
+        },
+        {
+            "id": "5",
+            "name": "lobby",
+            "dir": "lobby",
+            "version": "1",
+            "includeApk": false
+        }
+    ]
+}

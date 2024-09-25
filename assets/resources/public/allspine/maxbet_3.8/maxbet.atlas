@@ -1,0 +1,139 @@
+
+maxbet.png
+size: 1262,1262
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gaoliang02
+  rotate: true
+  xy: 1146, 1142
+  size: 120, 116
+  orig: 128, 128
+  offset: 5, 6
+  index: -1
+glow2
+  rotate: false
+  xy: 0, 838
+  size: 472, 424
+  orig: 512, 512
+  offset: 24, 36
+  index: -1
+lizi/lizi_00003
+  rotate: false
+  xy: 475, 497
+  size: 166, 81
+  orig: 600, 500
+  offset: 209, 206
+  index: -1
+lizi/lizi_00005
+  rotate: true
+  xy: 1133, 888
+  size: 219, 115
+  orig: 600, 500
+  offset: 187, 189
+  index: -1
+lizi/lizi_00007
+  rotate: true
+  xy: 1080, 421
+  size: 258, 139
+  orig: 600, 500
+  offset: 171, 177
+  index: -1
+lizi/lizi_00009
+  rotate: false
+  xy: 594, 18
+  size: 292, 158
+  orig: 600, 500
+  offset: 155, 168
+  index: -1
+lizi/lizi_00011
+  rotate: true
+  xy: 1068, 82
+  size: 320, 172
+  orig: 600, 500
+  offset: 140, 161
+  index: -1
+lizi/lizi_00014
+  rotate: false
+  xy: 906, 682
+  size: 355, 192
+  orig: 600, 500
+  offset: 121, 151
+  index: -1
+lizi/lizi_00016
+  rotate: false
+  xy: 217, 28
+  size: 374, 203
+  orig: 600, 500
+  offset: 111, 145
+  index: -1
+lizi/lizi_00018
+  rotate: true
+  xy: 0, 8
+  size: 389, 214
+  orig: 600, 500
+  offset: 103, 139
+  index: -1
+lizi/lizi_00020
+  rotate: false
+  xy: 663, 179
+  size: 402, 223
+  orig: 600, 500
+  offset: 96, 134
+  index: -1
+lizi/lizi_00022
+  rotate: false
+  xy: 718, 877
+  size: 412, 230
+  orig: 600, 500
+  offset: 90, 130
+  index: -1
+lizi/lizi_00024
+  rotate: true
+  xy: 240, 414
+  size: 421, 232
+  orig: 600, 500
+  offset: 85, 130
+  index: -1
+lizi/lizi_00026
+  rotate: false
+  xy: 475, 581
+  size: 428, 235
+  orig: 600, 500
+  offset: 81, 130
+  index: -1
+lizi/lizi_00028
+  rotate: true
+  xy: 0, 400
+  size: 435, 237
+  orig: 600, 500
+  offset: 77, 130
+  index: -1
+lizi/lizi_00030
+  rotate: true
+  xy: 475, 819
+  size: 443, 240
+  orig: 600, 500
+  offset: 72, 130
+  index: -1
+lizi/lizi_00032
+  rotate: false
+  xy: 663, 405
+  size: 414, 173
+  orig: 600, 500
+  offset: 93, 158
+  index: -1
+lizi/lizi_00034
+  rotate: false
+  xy: 240, 234
+  size: 420, 177
+  orig: 600, 500
+  offset: 90, 156
+  index: -1
+lizi/lizi_00036
+  rotate: false
+  xy: 718, 1110
+  size: 425, 152
+  orig: 600, 500
+  offset: 88, 154
+  index: -1

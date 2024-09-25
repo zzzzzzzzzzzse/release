@@ -1,0 +1,147 @@
+{
+"skeleton": {
+	"hash": "UsZyLgHJtc8",
+	"spine": "3.8-from-4.0.19",
+	"x": -702.48,
+	"y": -430.81,
+	"width": 1314.08,
+	"height": 874,
+	"images": "./images/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root" },
+	{ "name": "loading界面_03", "parent": "bone", "x": -57.86, "y": -398.39 },
+	{ "name": "loading界面_04", "parent": "bone", "x": 263.2, "y": -398.39 },
+	{ "name": "loading界面_05", "parent": "bone", "x": -404.78, "y": -398.39 },
+	{ "name": "loading界面_06", "parent": "bone", "x": 561.3, "y": -398.39 }
+],
+"slots": [
+	{ "name": "loading界面_03", "bone": "loading界面_03", "color": "241430ff", "attachment": "loading界面_03", "blend": "additive" },
+	{ "name": "loading界面_04", "bone": "loading界面_04", "color": "241430ff", "attachment": "loading界面_03", "blend": "additive" },
+	{ "name": "loading界面_05", "bone": "loading界面_05", "color": "241430ff", "attachment": "loading界面_03", "blend": "additive" },
+	{ "name": "loading界面_06", "bone": "loading界面_06", "color": "241430ff", "attachment": "loading界面_03", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"loading界面_03": {
+				"loading界面_03": { "x": -123.7, "y": 404.58, "width": 348, "height": 874 }
+			},
+			"loading界面_04": {
+				"loading界面_03": { "x": -123.7, "y": 404.58, "width": 348, "height": 874 }
+			},
+			"loading界面_05": {
+				"loading界面_03": { "x": -123.7, "y": 404.58, "width": 348, "height": 874 }
+			},
+			"loading界面_06": {
+				"loading界面_03": { "x": -123.7, "y": 404.58, "width": 348, "height": 874 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"loading界面_03": {
+				"color": [
+					{ "color": "24143000" },
+					{ "time": 1, "color": "241430ff" },
+					{ "time": 2, "color": "24143000" },
+					{ "time": 3, "color": "241430ff" },
+					{ "time": 4, "color": "24143000" }
+				]
+			},
+			"loading界面_04": {
+				"color": [
+					{ "color": "2414307f" },
+					{ "time": 0.5, "color": "241430ff" },
+					{ "time": 1.5, "color": "24143000" },
+					{ "time": 2.5, "color": "241430ff" },
+					{ "time": 3.5, "color": "24143000" },
+					{ "time": 4, "color": "2414307f" }
+				]
+			},
+			"loading界面_05": {
+				"color": [
+					{ "color": "24143000" },
+					{ "time": 1, "color": "241430ff" },
+					{ "time": 2, "color": "24143000" },
+					{ "time": 2.8333, "color": "241430ff" },
+					{ "time": 3.6667, "color": "24143000", "curve": "stepped" },
+					{ "time": 4, "color": "24143000" }
+				]
+			},
+			"loading界面_06": {
+				"color": [
+					{ "color": "241430aa" },
+					{ "time": 0.6667, "color": "24143000", "curve": "stepped" },
+					{ "time": 1, "color": "24143000" },
+					{ "time": 1.6667, "color": "241430ff" },
+					{ "time": 2.6667, "color": "24143000" },
+					{ "time": 3.6667, "color": "241430d4" },
+					{ "time": 4, "color": "241430aa" }
+				]
+			}
+		},
+		"bones": {
+			"loading界面_03": {
+				"rotate": [
+					{ "angle": 18.45 },
+					{ "time": 2, "angle": -37.83 },
+					{ "time": 4, "angle": 18.45 }
+				],
+				"scale": [
+					{},
+					{ "time": 1, "y": 1.118 },
+					{ "time": 2 },
+					{ "time": 3, "y": 1.118 },
+					{ "time": 4 }
+				]
+			},
+			"loading界面_04": {
+				"rotate": [
+					{ "angle": -2.17 },
+					{ "time": 1.5, "angle": -35.58 },
+					{ "time": 2, "angle": -19.95 },
+					{ "time": 3.5, "angle": 10.8 },
+					{ "time": 4, "angle": -2.17 }
+				],
+				"scale": [
+					{ "y": 1.059 },
+					{ "time": 0.5, "y": 1.118 },
+					{ "time": 1.5 },
+					{ "time": 2, "y": 1.059 },
+					{ "time": 2.5, "y": 1.118 },
+					{ "time": 3.5 },
+					{ "time": 4, "y": 1.059 }
+				]
+			},
+			"loading界面_05": {
+				"rotate": [
+					{ "angle": -62.26 },
+					{ "time": 2, "angle": 9 },
+					{ "time": 4, "angle": -62.26 }
+				],
+				"scale": [
+					{ "x": 1.5, "y": 1.5, "curve": "stepped" },
+					{ "time": 4, "x": 1.5, "y": 1.5 }
+				]
+			},
+			"loading界面_06": {
+				"rotate": [
+					{ "angle": 19.43 },
+					{ "time": 0.6667, "angle": 45.9 },
+					{ "time": 2.6667, "angle": -32.56 },
+					{ "time": 4, "angle": 19.43 }
+				],
+				"scale": [
+					{ "x": 1.5, "y": 1.5 }
+				]
+			}
+		}
+	}
+}
+}

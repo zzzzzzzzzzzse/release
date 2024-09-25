@@ -1,0 +1,20 @@
+
+tanchuang_bk.png
+size: 1092, 46
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+dian
+  rotate: false
+  xy: 2, 4
+  size: 543, 42
+  orig: 543, 42
+  offset: 0, 0
+  index: -1
+guang
+  rotate: false
+  xy: 547, 4
+  size: 543, 42
+  orig: 543, 42
+  offset: 0, 0
+  index: -1

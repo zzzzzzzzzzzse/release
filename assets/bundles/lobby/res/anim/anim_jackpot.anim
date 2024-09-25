@@ -1,0 +1,37 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "anim_jackpot",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.5166666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "364a5c9e-1cab-46ea-ab2a-853a2fa67451"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "db7d872c-e346-4969-b78c-069dfe49134b"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "364a5c9e-1cab-46ea-ab2a-853a2fa67451"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

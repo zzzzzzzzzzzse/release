@@ -1,0 +1,13 @@
+{
+  "ver": "1.1.3",
+  "uuid": "06fa7589-fa72-43b7-a578-a874dd3efc78",
+  "importer": "folder",
+  "isBundle": true,
+  "bundleName": "NewEgypt",
+  "priority": 1,
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
+  "subMetas": {}
+}

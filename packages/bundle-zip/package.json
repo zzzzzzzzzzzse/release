@@ -1,0 +1,28 @@
+{
+  "name": "bundle-zip",
+  "version": "1.0.2.20200807",
+  "description": "构建完成后加压需要的bundle文件",
+  "author": "zzzzz",
+  "main": "main.js",
+  "main-menu": {
+    "扩展/扩展合集": {
+      "message": "bundle-zip:open-panel",
+      "accelerator": "CmdOrCtrl+I"
+    }
+  },
+  "panel": {
+    "main": "panel/index.js",
+    "type": "dockable",
+    "title": "压缩bundle文件",
+    "width": 430,
+    "height": 295
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "install": "^0.13.0",
+    "npm": "^10.5.0",
+    "protobufjs": "^7.2.6",
+    "protobufjs-cli": "^1.1.2",
+    "node-uuid": "^1.4.8"
+  }
+}

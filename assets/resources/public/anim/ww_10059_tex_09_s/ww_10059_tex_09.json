@@ -1,0 +1,49 @@
+{
+"skeleton": {
+	"hash": "fAsqL4l/qUi4Jv+l0gSLftKoA6s",
+	"spine": "3.6.53",
+	"width": 0,
+	"height": 0,
+	"images": "C:/Users/qaz12/Desktop/slots/theme10059/theme10059/帧动画/ww_10059_tex_09_s/png"
+},
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "1", "bone": "root" }
+],
+"skins": {
+	"default": {
+		"1": {
+			"ww_10059_tex_09_01": { "width": 85, "height": 85 },
+			"ww_10059_tex_09_02": { "width": 86, "height": 85 },
+			"ww_10059_tex_09_03": { "width": 85, "height": 85 },
+			"ww_10059_tex_09_04": { "width": 85, "height": 86 },
+			"ww_10059_tex_09_05": { "width": 86, "height": 86 },
+			"ww_10059_tex_09_06": { "width": 85, "height": 86 },
+			"ww_10059_tex_09_07": { "width": 85, "height": 85 },
+			"ww_10059_tex_09_08": { "width": 86, "height": 85 },
+			"ww_10059_tex_09_09": { "width": 85, "height": 85 }
+		}
+	}
+},
+"animations": {
+	"animation": {
+		"slots": {
+			"1": {
+				"attachment": [
+					{ "time": 0, "name": "ww_10059_tex_09_01" },
+					{ "time": 0.0667, "name": "ww_10059_tex_09_02" },
+					{ "time": 0.1333, "name": "ww_10059_tex_09_03" },
+					{ "time": 0.2, "name": "ww_10059_tex_09_04" },
+					{ "time": 0.2667, "name": "ww_10059_tex_09_05" },
+					{ "time": 0.3333, "name": "ww_10059_tex_09_06" },
+					{ "time": 0.4, "name": "ww_10059_tex_09_07" },
+					{ "time": 0.4667, "name": "ww_10059_tex_09_08" },
+					{ "time": 0.5333, "name": "ww_10059_tex_09_09" }
+				]
+			}
+		}
+	}
+}
+}

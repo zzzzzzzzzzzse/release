@@ -1,0 +1,21 @@
+syntax = "proto3";
+option java_package = "com.rooollerslot.protobuf";
+option java_outer_classname = "Hall";
+
+//登录游戏请求
+message Hall_ReqLogin{
+    string pid = 1;                    //玩家id
+    string token = 2;               //玩家token
+    string version = 5;            //版本号
+    int32 maskingKey = 6;      //掩码
+}
+
+//登录成功
+message Hall_PushLogin{
+
+}
+
+//推送返回的pai 回调接口信息
+message Hall_PushApiCallBackMessage{
+    string jsondata = 3;         //json字符串
+}

@@ -1,0 +1,146 @@
+
+biaoqian.png
+size: 332, 142
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+hot
+  rotate: true
+  xy: 196, 73
+  size: 69, 36
+  orig: 77, 44
+  offset: 4, 4
+  index: -1
+huo
+  rotate: false
+  xy: 119, 7
+  size: 67, 57
+  orig: 70, 60
+  offset: 2, 2
+  index: -1
+new
+  rotate: true
+  xy: 2, 55
+  size: 87, 38
+  orig: 105, 50
+  offset: 10, 5
+  index: -1
+new_sg/1
+  rotate: false
+  xy: 188, 6
+  size: 16, 10
+  orig: 100, 100
+  offset: 9, 32
+  index: -1
+new_sg/10
+  rotate: false
+  xy: 273, 106
+  size: 44, 36
+  orig: 100, 100
+  offset: 15, 33
+  index: -1
+new_sg/11
+  rotate: true
+  xy: 188, 18
+  size: 50, 36
+  orig: 100, 100
+  offset: 15, 33
+  index: -1
+new_sg/12
+  rotate: true
+  xy: 80, 5
+  size: 59, 37
+  orig: 100, 100
+  offset: 15, 32
+  index: -1
+new_sg/13
+  rotate: true
+  xy: 234, 74
+  size: 68, 37
+  orig: 100, 100
+  offset: 15, 32
+  index: -1
+new_sg/14
+  rotate: true
+  xy: 157, 70
+  size: 72, 37
+  orig: 100, 100
+  offset: 15, 32
+  index: -1
+new_sg/15
+  rotate: true
+  xy: 42, 66
+  size: 76, 37
+  orig: 100, 100
+  offset: 15, 32
+  index: -1
+new_sg/16
+  rotate: true
+  xy: 81, 66
+  size: 76, 36
+  orig: 100, 100
+  offset: 15, 32
+  index: -1
+new_sg/17
+  rotate: true
+  xy: 119, 66
+  size: 76, 36
+  orig: 100, 100
+  offset: 15, 32
+  index: -1
+new_sg/2
+  rotate: true
+  xy: 226, 8
+  size: 16, 15
+  orig: 100, 100
+  offset: 9, 32
+  index: -1
+new_sg/3
+  rotate: false
+  xy: 301, 8
+  size: 24, 25
+  orig: 100, 100
+  offset: 8, 32
+  index: -1
+new_sg/4
+  rotate: true
+  xy: 301, 35
+  size: 31, 29
+  orig: 100, 100
+  offset: 8, 32
+  index: -1
+new_sg/5
+  rotate: true
+  xy: 264, 27
+  size: 39, 35
+  orig: 100, 100
+  offset: 8, 32
+  index: -1
+new_sg/6
+  rotate: true
+  xy: 226, 26
+  size: 45, 36
+  orig: 100, 100
+  offset: 8, 32
+  index: -1
+new_sg/7
+  rotate: true
+  xy: 41, 8
+  size: 45, 37
+  orig: 100, 100
+  offset: 8, 32
+  index: -1
+new_sg/8
+  rotate: true
+  xy: 2, 4
+  size: 49, 37
+  orig: 100, 100
+  offset: 8, 32
+  index: -1
+new_sg/9
+  rotate: false
+  xy: 273, 68
+  size: 40, 36
+  orig: 100, 100
+  offset: 15, 33
+  index: -1

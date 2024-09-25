@@ -1,0 +1,55 @@
+{
+  "ver": "2.3.7",
+  "uuid": "73e8a394-b44c-4295-b364-bc8863efaa04",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 248,
+  "height": 189,
+  "platformSettings": {
+    "android": {
+      "formats": [
+        {
+          "name": "astc_6x6",
+          "quality": "medium"
+        }
+      ]
+    },
+    "ios": {
+      "formats": [
+        {
+          "name": "astc_6x6",
+          "quality": "medium"
+        }
+      ]
+    }
+  },
+  "subMetas": {
+    "wenzi10_Gold Rush": {
+      "ver": "1.0.6",
+      "uuid": "c13a3a0d-6e09-47bb-b3ca-3020bc79ec9e",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "73e8a394-b44c-4295-b364-bc8863efaa04",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 1,
+      "offsetY": 0,
+      "trimX": 39,
+      "trimY": 2,
+      "width": 172,
+      "height": 185,
+      "rawWidth": 248,
+      "rawHeight": 189,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

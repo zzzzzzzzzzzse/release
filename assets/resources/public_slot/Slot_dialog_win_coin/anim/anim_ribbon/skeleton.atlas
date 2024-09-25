@@ -1,0 +1,69 @@
+
+skeleton.png
+size: 2048,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+lan_piaodai1
+  rotate: false
+  xy: 2, 86
+  size: 605, 158
+  orig: 605, 158
+  offset: 0, 0
+  index: -1
+lan_piaodai2
+  rotate: false
+  xy: 1823, 118
+  size: 38, 42
+  orig: 38, 42
+  offset: 0, 0
+  index: -1
+lan_piaodai3
+  rotate: false
+  xy: 2, 2
+  size: 119, 82
+  orig: 119, 82
+  offset: 0, 0
+  index: -1
+piaodai1
+  rotate: false
+  xy: 609, 86
+  size: 605, 158
+  orig: 605, 158
+  offset: 0, 0
+  index: -1
+r_piaodai2
+  rotate: false
+  xy: 1944, 202
+  size: 38, 42
+  orig: 38, 42
+  offset: 0, 0
+  index: -1
+r_piaodai3
+  rotate: false
+  xy: 1823, 162
+  size: 119, 82
+  orig: 119, 82
+  offset: 0, 0
+  index: -1
+zi_piaodai1
+  rotate: false
+  xy: 1216, 86
+  size: 605, 158
+  orig: 605, 158
+  offset: 0, 0
+  index: -1
+zi_piaodai2
+  rotate: false
+  xy: 244, 42
+  size: 38, 42
+  orig: 38, 42
+  offset: 0, 0
+  index: -1
+zi_piaodai3
+  rotate: false
+  xy: 123, 2
+  size: 119, 82
+  orig: 119, 82
+  offset: 0, 0
+  index: -1

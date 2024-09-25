@@ -1,0 +1,123 @@
+{
+"skeleton": {
+	"hash": "BzM67bTT11EKYzwRx93Q9AqSvDQ",
+	"spine": "3.8.99",
+	"x": -242.69,
+	"y": -55.9,
+	"width": 485.01,
+	"height": 99,
+	"images": "",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "anniu", "bone": "root", "attachment": "images/anniu_03" },
+	{ "name": "sg", "bone": "root", "blend": "additive" },
+	{ "name": "zuojian2", "bone": "root", "attachment": "images/anniu_06" },
+	{ "name": "youjian", "bone": "root", "attachment": "images/anniu_09" },
+	{ "name": "images/you_03", "bone": "root", "attachment": "images/you_03", "blend": "additive" },
+	{ "name": "images/zuo_3", "bone": "root", "attachment": "images/you_03", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"anniu": {
+				"images/anniu_03": { "y": -6.4, "width": 354, "height": 99 }
+			},
+			"images/you_03": {
+				"images/you_03": { "x": 214.04, "y": -4.81, "width": 56, "height": 72 }
+			},
+			"images/zuo_3": {
+				"images/you_03": { "x": -214.69, "y": -4.81, "scaleX": -1, "width": 56, "height": 72 }
+			},
+			"sg": {
+				"images/1_03": { "width": 342, "height": 86 },
+				"images/2_03": { "width": 342, "height": 86 },
+				"images/3_03": { "width": 342, "height": 86 },
+				"images/4_03": { "width": 342, "height": 86 },
+				"images/5_03": { "width": 342, "height": 86 },
+				"images/6_03": { "width": 342, "height": 86 },
+				"images/7_03": { "width": 342, "height": 86 },
+				"images/8_03": { "width": 342, "height": 86 },
+				"images/9_03": { "width": 342, "height": 86 },
+				"images/10_03": { "width": 342, "height": 86 },
+				"images/11_03": { "width": 342, "height": 86 },
+				"images/12_03": { "width": 342, "height": 86 },
+				"images/13_03": { "width": 342, "height": 86 },
+				"images/14_03": { "width": 342, "height": 86 },
+				"images/15_03": { "width": 342, "height": 86 },
+				"images/16_03": { "width": 342, "height": 86 },
+				"images/17_03": { "width": 342, "height": 86 },
+				"images/18_03": { "width": 342, "height": 86 },
+				"images/19_03": { "width": 342, "height": 86 },
+				"images/20_03": { "width": 342, "height": 86 },
+				"images/21_03": { "width": 342, "height": 86 },
+				"images/22_03": { "width": 342, "height": 86 },
+				"images/23_03": { "width": 342, "height": 86 },
+				"images/24_03": { "width": 342, "height": 86 }
+			},
+			"youjian": {
+				"images/anniu_09": { "x": 214.32, "y": -4.8, "width": 56, "height": 72 }
+			},
+			"zuojian2": {
+				"images/anniu_06": { "x": -212.91, "y": -4.8, "width": 55, "height": 72 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"images/you_03": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.8333, "color": "ffffffff" },
+					{ "time": 1.5333, "color": "ffffff00" }
+				]
+			},
+			"images/zuo_3": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.8333, "color": "ffffffff" },
+					{ "time": 1.5333, "color": "ffffff00" }
+				]
+			},
+			"sg": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.0667, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.4667, "color": "ffffffff" },
+					{ "time": 1.5333, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "name": "images/1_03" },
+					{ "time": 0.1333, "name": "images/2_03" },
+					{ "time": 0.2, "name": "images/3_03" },
+					{ "time": 0.2667, "name": "images/4_03" },
+					{ "time": 0.3333, "name": "images/5_03" },
+					{ "time": 0.4, "name": "images/6_03" },
+					{ "time": 0.4667, "name": "images/7_03" },
+					{ "time": 0.5333, "name": "images/9_03" },
+					{ "time": 0.6, "name": "images/10_03" },
+					{ "time": 0.6667, "name": "images/12_03" },
+					{ "time": 0.7333, "name": "images/13_03" },
+					{ "time": 0.8, "name": "images/14_03" },
+					{ "time": 0.8667, "name": "images/15_03" },
+					{ "time": 0.9333, "name": "images/16_03" },
+					{ "time": 1, "name": "images/17_03" },
+					{ "time": 1.0667, "name": "images/18_03" },
+					{ "time": 1.1333, "name": "images/19_03" },
+					{ "time": 1.2, "name": "images/20_03" },
+					{ "time": 1.2667, "name": "images/21_03" },
+					{ "time": 1.3333, "name": "images/22_03" },
+					{ "time": 1.4, "name": "images/23_03" },
+					{ "time": 1.4667, "name": "images/24_03" }
+				]
+			}
+		}
+	}
+}
+}

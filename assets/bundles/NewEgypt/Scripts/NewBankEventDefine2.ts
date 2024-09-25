@@ -1,0 +1,11 @@
+export enum NewBankEventDefine2 {
+    RECONNECTION = "RECONNECTION",//重连
+    WIN_DIALOG_CLOSE_CALLBACK = "WIN_DIALOG_CLOSE_CALLBACK",//大奖动画弹框关闭回调
+    WIN_DIALOG_OPEN_CALLBACK = "WIN_DIALOG_OPEN_CALLBACK",//大奖动画弹框打开回调
+    START_SPIN = "START_SPIN",//收到服务器回复后 开始转圈
+    UPDATE_START_DATA = "UPDATE_START_DATA",//更新开始游戏数据
+    BET_ERROR = "BET_ERROR",//下注错误
+    SHAKE_EFFECT = "SHAKE_EFFECT",//全屏震动
+    UPDATE_FREE_COUNT = "UPDATE_FREE_COUNT",//更新免费转次数
+    UPDATE_CIRCLE = "UPDATE_CIRCLE",//更新圈数
+}

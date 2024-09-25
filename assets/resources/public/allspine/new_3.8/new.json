@@ -1,0 +1,123 @@
+{
+"skeleton": { "hash": "huZvZDAvX14", "spine": "3.8-from-4.0.64", "x": -52.16, "y": -28.76, "width": 105, "height": 50 },
+"bones": [
+	{ "name": "root" },
+	{ "name": "new", "parent": "root" },
+	{ "name": "new_sg", "parent": "new", "x": 1.43, "y": -2.75 }
+],
+"slots": [
+	{ "name": "new", "bone": "new", "attachment": "new" },
+	{ "name": "new_sg", "bone": "new_sg", "color": "ffffff6d", "blend": "additive" },
+	{ "name": "new_sg2", "bone": "new_sg", "color": "ffffff6d", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"new": {
+				"new": { "x": 0.34, "y": -3.76, "width": 105, "height": 50 }
+			},
+			"new_sg": {
+				"new_sg/1": { "width": 100, "height": 100 },
+				"new_sg/2": { "width": 100, "height": 100 },
+				"new_sg/3": { "width": 100, "height": 100 },
+				"new_sg/4": { "width": 100, "height": 100 },
+				"new_sg/5": { "width": 100, "height": 100 },
+				"new_sg/6": { "width": 100, "height": 100 },
+				"new_sg/7": { "width": 100, "height": 100 },
+				"new_sg/8": { "width": 100, "height": 100 },
+				"new_sg/9": { "width": 100, "height": 100 },
+				"new_sg/10": { "width": 100, "height": 100 },
+				"new_sg/11": { "width": 100, "height": 100 },
+				"new_sg/12": { "width": 100, "height": 100 },
+				"new_sg/13": { "width": 100, "height": 100 },
+				"new_sg/14": { "width": 100, "height": 100 },
+				"new_sg/15": { "width": 100, "height": 100 },
+				"new_sg/16": { "width": 100, "height": 100 },
+				"new_sg/17": { "width": 100, "height": 100 }
+			},
+			"new_sg2": {
+				"new_sg/1": { "width": 100, "height": 100 },
+				"new_sg/2": { "width": 100, "height": 100 },
+				"new_sg/3": { "width": 100, "height": 100 },
+				"new_sg/4": { "width": 100, "height": 100 },
+				"new_sg/5": { "width": 100, "height": 100 },
+				"new_sg/6": { "width": 100, "height": 100 },
+				"new_sg/7": { "width": 100, "height": 100 },
+				"new_sg/8": { "width": 100, "height": 100 },
+				"new_sg/9": { "width": 100, "height": 100 },
+				"new_sg/10": { "width": 100, "height": 100 },
+				"new_sg/11": { "width": 100, "height": 100 },
+				"new_sg/12": { "width": 100, "height": 100 },
+				"new_sg/13": { "width": 100, "height": 100 },
+				"new_sg/14": { "width": 100, "height": 100 },
+				"new_sg/15": { "width": 100, "height": 100 },
+				"new_sg/16": { "width": 100, "height": 100 },
+				"new_sg/17": { "width": 100, "height": 100 }
+			}
+		}
+	}
+],
+"animations": {
+	"new": {
+		"slots": {
+			"new_sg": {
+				"attachment": [
+					{ "time": 0.5, "name": "new_sg/1" },
+					{ "time": 0.6333, "name": "new_sg/2" },
+					{ "time": 0.7, "name": "new_sg/3" },
+					{ "time": 0.7667, "name": "new_sg/4" },
+					{ "time": 0.8333, "name": "new_sg/5" },
+					{ "time": 0.9, "name": "new_sg/6" },
+					{ "time": 0.9667, "name": "new_sg/7" },
+					{ "time": 1.0333, "name": "new_sg/8" },
+					{ "time": 1.1, "name": "new_sg/9" },
+					{ "time": 1.1667, "name": "new_sg/10" },
+					{ "time": 1.2333, "name": "new_sg/11" },
+					{ "time": 1.3, "name": "new_sg/12" },
+					{ "time": 1.3667, "name": "new_sg/13" },
+					{ "time": 1.4333, "name": "new_sg/14" },
+					{ "time": 1.5, "name": "new_sg/15" },
+					{ "time": 1.5667, "name": "new_sg/16" },
+					{ "time": 1.6333, "name": "new_sg/17" },
+					{ "time": 1.7667, "name": null }
+				]
+			},
+			"new_sg2": {
+				"attachment": [
+					{ "time": 0.5333, "name": "new_sg/1" },
+					{ "time": 0.6667, "name": "new_sg/2" },
+					{ "time": 0.7333, "name": "new_sg/3" },
+					{ "time": 0.8, "name": "new_sg/4" },
+					{ "time": 0.8667, "name": "new_sg/5" },
+					{ "time": 0.9333, "name": "new_sg/6" },
+					{ "time": 1, "name": "new_sg/7" },
+					{ "time": 1.0667, "name": "new_sg/8" },
+					{ "time": 1.1333, "name": "new_sg/9" },
+					{ "time": 1.2, "name": "new_sg/10" },
+					{ "time": 1.2667, "name": "new_sg/11" },
+					{ "time": 1.3333, "name": "new_sg/12" },
+					{ "time": 1.4, "name": "new_sg/13" },
+					{ "time": 1.4667, "name": "new_sg/14" },
+					{ "time": 1.5333, "name": "new_sg/15" },
+					{ "time": 1.6, "name": "new_sg/16" },
+					{ "time": 1.6667, "name": "new_sg/17" },
+					{ "time": 1.8, "name": null }
+				]
+			}
+		},
+		"bones": {
+			"new": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": 11.25 },
+					{ "time": 0.3333, "angle": -12.6 },
+					{ "time": 0.5, "angle": 11.02 },
+					{ "time": 0.6667, "curve": "stepped" },
+					{ "time": 3 }
+				]
+			}
+		}
+	}
+}
+}

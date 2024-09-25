@@ -1,0 +1,37 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "anim_left_lamp",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.0166666666666666,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "75d576ca-5b3a-4835-8246-1120f66d3b1c"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "4934f1fa-74ef-4f1b-b506-2c099f80b1e0"
+            }
+          },
+          {
+            "frame": 1,
+            "value": {
+              "__uuid__": "75d576ca-5b3a-4835-8246-1120f66d3b1c"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

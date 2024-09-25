@@ -1,0 +1,41 @@
+
+mission.png
+size: 230,230
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guang
+  rotate: false
+  xy: 0, 126
+  size: 104, 104
+  orig: 126, 126
+  offset: 11, 12
+  index: -1
+guang_shu
+  rotate: true
+  xy: 102, 0
+  size: 63, 64
+  orig: 76, 75
+  offset: 4, 9
+  index: -1
+kuang
+  rotate: false
+  xy: 0, 23
+  size: 99, 100
+  orig: 99, 100
+  offset: 0, 0
+  index: -1
+shu
+  rotate: true
+  xy: 107, 66
+  size: 71, 73
+  orig: 76, 75
+  offset: 0, 2
+  index: -1
+yuan
+  rotate: false
+  xy: 107, 140
+  size: 90, 90
+  orig: 100, 100
+  offset: 5, 6
+  index: -1

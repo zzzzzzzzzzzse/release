@@ -1,0 +1,301 @@
+syntax = "proto3";
+option java_package = "com.rooollerslot.protobuf";
+option java_outer_classname = "Slot";
+
+//子游戏类型
+enum SubGameType{
+    None  =0; //
+    Base = 1; //基础游戏类型
+	Base_Link  = 2;  // base游戏引发的link游戏
+	Free = 3;  // 免费游戏
+	Bonus = 4;  // bonus游戏模式
+	Free_Link = 5;  // Free游戏引发的link游戏
+	RandomWilds = 6; //轮盘上随机出现2-9个wild图标，中奖后结算，然后播放转场退出feature
+	RespinUntilWin = 7;  //之后会重复spin2-10次，结果与第一次赢钱相同。次数结束后，结算，然后播放转场退出feature
+	LockWildAward = 8; //第一，三列会固定落定bigwild图标，第二列随机落定，之后结算，然后播放转场退出feature
+	RandomOdds = 9; //结算数额=赢钱数*倍数
+	Bonus_choose = 10;//选择后的bouns游戏 在埃及游戏中
+	Collect_Free = 11;  //收集玩法引发的freegame
+
+	Bingo = 12;                     //bingo 游戏
+	Mega_Bouns = 13;          //爱尔兰里收集玩法奖金游戏
+	Super_Bouns = 14;          //爱尔兰里收集玩法超大奖金游戏
+	Super_Free = 15;            //旷工里的收集玩法的freegame
+	Free_choose = 16;          //  选择后的Free游戏
+
+    Rich_Green_Bonus = 20;                      //富豪绿色宝箱game
+    Rich_Purple_Bonus = 21;                     //富豪紫色宝箱game
+    Rich_Red_Bonus = 22;                         //富豪红色宝箱game
+    Rich_Green_Purple_Bonus = 23;          //富豪绿色and紫色宝箱game
+    Rich_Green_Red_Bonus = 24;              //富豪绿色and红色宝箱game
+    Rich_Purple_Red_Bonus = 25;             // 富豪红色and紫色宝箱game
+    Rich_Green_Purple_Red_Bonus = 26;  // 富豪红色and紫色and绿色宝箱game
+
+    Wheel_Game = 27;                        //轮盘游戏
+    Collect_Subgame = 28;                //富豪游戏收集玩法游戏
+}
+
+//游戏全局数据类型key值
+enum GameDataKey{
+	GAMEDATATYPE_NONE = 0;   //
+	GREEN_BOX = 1;                   //rich游戏绿色保险箱
+	PURPLE_BOX = 2;                  //rich游戏紫色保险箱
+	RED_BOX = 3;                        //rich游戏红色色保险箱
+}
+
+//游戏状态
+enum SubGameStatus{
+    Normal  =0;             //正常状态，等待玩家下注
+    Reward = 1;             //待领奖状态
+    Choose = 2;            //等待玩家选择哪个游戏
+    RewardBingo = 3;            //bingo游戏里等待玩家完成bingo结果计算
+}
+
+//奖池类型
+enum PoolType{
+	POOL_NONE  = 0;   //无意义
+	GRAND  = 1;   //"全局奖池"),
+	MAJOR  = 2;   // "最大奖池"),
+	MINOR  = 3;   //"普通奖池"),
+	MINI = 4;   //"最小奖池"),
+	MEGA = 5;   //"Mega奖池"),
+	MAXI = 6;   //"Maxi奖池"),
+}
+
+//物件奖励类型
+enum RewardType{
+	Reward_NONE= 0;   //无意义
+	BONUS_COUNT    =6;       // gameTimes次数增加，类型值对应增加次数
+	Pool    =7;       // "奖池类型"),
+	Money=9;       // "	Money物件"),
+	SubGame       =10;    // "小游戏中奖规则");
+	JackpotUp     =15;   //奖池等级+1
+
+	Collect1 = 16;       //绿色宝箱点数收集
+	Collect2 = 17;       //紫色宝箱点数收集
+	Collect3 = 18;      //红色宝箱点数收集
+
+	Multiple = 19;        //倍数
+
+	Addition = 20;               //加成规则	物件中奖金额加成
+	AddReel = 21;               //增加列规则	轮盘增加列数
+	AddRow = 22;               //增加行规则	轮盘增加行数
+	AddProbability = 23;     //增加物件概率规则	物件出现概率加成
+}
+
+//语言类型
+enum Lange{
+	En = 0;                        //英文
+	Hindi = 1;                   //印度语
+}
+
+//登录游戏请求
+message Slot_ReqLogin{
+	string pid = 1;       //玩家pid
+    string token = 2;    //玩家token
+    int32 gameId = 3;     //游戏id
+    int32 lang = 4;           //语言 默认为英语 0
+    string version = 5;      //版本号
+    int32 maskingKey = 6;      //掩码
+    int32 channel = 7;      //渠道
+}
+
+//登录成功
+message Slot_PushLogin{
+	int32 gameId = 1; //游戏id
+	repeated  Slot_SubGameInfo subGameInfos = 2; //游戏房间信息
+	Slot_PlayerCollectInfo playerCollectInfo = 3;          //玩家收集玩法详情
+
+	repeated Slot_BetkeyMap betkeyMap = 4;          //betkey 全局数据  目前就爱尔兰小矮人会用到
+	repeated Slot_GlobalMap globalMap = 5;            //游戏全局数据， 目前就富豪游戏里会用到
+	Slot_PushBetResult lastBetInfo = 6;                      //最后一次下注信息， 有可能为null
+}
+
+//全局数据键值对
+message Slot_GlobalMap{
+	int32 dataKey = 1;        //key
+	int64 dataValue = 2;     //value
+}
+
+//betkey 全局数据
+message Slot_BetkeyMap{
+	int32 betKey = 1;        //betKey
+	repeated Slot_SlotRewardSubject slotRewards = 2;     //bingo里的图标奖励信息
+}
+
+//连成一条线的bingo奖励列表
+message Slot_BingoRewards{
+	repeated Slot_SlotRewardSubject slotRewards = 1;     //连成一条线的bingo奖励列表
+}
+
+//下注
+message Slot_ReqBet{
+    int32 betKey = 1; //下注系数
+    int32 subGameType = 2;//子类游戏type
+}
+
+//物品
+message Slot_SlotSubject{
+	int32 id = 1;    //物品id
+	repeated int32 lines = 2;    //中了哪些线
+	bool winPrize = 3;       //是否中奖
+	int32 index = 4;  //位置
+}
+
+//下注返回结果
+message Slot_PushBetResult{
+    Slot_SubGameBetResult betResult = 1;                      //当前下注游戏返回结果
+	Slot_SubGameInfo nextGameInfo = 2;                      //当前子游戏状态信息
+	Slot_PlayerCollectInfo playerCollectInfo = 3;             //玩家收集玩法信息
+	repeated Slot_GlobalMap changeDatas = 4;            //刷新游戏全局数据 变的才有值
+	repeated Slot_BingoRewards bingoRewardsList = 5;      //如果不为空表示，有bingo游戏的奖励未领取
+
+    int64 exp = 8;  //玩家经验
+    int32 playerLevel = 9;  //玩家等级
+	int64 balance = 10;  //玩家余额
+}
+
+//各个子类游戏相关进度信息
+message Slot_SubGameInfo{
+	int32 subGameType = 1;  //子类游戏type
+	int32 rounds = 2;  //总轮数
+	int32 leftRounds = 3;     //当前还剩多少轮
+	int32 betKey = 4;  //下注系数                     betKey==-1 表示全局subgame
+	int64 betAmount = 5;  //下注金额
+
+	repeated int32 linkIconPos =  6;  //福娃游戏里表示link边框图标位置，埃及游戏里表示合并的link图标位置集合
+    repeated Slot_SlotSubject slotSubjects =7;        //游戏里物品位置
+    repeated Slot_SlotRewardSubject rewardSubjects =8;    //bouns 物品奖励 只针对bouns游戏结算使用
+
+    int64 beforeSettlementAmount = 9;        // 结算前所有赢的钱
+    int32 subGameStatus = 10;        //游戏状态
+	int64 appendValue = 11;            //零时附加的long值
+	repeated int64 appendLongList = 12;        //long 类型列表
+}
+
+//bonus物品
+message Slot_SlotRewardSubject{
+	int32 subjectId = 1;     //物件id，大多数bounsgame里用不到，一般用index 取物品，特殊情况下，如转盘游戏里有用
+	int32 index = 2;     //位置    -1为 GRAND奖池奖励
+	int32 rewardType = 3;       //奖励类型
+	int64 rewardAmount = 4;  //奖励金额
+	int32 poolType = 5;  //奖池类型   //rewardType  为Pool 有用
+
+	repeated Slot_SubGameBetResult subGameBetResults = 6;   //rewardType  为SubGame 有用
+
+	int32 rewardCount = 7; //附加的int 类型
+}
+
+//游戏下注结果
+message Slot_SubGameBetResult{
+	int32 subGameType = 1; //子类游戏type
+    int32 betKey = 2;//下注系数
+    int64 betAmount = 3;  //下注金额
+    int64 winAmount = 4;  //普通中奖金额
+    int32 rounds = 5;//总轮数
+	int32 leftRounds = 6;   //当前还剩多少轮
+    repeated Slot_SlotSubject showSubjects = 7; //物品展示详情
+    repeated int32 lineIds = 8;     //连线结果
+    repeated Slot_SlotRewardSubject bounsRewards = 9;      //bank游戏中，bouns图标奖励
+
+    int64 appendValue = 12; //附加的int 类型 在classic 子游戏中表示翻倍的数量
+    repeated int32 appendList = 13;//附加的int list  在福娃游戏中指 随机出现的金框位置集合,在埃及游戏，随机wild游戏里指随机wild的位置列表
+    repeated int64 appendLongList = 14; //long 类型列表
+}
+
+
+//============领取奖励=================
+//请求结算bounsGame完成
+message Slot_ReqSettlementBounsSuccess{
+    int32 betKey = 1;     //下注系数
+}
+
+//请求结算bounsGame完成 返回
+message Slot_PushSettlementBounsSuccess{
+    int32 betKey = 1;     //下注系数
+	Slot_SubGameInfo currentGameInfo = 2; //当前子游戏状态信息
+	Slot_PlayerCollectInfo playerCollectInfo = 3;             //玩家收集玩法信息 默认为null, 如果结算的是收集玩法的奖励时有用
+	int64 winAmount = 4;  //领取的奖励金额
+	int64 balance = 5;        //当前用户余额
+}
+//============埃及=================
+//埃及游戏选择进入的游戏类型
+message Slot_ReqChooseSubGame{
+	int32 betKey = 1;
+    int32 subGameType = 2;     //选择进入的子游戏类型
+}
+
+//埃及游戏选择进入的游戏 返回
+message Slot_PushChooseSubGame{
+     int32 betKey = 1;                                       //下注系数
+	 Slot_SubGameInfo currentGameInfo = 2;  //当前子游戏状态信息
+}
+
+//============爱尔兰魔法精灵=================
+//请求初始化bingo 奖励图标
+message Slot_ReqBingoReward{
+	int32 betKey = 1;                  //bingo游戏所在场景betKey
+}
+//请求初始化bingo 奖励图标 返回
+message Slot_PushBingoReward{
+    int32 betKey = 1;        //betKey
+	repeated Slot_SlotRewardSubject slotRewards = 2;     //bingo里的图标奖励信息
+}
+
+//============收集玩法============
+//玩家收集玩法详情
+message Slot_PlayerCollectInfo{
+	int64 averageBetAmount = 1;               //下注平均值
+	int32 collectCurrentValue = 2;              //当前收集的值
+	int32 collectMaxValue = 3;                   //收集满的最大值
+	int32 currentIndex = 4;                        //当前关卡索引
+	bool haveReward = 5;                         //当前是否有奖励待领取 如果为true ，会阻塞正常的游戏进程 ，要领完奖励才能进行游戏下注操作
+	repeated Slot_SlotRewardSubject slotRewards = 6;     //待领取的奖励）
+	repeated Slot_SlotRewardSubject receivedSlotRewards = 7;     //已经领取的奖励
+	repeated Slot_SlotRewardSubject buffSlotRewards = 8;           //下一个大奖点的buff列表
+	int32 betkey = 9;                               //触发收集玩法奖励的 betKey, 只有haveReward 为true才有意义
+}
+
+//请求领取收集玩法奖励
+message Slot_ReqAcceptCollectAward{
+	 int32 betKey = 1;     //下注系数
+}
+
+//请求领取收集玩法奖励返回
+message Slot_PushAcceptCollectAward{
+	int32 betKey = 1;     //下注系数
+	Slot_SubGameInfo currentGameInfo = 2; //当前子游戏状态信息
+	Slot_PlayerCollectInfo playerCollectInfo = 3;             //玩家收集玩法信息
+	int64 winAmount = 4;  //领取的奖励金额
+	int64 balance = 5;        //当前用户余额
+}
+
+//收集玩法中，用积分兑换商店里的奖励
+message Slot_ReqCollectShopExchangeAward{
+	int32 index = 1;                        //请求兑换的商品索引
+}
+
+//收集玩法中，用积分兑换商店里的奖励返回
+message Slot_PushCollectShopExchangeAward{
+	int32 index = 1;                        //请求兑换的商品索引
+	Slot_PlayerCollectInfo playerCollectInfo = 2;             //玩家收集玩法信息
+}
+//============奖池金币矫正============
+//请求当前场景的奖池信息
+message Slot_ReqJackpotAmount{
+	int32 betKey = 1;                         //
+	repeated int32 poolTypes = 2;    //奖池类型
+}
+//请求当前场景的奖池信息 返回
+message Slot_PushJackpotAmount{
+	int32 betKey = 1;                         //
+	repeated JackpotInfo jackpotInfos = 2;    //奖池信息
+}
+message JackpotInfo{
+	int32 poolType = 1;    //奖池类型
+	int64 amount = 2;     //奖池金额
+}
+//============游戏最后一次下注信息 返回 Slot_PushBetResult 有可能为null============
+message Slot_ReqLastBetInfo{
+}
+

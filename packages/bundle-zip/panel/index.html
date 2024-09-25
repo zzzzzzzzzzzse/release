@@ -1,0 +1,26 @@
+<div class="container">
+    <h2>配置面板</h2>
+    <ui-box-container class="layout vertical">
+        <!-- <div>
+            <ui-prop name="启用" type="number" v-value="enabled" tooltip="· 项目构建完成后自动压缩 PNG 资源"></ui-prop>
+            <hr />
+            <ui-prop name="最低质量（%）" type="number" v-value="minQuality" tooltip="· 最低图像质量"></ui-prop>
+            <ui-prop name="最高质量（%）" type="number" v-value="maxQuality" tooltip="· 最高图像质量"></ui-prop>
+        </div> 
+        <ui-button class="button blue big" v-disabled="isSaving" @click="saveConfig()">保存</ui-button>-->
+        <ui-button class="button blue big" v-disabled="isSaving" @click="createProto()">更新PB</ui-button>
+        <hr />
+        <ui-prop name="老bundle名字" type="string" v-value="oldBundleName" tooltip=". 老的bunlde名字"></ui-prop>
+        <ui-prop name="新bundel名字" type="string" v-value="newBundleName" tooltip="· 新的bundle名字"></ui-prop>
+        <ui-button class="button blue big" v-disabled="isSaving" @click="copyBundle()">拷贝</ui-button>
+        <!-- 增加文字和checkbox -->
+        <!-- <ui-prop name="开启图片压缩" type="boolean" v-value="isMetaCompress" tooltip="是否开启文件压缩"
+            @click="setMetaCompress()"></ui-prop> -->
+        <hr />
+        <ui-prop name="压缩路径" type="string" v-value="compressPath" tooltip="压缩图片的路径"></ui-prop>
+        <div>
+            <ui-button @click="openMetaCompress()">开启压缩</ui-button>
+            <ui-button @click="closeMetaCompress()">关闭压缩</ui-button>
+        </div>
+    </ui-box-container>
+</div>

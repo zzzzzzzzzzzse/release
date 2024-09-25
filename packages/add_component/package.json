@@ -1,0 +1,26 @@
+{
+  "name": "add_component",
+  "version": "0.2.1",
+  "description": "键盘搜索添加组件。一些常用的节点操作。",
+  "author": "Wildptr",
+  "main": "main.js",
+  "main-menu": {
+    "i18n:MAIN_MENU.package.title/add_component/开启": {
+      "message": "add_component:open"
+    },
+    "i18n:MAIN_MENU.package.title/add_component/关闭": {
+      "message": "add_component:close"
+    }
+  },
+  "panel": {
+    "main": "panel/index.js",
+    "type": "dockable",
+    "title": "增加组件",
+    "width": 400,
+    "height": 50,
+    "min-height": 50,
+    "engineSupport": true
+  },
+  "scene-script": "scene-accessor.js",
+  "_storeId": "939aec351629b4e6f40a5078cc5c75a4"
+}

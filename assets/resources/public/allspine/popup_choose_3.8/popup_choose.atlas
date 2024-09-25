@@ -1,0 +1,13 @@
+
+popup_choose.png
+size: 827, 18
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+guang
+  rotate: false
+  xy: 2, 2
+  size: 823, 14
+  orig: 823, 14
+  offset: 0, 0
+  index: -1
