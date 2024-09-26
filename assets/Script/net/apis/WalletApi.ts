@@ -1,4 +1,5 @@
 import { UIManagernew } from "../../../UIManagernew";
+import AppBundleConfig from "../../configs/AppBundleConfig";
 import { EVENT } from "../../configs/ConstDefine";
 import { Constants } from "../../Constants";
 import { EventMgr } from "../../framework/mgr/EventManager";
@@ -11,7 +12,6 @@ import ShopGoodsModel, { GoodsAtts } from "../../models/ShopGoodsModel";
 import { SignInAtts } from "../../models/SignItemModel";
 import { WalletInfoModel } from "../../models/WalletInfoModel";
 import UserTaskTimerHelper from "../../task/UserTaskTimerHelper";
-import AppLog from "../../tools/AppLog";
 import AnalyticsTool, { AnalyticsEventEnmu } from "../../tools/log/AnalyticsTool";
 import { OperateJson } from "../../tools/OperateJson";
 import { LocalStorageTool } from "../../tools/storage/LocalStorageTool";
@@ -25,10 +25,10 @@ import { BaseApi } from "./BaseApi";
  * 钱包业务
  */
 export class WalletApi extends BaseApi {
- /**
-     * 获取用户账户余额信息
-     * @returns
-     */
+    /**
+        * 获取用户账户余额信息
+        * @returns
+        */
     public static async getBaseAccounts(): Promise<CommonResult<any>> {
         //创建请求参数
         let httpResult: CommonResult<any> = new CommonResult<any>();
@@ -61,22 +61,22 @@ export class WalletApi extends BaseApi {
                     httpResult.succ = true;
                     return httpResult;
                 }
-            } 
+            }
         } else {
             //失败
             let sureCallback = (() => {
                 cc.log("sureCallback!!!")
                 Constants.getInstance().hallSocket.onDestroy();
                 Constants.getInstance().hallSocket.resetstatus();
-                let  SceneName = cc.director.getScene().name
-                if(SceneName.localeCompare("CoreLoadScene")!=0 ){
+                let SceneName = cc.director.getScene().name
+                if (SceneName.localeCompare("CoreLoadScene") != 0) {
                     cc.director.loadScene("CoreLoadScene")
                 }
             })
             let msg1 = {
                 name: "MessageBoxView",
                 sureCallback: sureCallback,
-                bundleIndex: "gameprefab",
+                bundleIndex: AppBundleConfig.BUNDLE_HALL,
                 btnOkText: "Disconnect, please login again.",
                 btnCount: 1,
                 zorder: 10000
@@ -93,7 +93,7 @@ export class WalletApi extends BaseApi {
      * 用户领取在线奖励 1:在线奖励 2:商城奖励
      * @returns
      */
-     public static async receiveOnlineList(type?:number,isreward:string="1"): Promise<CommonResult<any>> {
+    public static async receiveOnlineList(type?: number, isreward: string = "1"): Promise<CommonResult<any>> {
         //创建请求参数
         let httpResult: CommonResult<any> = new CommonResult<any>();
         let postDataList: PostParameter = new PostParameter();
@@ -101,10 +101,10 @@ export class WalletApi extends BaseApi {
         this.setWapParmes(postDataList);
 
         postDataList.addPostData(this._apiMethodKey, "reward/receiveOnlineList");
-        if(type==undefined) type = 1;
-        if(type == 1){
+        if (type == undefined) type = 1;
+        if (type == 1) {
             postDataList.addPostData("type", "onlie");
-        }else if(type == 2){
+        } else if (type == 2) {
             postDataList.addPostData("type", "shop");
         }
         postDataList.addPostData("isReward", isreward);
@@ -123,10 +123,10 @@ export class WalletApi extends BaseApi {
                     //获取充值商品列表
 
                     let time: number = OperateJson.getNumber(jsonObj, "time");
-                    if(type == 1){
+                    if (type == 1) {
                         LocalStorageTool.setUserCollectTime(String(time + 2));
                     }
-                    
+
                     let listJson: JSON = OperateJson.getJsonArr(jsonObj, "list");
                     let dataList: OpenMoneyInfo[] = [];
                     let item: JSON;
@@ -180,7 +180,7 @@ export class WalletApi extends BaseApi {
         //数据格式化
         postDataList.adapterParamsSignatureSession();
         let result: RequestCallBackInfo = await this._httpNet.runHttp(this.getPostRequest(postDataList));
-        console.log("huoqushangpinliebiaoxinxi",JSON.stringify(result));
+        console.log("huoqushangpinliebiaoxinxi", JSON.stringify(result));
         if (result.m_requestStatus) {
             //判断是否是200
             if (result.checkServerCmdStatus()) {
@@ -249,14 +249,14 @@ export class WalletApi extends BaseApi {
      * @param params 提交参数
      * @returns
      */
-     public static async payOrderRecharge(params: PayOrderParam): Promise<CommonResult<any>> {
+    public static async payOrderRecharge(params: PayOrderParam): Promise<CommonResult<any>> {
         //创建请求参数
         let httpResult: CommonResult<any> = new CommonResult<any>();
         let postDataList: PostParameter = new PostParameter();
         //设置wapsid
         this.setWapParmes(postDataList);
 
-        console.log("jiamiqiandeshuju",params.skuId,params.money,params.dataType,params.payModel);
+        console.log("jiamiqiandeshuju", params.skuId, params.money, params.dataType, params.payModel);
 
         postDataList.addPostData("key", MyCrpty.clientEncrypt(String(params.skuId), 1));
         if (params.money && params.money > 0) {
@@ -269,8 +269,8 @@ export class WalletApi extends BaseApi {
         postDataList.addPostData(this._apiMethodKey, "wallet/payOrderProductSku");
 
         let data = [];
-        for(let i in postDataList){
-            data.push(i + "="+postDataList[i]);
+        for (let i in postDataList) {
+            data.push(i + "=" + postDataList[i]);
         }
         // console.log(data.join("&&"));
         //添加公共sign
@@ -318,14 +318,14 @@ export class WalletApi extends BaseApi {
      * @param params 提交参数
      * @returns
      */
-     public static async validateOrder(params: ValidateOrderParams): Promise<CommonResult<any>> {
+    public static async validateOrder(params: ValidateOrderParams): Promise<CommonResult<any>> {
         AnalyticsTool.logEvent(AnalyticsEventEnmu.store_buy_success);
         //创建请求参数
         let httpResult: CommonResult<any> = new CommonResult<any>();
         let postDataList: PostParameter = new PostParameter();
         //设置wapsid
         this.setWapParmes(postDataList);
-      
+
         postDataList.addPostData("key", MyCrpty.clientEncrypt(String(params.m_key), 1));
         postDataList.addPostData("payGateway", MyCrpty.clientEncrypt(String(params.m_payGateway), 1));
         postDataList.addPostData("receipt", MyCrpty.clientEncrypt(String(params.m_receipt), 1));
@@ -337,12 +337,12 @@ export class WalletApi extends BaseApi {
         //数据格式化
         postDataList.adapterParamsSignatureSession();
         let result: RequestCallBackInfo = await this._httpNet.runHttp(this.getPostRequest(postDataList));
-       
+
         let data = [];
-        for(let i in result){
+        for (let i in result) {
             data.push(i + " = " + result[i]);
         }
-        console.log("%%%%%%%%%%",data.join("&&"));
+        console.log("%%%%%%%%%%", data.join("&&"));
         if (result.m_requestStatus) {
             //判断是否是200
             if (result.checkServerCmdStatus()) {
@@ -373,7 +373,7 @@ export class WalletApi extends BaseApi {
                         arr.push(attsItem);
                     }
                 }
-                
+
                 httpResult.code = result.getServerCmdCode();
                 httpResult.msg = result.getServerContent();
                 httpResult.succ = true;
@@ -382,30 +382,30 @@ export class WalletApi extends BaseApi {
                 let goodsnum = 0;
                 let goodstype = 1;
                 let goodstime = 0;
-                console.log("arrarrarrarrarr",arr);
-                if(arr.length>0){
+                console.log("arrarrarrarrarr", arr);
+                if (arr.length > 0) {
                     for (let n: number = 0; n < arr.length; n++) {
-                        if(Number(arr[n].m_attType)==1){
+                        if (Number(arr[n].m_attType) == 1) {
                             goodsnum = goodsnum + Number(arr[n].m_valueA)
                             goodstype = 1
-                        }else if(Number(arr[n].m_attType)==2){
+                        } else if (Number(arr[n].m_attType) == 2) {
                             goodstype = 2
                             goodsnum = goodsnum + Number(arr[n].m_valueA)
-                        }else if(Number(arr[n].m_attType)==7){
+                        } else if (Number(arr[n].m_attType) == 7) {
                             goodstime = goodstime + Number(arr[n].m_valueA)
                         }
                     }
                     let paydata = {
-                        type:goodstype,
-                        num:goodsnum,
-                        time:goodstime,
+                        type: goodstype,
+                        num: goodsnum,
+                        time: goodstime,
                     }
-                    EventMgr.dispatch(EVENT.EVENT_SHOP_PAYSUC,paydata);
+                    EventMgr.dispatch(EVENT.EVENT_SHOP_PAYSUC, paydata);
                 }
                 return httpResult;
                 // let jsonObj = result.getServerResult();
                 // if (jsonObj) {
-                   
+
                 // }
             }
         } else {

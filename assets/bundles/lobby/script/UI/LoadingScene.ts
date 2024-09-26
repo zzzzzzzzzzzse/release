@@ -1,3 +1,4 @@
+import AppBundleConfig from "../../../../Script/configs/AppBundleConfig";
 import AppLanguageConfig from "../../../../Script/configs/AppLanguageConfig";
 import AppPlatformConfig, { AppPlatformType } from "../../../../Script/configs/AppPlatformConfig";
 import { Constants } from "../../../../Script/Constants";
@@ -8,7 +9,6 @@ import { CoreApi } from "../../../../Script/net/apis/CoreApi";
 import { SlotEventBusEnum } from "../../../../Script/net/socket/GameHub";
 import { CoreUpdate } from "../../../../Script/tools/coreupdate/Coreupdate";
 import { CoreupdateManager } from "../../../../Script/tools/coreupdate/CoreupdateManager";
-import ResourcesLoader from "../../../../Script/tools/ResourcesLoder";
 import { LocalStorageTool } from "../../../../Script/tools/storage/LocalStorageTool";
 import { UIManagernew } from "../../../../UIManagernew";
 import { SlotGameConfigModel } from "../../config/SlotGameConfig";
@@ -39,7 +39,7 @@ export default class LoadingScene extends cc.Component {
     @property(cc.Label)
     gameVersion: cc.Label = null;
 
-    
+
     /**
      * 游戏配置
      */
@@ -56,7 +56,7 @@ export default class LoadingScene extends cc.Component {
 
     onLoad() {
         this._width = 560;
-        this.rannum = Math.random() * 0.2+0.6
+        this.rannum = Math.random() * 0.2 + 0.6
 
         this.initData();
     }
@@ -76,7 +76,7 @@ export default class LoadingScene extends cc.Component {
         } else {
             cc.view.setOrientation(cc.macro.ORIENTATION_PORTRAIT);
         }
-        
+
         let frameSize = cc.view.getFrameSize();
         let designSize = cc.view.getDesignResolutionSize();
         if (frameSize.width / frameSize.height > designSize.width / designSize.height) {
@@ -89,27 +89,27 @@ export default class LoadingScene extends cc.Component {
             this.node.getComponent(cc.Canvas).designResolution = cc.size(this.node.width, this.node.height);
         }
 
-       
+
 
         this.gameid = this.gameConfig.gameID
         let self = this
-        var _prefabPath = "prefab/" + this.gameConfig.gameBundle+"loading"
+        var _prefabPath = "prefab/" + this.gameConfig.gameBundle + "loading"
         cc.assetManager.loadBundle("resources", (err, bundle) => {
-            bundle.load(_prefabPath, cc.Prefab, function (err, prefab:cc.Prefab) {
-                if(prefab){
+            bundle.load(_prefabPath, cc.Prefab, function (err, prefab: cc.Prefab) {
+                if (prefab) {
                     var _newUIRoot = cc.instantiate(prefab)
                     _newUIRoot.parent = self.Container;
                     // self.updatagame()
                     // self.getcoreupdate()
 
-                    if(AppPlatformConfig.ISOLDVERSION){
+                    if (AppPlatformConfig.ISOLDVERSION) {
                         self.rannum = Math.random() * 0.2 + 0.1
                         self.loadBundle();
-                    }else{
+                    } else {
                         self.getcoreupdate()
                     }
-                    
-                }else{
+
+                } else {
                     let sureCallback = (() => {
                         Constants.getInstance().resLoader.setOrientation(1)
                         cc.director.loadScene("hall")
@@ -118,23 +118,23 @@ export default class LoadingScene extends cc.Component {
                     let msg1 = {
                         name: "MessageBoxView",
                         sureCallback: sureCallback,
-                        bundleIndex: "gameprefab",
+                        bundleIndex: AppBundleConfig.BUNDLE_HALL,
                         btnOkText: "error",
                         btnCount: 1,
                         zorder: 1000
                     }
                     UIManagernew.openUI(msg1)
                 }
-                
+
             })
         });
 
         //版本号
-        if(AppPlatformConfig.platformType == AppPlatformType.KAIFA){
+        if (AppPlatformConfig.platformType == AppPlatformType.KAIFA) {
             this.gameVersion.node.active = true
         }
         // Constants.getInstance().SendHttpGets(AppPlatformConfig.KAIFA_LOGURL, "isError=1&uid="+Constants.getInstance().m_LoginUserSession.m_uid+"&msg="+"gameBundle="+this.gameConfig.gameBundle+"_Version="+Manager.localStorage.getItem(this.gameConfig.gameBundle+"_Version", 1))
-        this.gameVersion.string="Version: "+Manager.localStorage.getItem(this.gameConfig.gameBundle+"_Version", 1)
+        this.gameVersion.string = "Version: " + Manager.localStorage.getItem(this.gameConfig.gameBundle + "_Version", 1)
     }
 
     public _registerEvent(): void {
@@ -150,28 +150,28 @@ export default class LoadingScene extends cc.Component {
 
 
     //获取更新地址
-    private async getcoreupdate(){
-        let namestr:string = this.gameConfig.gameBundle
+    private async getcoreupdate() {
+        let namestr: string = this.gameConfig.gameBundle
         let gameversion: number = parseInt(Manager.localStorage.getItem(namestr, -1));
 
         Constants.getInstance().gameListData().then(data => {
             this.gamelist = data
             let serverversion = -1
             for (let i: number = 0; i < this.gamelist.length; i++) {
-                if(this.gameid == this.gamelist[i].m_id){
+                if (this.gameid == this.gamelist[i].m_id) {
                     serverversion = this.gamelist[i].m_version
                 }
             }
-            if(serverversion>gameversion){
+            if (serverversion > gameversion) {
                 this.getcoreupdateaddress();
-            }else{
+            } else {
                 this.updatagame();
                 // this.loadBundle();
             }
 
         });
 
-        
+
 
         // let result = await CoreApi.coreCheckUpdate(this.gameConfig.gameID);
         // cc.log("getcoreupdate=",result)
@@ -190,7 +190,7 @@ export default class LoadingScene extends cc.Component {
         //     }else{
         //         this.updatagame()
         //     }
-            
+
         // }else{
         //     let sureCallback = (() => {
         //         Constants.getInstance().resLoader.setOrientation(1)
@@ -209,30 +209,30 @@ export default class LoadingScene extends cc.Component {
     }
 
     //更新地址
-    private async getcoreupdateaddress(){
-        let namestr:string = this.gameConfig.gameBundle
+    private async getcoreupdateaddress() {
+        let namestr: string = this.gameConfig.gameBundle
         let gameversion: number = parseInt(Manager.localStorage.getItem(namestr, -1));
-        let result = await CoreApi.coreCheckUpdate(this.gameConfig.gameID,"game");
-        console.log("getcoreupdate=",JSON.stringify(result));
-        if(result.succ){
-            let packageUrlstr:string = result.data.packageUrl;
+        let result = await CoreApi.coreCheckUpdate(this.gameConfig.gameID, "game");
+        console.log("getcoreupdate=", JSON.stringify(result));
+        if (result.succ) {
+            let packageUrlstr: string = result.data.packageUrl;
             this.versionid = result.data.version;
             this.gameid = result.data.clientId;
 
             let oldpackageUrlstr = LocalStorageTool.getBaseHotHost();
             let lastindex = oldpackageUrlstr.lastIndexOf("/")
             let newstr = oldpackageUrlstr
-            cc.log("packageUrlstr=",newstr)
+            cc.log("packageUrlstr=", newstr)
             CoreupdateManager.Instance().commonCoreUpdateUrl = newstr + packageUrlstr
             // if(this.versionid>gameversion){
-                // CoreupdateManager.Instance().commonCoreUpdateUrl = newstr + packageUrlstr
-                this.updatagame()
+            // CoreupdateManager.Instance().commonCoreUpdateUrl = newstr + packageUrlstr
+            this.updatagame()
             // }else{
             //     this.updatagame()
             //     // this.loadBundle();
             // }
-            
-        }else{
+
+        } else {
             let sureCallback = (() => {
                 Constants.getInstance().resLoader.setOrientation(1)
                 cc.director.loadScene("hall")
@@ -240,7 +240,7 @@ export default class LoadingScene extends cc.Component {
             let msg1 = {
                 name: "MessageBoxView",
                 sureCallback: sureCallback,
-                bundleIndex: "gameprefab",
+                bundleIndex: AppBundleConfig.BUNDLE_HALL,
                 btnOkText: "core error",
                 btnCount: 1,
                 zorder: 1000
@@ -252,45 +252,45 @@ export default class LoadingScene extends cc.Component {
     /**
      * 更新游戏
      */
-     private updatagame(){
-            //确定版本
-            let versionInfo: CoreUpdate.BundleConfig = new CoreUpdate.BundleConfig(this.gameConfig.gameBundle, this.gameConfig.gameBundle);
-            CoreupdateManager.Instance().checkUpdate((code, state) => {
-                if (code == CoreUpdate.Code.NEW_VERSION_FOUND) {
-                    //有新版本
-                    this.itemStartCoreUpdate(versionInfo.name);
-                    CoreupdateManager.Instance().CoreUpdate();
-                } else if (state == CoreUpdate.State.TRY_DOWNLOAD_FAILED_ASSETS) {
-                    //尝试重新下载之前下载失败的文件
-                    // this.itemStartCoreUpdate(versionInfo.name);
-                    // CoreupdateManager.Instance().CoreUpdate();
-                    CoreupdateManager.Instance().downloadFailedAssets();
-                } else if (code == CoreUpdate.Code.ALREADY_UP_TO_DATE) {
-                    //已经是最新版本
-                    this.rannum = Math.random() * 0.3+0.2
-                    this.loadBundle();
-                    
-                } else if (code == CoreUpdate.Code.ERROR_DOWNLOAD_MANIFEST ||
-                    code == CoreUpdate.Code.ERROR_NO_LOCAL_MANIFEST ||
-                    code == CoreUpdate.Code.ERROR_PARSE_MANIFEST) {
-                    //下载manifest文件失败
-                    
-                } else if (code == CoreUpdate.Code.CHECKING) {
-                    //当前正在检测更新
-                }else if (code == CoreUpdate.Code.UPDATE_FINISHED) {
-                    //更新完成
-                    // this.loadBundle();
-                } else {
-                }
-            }, versionInfo.name);
-        
+    private updatagame() {
+        //确定版本
+        let versionInfo: CoreUpdate.BundleConfig = new CoreUpdate.BundleConfig(this.gameConfig.gameBundle, this.gameConfig.gameBundle);
+        CoreupdateManager.Instance().checkUpdate((code, state) => {
+            if (code == CoreUpdate.Code.NEW_VERSION_FOUND) {
+                //有新版本
+                this.itemStartCoreUpdate(versionInfo.name);
+                CoreupdateManager.Instance().CoreUpdate();
+            } else if (state == CoreUpdate.State.TRY_DOWNLOAD_FAILED_ASSETS) {
+                //尝试重新下载之前下载失败的文件
+                // this.itemStartCoreUpdate(versionInfo.name);
+                // CoreupdateManager.Instance().CoreUpdate();
+                CoreupdateManager.Instance().downloadFailedAssets();
+            } else if (code == CoreUpdate.Code.ALREADY_UP_TO_DATE) {
+                //已经是最新版本
+                this.rannum = Math.random() * 0.3 + 0.2
+                this.loadBundle();
+
+            } else if (code == CoreUpdate.Code.ERROR_DOWNLOAD_MANIFEST ||
+                code == CoreUpdate.Code.ERROR_NO_LOCAL_MANIFEST ||
+                code == CoreUpdate.Code.ERROR_PARSE_MANIFEST) {
+                //下载manifest文件失败
+
+            } else if (code == CoreUpdate.Code.CHECKING) {
+                //当前正在检测更新
+            } else if (code == CoreUpdate.Code.UPDATE_FINISHED) {
+                //更新完成
+                // this.loadBundle();
+            } else {
+            }
+        }, versionInfo.name);
+
     }
 
     /**
      * 开始热更
      */
     private itemStartCoreUpdate(bundleName: string) {
-        
+
     }
 
 
@@ -298,21 +298,21 @@ export default class LoadingScene extends cc.Component {
      * 热更进行中
      * @param CoreUpdateData 热更进度文件
      */
-     private CoreUpdateLoading(CoreUpdateData: CoreUpdate.DownLoadInfo) {
+    private CoreUpdateLoading(CoreUpdateData: CoreUpdate.DownLoadInfo) {
         if (CoreUpdateData) {
             if (CoreUpdateData.needRestart) {
-                let namestr:string = this.gameConfig.gameBundle
+                let namestr: string = this.gameConfig.gameBundle
                 Manager.localStorage.setItem(namestr, this.versionid)
-                Manager.localStorage.setItem(CoreUpdateData.bundleName+"_Version",CoreUpdateData.newVersion)
+                Manager.localStorage.setItem(CoreUpdateData.bundleName + "_Version", CoreUpdateData.newVersion)
                 this.rannum = 0.7
                 this.loadBundle();
             } else {
                 //设置下载进度 0-1
                 let proNum = CoreUpdateData.downloadedFiles / CoreUpdateData.totalFiles;
-                let proNumnew = proNum*0.7;
-                let kuang = this._width * proNumnew-540;
-                if(kuang>=this.mask.x){
-                    this.mask.x = this._width * proNumnew-540;
+                let proNumnew = proNum * 0.7;
+                let kuang = this._width * proNumnew - 540;
+                if (kuang >= this.mask.x) {
+                    this.mask.x = this._width * proNumnew - 540;
                 }
                 // this.mask.x = this._width * proNumnew-540;
                 this.progressText.string = Math.round(proNumnew * 100) + "%"
@@ -330,7 +330,7 @@ export default class LoadingScene extends cc.Component {
                 this.setTips(AppLanguageConfig.Bundle_loading_err);
             } else {
                 if (prefabBundle) {
-                    
+
                     await this.loadprefabRes(prefabBundle);
                 } else {
 
@@ -339,11 +339,11 @@ export default class LoadingScene extends cc.Component {
         });
 
         //版本号
-        if(AppPlatformConfig.platformType == AppPlatformType.KAIFA){
+        if (AppPlatformConfig.platformType == AppPlatformType.KAIFA) {
             this.gameVersion.node.active = true
         }
         // Constants.getInstance().SendHttpGets(AppPlatformConfig.KAIFA_LOGURL, "isError=1&uid="+Constants.getInstance().m_LoginUserSession.m_uid+"&msg="+"gameBundle="+this.gameConfig.gameBundle+"_Version="+Manager.localStorage.getItem(this.gameConfig.gameBundle+"_Version", 1))
-        this.gameVersion.string="Version: "+Manager.localStorage.getItem(this.gameConfig.gameBundle+"_Version", 1)
+        this.gameVersion.string = "Version: " + Manager.localStorage.getItem(this.gameConfig.gameBundle + "_Version", 1)
 
     }
 
@@ -355,9 +355,9 @@ export default class LoadingScene extends cc.Component {
             //更新进度条
             let percent: number = completedCount / totalCount;
             if (percent < this.rannum) {
-                let kuangdu = this._width * percent-540;
-                if(kuangdu>=this.mask.x){
-                    this.mask.x = this._width * percent-540;
+                let kuangdu = this._width * percent - 540;
+                if (kuangdu >= this.mask.x) {
+                    this.mask.x = this._width * percent - 540;
                 }
                 // this.mask.x = this._width * percent-540;
             }
@@ -410,21 +410,21 @@ export default class LoadingScene extends cc.Component {
                 sucBundle.loadDir(path, type, function (completedCount: number, totalCount: number, item: any) {
                     //更新进度条
                     percent = completedCount / totalCount;
-                    if (percent > this.rannum ) {
-                        if(percent > 0.7){
-                            if(AppPlatformConfig.ISOLDVERSION){
+                    if (percent > this.rannum) {
+                        if (percent > 0.7) {
+                            if (AppPlatformConfig.ISOLDVERSION) {
                                 percent = 1
-                            }else{
+                            } else {
                                 percent = 0.7
                             }
-                            
+
                         }
-                        if(percent>beforepercent){
+                        if (percent > beforepercent) {
                             beforepercent = percent
-                            this.mask.x = this._width * percent-540;
+                            this.mask.x = this._width * percent - 540;
                             this.progressText.string = Math.round(percent * 100) + "%"
                         }
-                        
+
                     }
                 }.bind(this), function (err, assets, urls) {
                     // if (err) { cc.log('error, because:' + err); return; }
@@ -434,9 +434,9 @@ export default class LoadingScene extends cc.Component {
                         // cc.log("所有目录预加载完成后，进入游戏")
                         // cc.director.loadScene(this.gameConfig.gameScene);
                         //
-                        if(AppPlatformConfig.ISOLDVERSION){
+                        if (AppPlatformConfig.ISOLDVERSION) {
                             cc.director.loadScene(this.gameConfig.gameScene);
-                        }else{
+                        } else {
                             Constants.getInstance().slotSocket.connect(this.gameConfig.gameID);
                         }
                     }
@@ -445,25 +445,25 @@ export default class LoadingScene extends cc.Component {
         }
     }
 
-    onplayerLoginSuccess(data: SlotPushLogin){
+    onplayerLoginSuccess(data: SlotPushLogin) {
         Constants.getInstance().GameConnectSuccessData = data;
-        this.mask.x = this._width * 0.7-540;
+        this.mask.x = this._width * 0.7 - 540;
         this.progressText.string = 70 + "%"
         this.beforenum = 0
-        this.beforewidth = this._width * 0.7-540
-        cc.director.preloadScene(this.gameConfig.gameScene,function (completedCount: number, totalCount: number, item: any) {
-            let percent:number = completedCount / totalCount;
-            let newpercent:number = percent*0.3
-            let addwidth = this._width * (0.7+newpercent)-540
-            if(addwidth>this.beforewidth){
+        this.beforewidth = this._width * 0.7 - 540
+        cc.director.preloadScene(this.gameConfig.gameScene, function (completedCount: number, totalCount: number, item: any) {
+            let percent: number = completedCount / totalCount;
+            let newpercent: number = percent * 0.3
+            let addwidth = this._width * (0.7 + newpercent) - 540
+            if (addwidth > this.beforewidth) {
                 this.beforewidth = addwidth
                 this.mask.x = addwidth;
             }
             let newnum = newpercent.toFixed(2)
-            let addnum =  Math.round(Number(newnum) * 100)
-            if(addnum>this.beforenum){
+            let addnum = Math.round(Number(newnum) * 100)
+            if (addnum > this.beforenum) {
                 this.beforenum = addnum
-                this.progressText.string = addnum+70+ "%"
+                this.progressText.string = addnum + 70 + "%"
             }
         }.bind(this), function (err) {
             if (err) {

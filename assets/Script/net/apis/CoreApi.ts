@@ -3,7 +3,6 @@ import AppPlatformConfig from "../../configs/AppPlatformConfig";
 import { MyCrpty } from "../../libs/MyCrpty";
 import { SlotGameVersion } from "../../models/SlotGameVersion";
 import WSCItemModel from "../../models/WSCItemModel";
-import AppLog from "../../tools/AppLog";
 import { OperateJson } from "../../tools/OperateJson";
 import { StringUtil } from "../../tools/StringUtil";
 import { LocalStorageTool } from "../../tools/storage/LocalStorageTool";
@@ -29,7 +28,7 @@ export class CoreApi extends BaseApi {
         //设置wapsid
         this.setWapParmes(postDataList);
 
-        postDataList.addPostData(this._apiMethodKey, "core/rout");
+        postDataList.addPostData(this._apiMethodKey, "core/rout1");
         //添加公共sign
         this.setPublicSignParams(postDataList, "rout");
         //数据格式化
@@ -44,10 +43,12 @@ export class CoreApi extends BaseApi {
                 if (jsonObj) {
                     let gateway: string = OperateJson.getString(jsonObj, "gateway");
                     let gateway2: string = OperateJson.getString(jsonObj, "gateway2");
+                    console.log("aesGateway url v1 %s,v2 %s", gateway, gateway2);
                     if (Constants.getInstance().m_httpHost && !StringUtil.isEmpty(gateway)) {
+                        console.log("aesGateway222 url v1 %s,v2 %s", gateway, gateway2);
                         let aesGateway: string = MyCrpty.clientDecrypt(gateway, 0);
-                        //let aesGateway2: string = MyCrpty.clientDecrypt(gateway2, 0);
-                        let aesGateway2: string = "https://usaeastapi2.jackpot-fevergame.com/v01/apps/";
+                        let aesGateway2: string = MyCrpty.clientDecrypt(gateway2, 0);
+                        console.log("aesGateway url v1 %s,v2 %s", aesGateway, aesGateway2);
                         LocalStorageTool.setBaseApiHost(aesGateway);
                         LocalStorageTool.setBaseJavaApiHost(aesGateway2);
                         Constants.getInstance().m_httpHost.m_hostList[0] = aesGateway;
@@ -233,7 +234,7 @@ export class CoreApi extends BaseApi {
         postDataList.adapterParamsSignatureSession();
 
         let result: RequestCallBackInfo = await this._httpNet.runHttp(this.getPostRequest(postDataList));
-        AppLog.writeLog("net_123123core/wsclist:", result)
+        console.log("net_123123core/wsclist1:", JSON.stringify(result));
         if (result.m_requestStatus) {
             //判断是否是200
             if (result.checkServerCmdStatus()) {

@@ -62,7 +62,10 @@ export default class AppPlatformConfig {
     /**
      * 正式服url
      */
-    public static readonly HTTPURL: string = "https://global.jackpot-fevergame.com";
+    // public static readonly HTTPURL: string = "https://global.jackpot-fevergame.com";
+    public static readonly HTTPURL: string = "https://global.game-champion.com";
+
+
 
     //品牌标签
     public static readonly PlatformConfigID_kaifa = "rooollerslotdev";

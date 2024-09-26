@@ -1,5 +1,5 @@
-import AppPlatformConfig from "../../configs/AppPlatformConfig";
 import { Constants } from "../../Constants";
+import AppPlatformConfig from "../../configs/AppPlatformConfig";
 import { MyCrpty } from "../../libs/MyCrpty";
 import { StringUtil } from "../../tools/StringUtil";
 import { HttpNet, IHttpHubRequest } from "../HttpNet";
@@ -33,6 +33,7 @@ export class BaseApi {
                 body: postDataStr,
             };
         } else {
+            console.log("ApiMethodxxx ", urlstr + "?reqmnasign=" + apiMethod);
             return {
                 url: urlstr + "?reqmnasign=" + apiMethod,
                 method: "POST",

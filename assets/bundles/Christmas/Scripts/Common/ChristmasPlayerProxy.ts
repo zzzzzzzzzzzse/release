@@ -242,6 +242,7 @@ export default class ChristmasPlayerProxy {
     }
 
     public set gold(value: number) {
+        console.log('set gold', value);
         this._playerVO.gold = value;
         // LocalStorageManager.instance.saveLocalData(LocalStorageType.GOLD, value);
         cc.sys.localStorage.setItem('gold', value);

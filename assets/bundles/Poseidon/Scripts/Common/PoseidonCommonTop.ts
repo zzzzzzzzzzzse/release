@@ -1,3 +1,4 @@
+import { Constants } from "../../../../Script/Constants";
 import { BundleType, CommonTopStatus, FunctionKey, OperateTypeEnum, ViewCloseAnimType, ViewOpenAnimType } from "../BaseFrame/Const/PoseidonCommonDefine";
 import { PoseidonEventDefine } from "../BaseFrame/Const/PoseidonEventDefine";
 import PoseidonDialogManager from "../BaseFrame/Manager/PoseidonDialogManager";
@@ -180,7 +181,11 @@ export default class PoseidonCommonTop extends PoseidonComponentBase {
      * 更新玩家金币
      */
     public updatePlayerGold(isDigit: boolean = true, descGold: number = -1): void {
-        const gold = descGold == -1 ? PlayerProxy.instance.playerVO.gold : descGold;
+        const gold = descGold == -1 ? Constants.getInstance().gold : descGold;
+        console.log('updatePlayerGold gold:', gold);
+        if (descGold != -1) {
+            Constants.getInstance().gold = gold;
+        }
         if (isDigit) {
             this.goldLabel.digitEffect({
                 score: gold,

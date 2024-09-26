@@ -1,3 +1,4 @@
+import { Constants } from "../../../../Script/Constants";
 import { BundleType, CommonTopStatus, FunctionKey, OperateTypeEnum, ViewCloseAnimType, ViewOpenAnimType } from "../BaseFrame/Const/RichCommonDefine";
 import { RichEventDefine } from "../BaseFrame/Const/RichEventDefine";
 import RichDialogManager from "../BaseFrame/Manager/RichDialogManager";
@@ -180,7 +181,11 @@ export default class RichCommonTop extends RichComponentBase {
      * 更新玩家金币
      */
     public updatePlayerGold(isDigit: boolean = true, descGold: number = -1): void {
-        const gold = descGold == -1 ? PlayerProxy.instance.playerVO.gold : descGold;
+        const gold = descGold == -1 ? Constants.getInstance().gold : descGold;
+        console.log('updatePlayerGold gold:', gold);
+        if (descGold != -1) {
+            Constants.getInstance().gold = gold;
+        }
         if (isDigit) {
             this.goldLabel.digitEffect({
                 score: gold,

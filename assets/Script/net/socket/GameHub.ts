@@ -1,16 +1,10 @@
-import { PushHeartBeat, SubCmd } from "../../../resources/proto/common";
-import { Error } from "../../../resources/proto/common";
-import { ReqHeartBeat } from "../../../resources/proto/common";
+import { Error, PushHeartBeat, ReqHeartBeat, SubCmd } from "../../../resources/proto/common";
 import { TransportData } from "../../../resources/proto/Packet";
-import { Slot_PushAcceptCollectAward, Slot_PushChooseSubGame, Slot_PushCollectShopExchangeAward, Slot_PushJackpotAmount, Slot_PushLogin, Slot_ReqAcceptCollectAward, Slot_ReqChooseSubGame, Slot_ReqJackpotAmount } from "../../../resources/proto/slot";
-import { Slot_PushBetResult } from "../../../resources/proto/slot";
-import { Slot_PushSettlementBounsSuccess } from "../../../resources/proto/slot";
-import { Slot_ReqSettlementBounsSuccess } from "../../../resources/proto/slot";
-import { Slot_ReqLogin } from "../../../resources/proto/slot";
-import { Slot_ReqBet } from "../../../resources/proto/slot";
+import { Slot_PushAcceptCollectAward, Slot_PushBetResult, Slot_PushChooseSubGame, Slot_PushCollectShopExchangeAward, Slot_PushJackpotAmount, Slot_PushLogin, Slot_PushSettlementBounsSuccess, Slot_ReqAcceptCollectAward, Slot_ReqBet, Slot_ReqChooseSubGame, Slot_ReqJackpotAmount, Slot_ReqLogin, Slot_ReqSettlementBounsSuccess } from "../../../resources/proto/slot";
 import { UIManagernew } from "../../../UIManagernew";
 import { BaseUI } from "../../common/BaseUI";
 import { EventBus } from "../../common/EventBus";
+import AppBundleConfig from "../../configs/AppBundleConfig";
 import AppPlatformConfig from "../../configs/AppPlatformConfig";
 import { EVENT } from "../../configs/ConstDefine";
 import { Constants } from "../../Constants";
@@ -27,7 +21,6 @@ import SlotPushSettlementBonusSuccess from "../../models/socket/SlotPushSettleme
 import { SocketReqSlotLogin } from "../../models/socket/SocketReqSlotLogin";
 import AppLog from "../../tools/AppLog";
 import { BaseHub } from "./BaseHub";
-import { HallEventBusEnum } from "./HallHub";
 import { SocketDataFormat } from "./SocketDataFormat";
 
 /**
@@ -289,7 +282,7 @@ export class GameHub extends BaseHub {
         let msg1 = {
             name: "MessageBoxView",
             sureCallback: sureCallback,
-            bundleIndex: "gameprefab",
+            bundleIndex: AppBundleConfig.BUNDLE_HALL,
             btnOkText: "Disconnect, please login again." + str,
             btnCount: 1,
             zorder: 10000
@@ -582,7 +575,7 @@ export class GameHub extends BaseHub {
             sendData: sendData
         }
         let sendMessage = this.m_protoProcessor.encode(transportData);
-        if(this.m_socket){
+        if (this.m_socket) {
             this.m_socket.send(sendMessage);
         }
         // this.m_socket.send(sendMessage);
@@ -642,14 +635,14 @@ export class GameHub extends BaseHub {
      * @param gameId slot游戏id
      */
     private onPlayerJoinGame(slotPushLogin: SlotPushLogin) {
-        if(AppPlatformConfig.ISOLDVERSION){
+        if (AppPlatformConfig.ISOLDVERSION) {
             this.m_eventBus.post(SlotEventBusEnum.SLOT_Player_Login_Result, slotPushLogin);
-        }else{
+        } else {
             this.m_eventBus.post(SlotEventBusEnum.Slot_ServerConnectSuccess, slotPushLogin);
         }
         // this.m_eventBus.post(SlotEventBusEnum.SLOT_Player_Login_Result, slotPushLogin);
         // this.m_eventBus.post(SlotEventBusEnum.Slot_ServerConnectSuccess, slotPushLogin);
-        
+
     }
 
     /**

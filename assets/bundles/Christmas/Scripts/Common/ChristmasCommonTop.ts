@@ -1,3 +1,4 @@
+import { Constants } from "../../../../Script/Constants";
 import { BundleType, CommonTopStatus, FunctionKey, OperateTypeEnum, ViewCloseAnimType, ViewOpenAnimType } from "../BaseFrame/Const/ChristmasCommonDefine";
 import { ChristmasEventDefine } from "../BaseFrame/Const/ChristmasEventDefine";
 import ChristmasDialogManager from "../BaseFrame/Manager/ChristmasDialogManager";
@@ -10,7 +11,7 @@ import ProgressBarEx, { ProgressBarEvent } from "../BaseFrame/UI/Component/Chris
 import SpriteEx from "../BaseFrame/UI/Component/ChristmasSpriteEx";
 import ChristmasComponentBase from "../BaseFrame/UI/ComponentBase/ChristmasComponentBase";
 import ChristmasUtil from "../BaseFrame/Util/ChristmasUtil";
-import PlayerProxy from "./ChristmasPlayerProxy";
+import { default as PlayerProxy } from "./ChristmasPlayerProxy";
 
 const { ccclass, property } = cc._decorator;
 
@@ -180,7 +181,11 @@ export default class ChristmasCommonTop extends ChristmasComponentBase {
      * 更新玩家金币
      */
     public updatePlayerGold(isDigit: boolean = true, descGold: number = -1): void {
-        const gold = descGold == -1 ? PlayerProxy.instance.playerVO.gold : descGold;
+        const gold = descGold == -1 ? Constants.getInstance().gold : descGold;
+        console.log('updatePlayerGold gold:', gold);
+        if (descGold != -1) {
+            Constants.getInstance().gold = gold;
+        }
         if (isDigit) {
             this.goldLabel.digitEffect({
                 score: gold,
@@ -190,6 +195,7 @@ export default class ChristmasCommonTop extends ChristmasComponentBase {
             });
             return;
         }
+
         this.goldLabel.label.string = ChristmasUtil.formateCoinStr(gold);
     }
 

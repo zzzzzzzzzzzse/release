@@ -1,3 +1,4 @@
+import { Constants } from "../../../../Script/Constants";
 import { BundleType, CommonTopStatus, FunctionKey, OperateTypeEnum, ViewCloseAnimType, ViewOpenAnimType } from "../BaseFrame/Const/StoneAgeCommonDefine";
 import { StoneAgeEventDefine } from "../BaseFrame/Const/StoneAgeEventDefine";
 import StoneAgeDialogManager from "../BaseFrame/Manager/StoneAgeDialogManager";
@@ -10,7 +11,7 @@ import ProgressBarEx, { ProgressBarEvent } from "../BaseFrame/UI/Component/Stone
 import SpriteEx from "../BaseFrame/UI/Component/StoneAgeSpriteEx";
 import StoneAgeComponentBase from "../BaseFrame/UI/ComponentBase/StoneAgeComponentBase";
 import StoneAgeUtil from "../BaseFrame/Util/StoneAgeUtil";
-import PlayerProxy from "./StoneAgePlayerProxy";
+import { default as PlayerProxy } from "./StoneAgePlayerProxy";
 
 const { ccclass, property } = cc._decorator;
 
@@ -180,7 +181,11 @@ export default class StoneAgeCommonTop extends StoneAgeComponentBase {
      * 更新玩家金币
      */
     public updatePlayerGold(isDigit: boolean = true, descGold: number = -1): void {
-        const gold = descGold == -1 ? PlayerProxy.instance.playerVO.gold : descGold;
+        const gold = descGold == -1 ? Constants.getInstance().gold : descGold;
+        console.log('updatePlayerGold gold:', gold);
+        if (descGold != -1) {
+            Constants.getInstance().gold = gold;
+        }
         if (isDigit) {
             this.goldLabel.digitEffect({
                 score: gold,

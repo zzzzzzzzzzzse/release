@@ -5,6 +5,7 @@ import LoginUserSession from "./common/LoginUserSession";
 import { ResLoader } from "./common/ResLoader";
 import AnalyticsBridge from "./common/bridge/AnalyticsBridge";
 import NativeBridge from "./common/bridge/NativeBridge";
+import AppBundleConfig from "./configs/AppBundleConfig";
 import AppPlatformConfig, { AppPlatformType } from "./configs/AppPlatformConfig";
 import { NativeEvent } from "./configs/ConstDefine";
 import { CrptyConfig } from "./configs/CrptyConfig";
@@ -41,6 +42,9 @@ export class Constants {
     private static m_instance: Constants;
     /** 邮件条数*/
     public emailcount: number = 0
+    m_firstOpenLobby: any;
+    /** 玩家的金币 */
+    gold: number = 0;
 
     public static getInstance() {
         if (!this.m_instance) {
@@ -303,7 +307,7 @@ export class Constants {
         if (result.succ) {
             // let msg = {
             //     name: "MessageBoxView",
-            //     bundleIndex: "gameprefab",
+            //     bundleIndex: AppBundleConfig.BUNDLE_HALL,
             //     btnOkText: "",
             //     btnCount: 1,
             //     zorder: 10000
@@ -318,7 +322,7 @@ export class Constants {
         } else {
             let msg = {
                 name: "MessageBoxView",
-                bundleIndex: "gameprefab",
+                bundleIndex: AppBundleConfig.BUNDLE_HALL,
                 btnOkText: "faild",
                 btnCount: 1,
                 zorder: 10000
@@ -381,7 +385,7 @@ export class Constants {
             if (result.succ) {
                 let msg = {
                     name: "MessageBoxView",
-                    bundleIndex: "gameprefab",
+                    bundleIndex: AppBundleConfig.BUNDLE_HALL,
                     btnOkText: "bind success",
                     btnCount: 1,
                     zorder: 10000
@@ -399,7 +403,7 @@ export class Constants {
                 }
                 let msg = {
                     name: "MessageBoxView",
-                    bundleIndex: "gameprefab",
+                    bundleIndex: AppBundleConfig.BUNDLE_HALL,
                     btnOkText: "Login server err:" + result.msg,
                     btnCount: 1,
                     zorder: 10000
@@ -426,7 +430,7 @@ export class Constants {
             if (result.succ) {
                 // let msg = {
                 //     name: "MessageBoxView",
-                //     bundleIndex: "gameprefab",
+                //     bundleIndex: AppBundleConfig.BUNDLE_HALL,
                 //     btnOkText: "bind success",
                 //     btnCount: 1,
                 //     zorder: 10000
@@ -440,7 +444,7 @@ export class Constants {
 
                 let msg = {
                     name: "MessageBoxView",
-                    bundleIndex: "gameprefab",
+                    bundleIndex: AppBundleConfig.BUNDLE_HALL,
                     btnOkText: "Login server err:" + result.msg,
                     btnCount: 1,
                     zorder: 10000
@@ -488,7 +492,7 @@ export class Constants {
                 BaseUI.removeNetLoading();
                 let msg = {
                     name: "MessageBoxView",
-                    bundleIndex: "gameprefab",
+                    bundleIndex: AppBundleConfig.BUNDLE_HALL,
                     btnOkText: "Login server err:" + result.msg,
                     btnCount: 1,
                     zorder: 10000
@@ -508,7 +512,7 @@ export class Constants {
         }
         let msg = {
             name: "MessageBoxView",
-            bundleIndex: "gameprefab",
+            bundleIndex: AppBundleConfig.BUNDLE_HALL,
             btnOkText: tipsMsg,
             btnCount: 1,
             zorder: 10000
@@ -547,7 +551,7 @@ export class Constants {
             if (result.succ) {
                 let msg = {
                     name: "MessageBoxView",
-                    bundleIndex: "gameprefab",
+                    bundleIndex: AppBundleConfig.BUNDLE_HALL,
                     btnOkText: "Bind success",
                     btnCount: 1,
                     zorder: 10000
@@ -564,7 +568,7 @@ export class Constants {
                 }
                 let msg = {
                     name: "MessageBoxView",
-                    bundleIndex: "gameprefab",
+                    bundleIndex: AppBundleConfig.BUNDLE_HALL,
                     btnOkText: "Login server err:" + result.msg,
                     btnCount: 1,
                     zorder: 10000
@@ -584,7 +588,7 @@ export class Constants {
         }
         let msg = {
             name: "MessageBoxView",
-            bundleIndex: "gameprefab",
+            bundleIndex: AppBundleConfig.BUNDLE_HALL,
             btnOkText: tipsMsg,
             btnCount: 1,
             zorder: 10000
@@ -602,7 +606,7 @@ export class Constants {
         if (result.succ) {
             let msg = {
                 name: "MessageBoxView",
-                bundleIndex: "gameprefab",
+                bundleIndex: AppBundleConfig.BUNDLE_HALL,
                 btnOkText: "thirdPartyLogin bind success",
                 btnCount: 1,
                 zorder: 10000
@@ -614,7 +618,7 @@ export class Constants {
         } else {
             let msg = {
                 name: "MessageBoxView",
-                bundleIndex: "gameprefab",
+                bundleIndex: AppBundleConfig.BUNDLE_HALL,
                 btnOkText: "thirdPartyLogin server err:" + result.msg,
                 btnCount: 1,
                 zorder: 10000

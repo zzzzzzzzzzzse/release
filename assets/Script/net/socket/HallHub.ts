@@ -1,20 +1,14 @@
-import { basename } from "path/posix";
-import { SubCmd } from "../../../resources/proto/common";
-import { Error } from "../../../resources/proto/common";
-import { PushHeartBeat } from "../../../resources/proto/common";
-import { ReqHeartBeat } from "../../../resources/proto/common";
-import { Hall_PushApiCallBackMessage } from "../../../resources/proto/hall";
-import { Hall_PushLogin } from "../../../resources/proto/hall";
-import { Hall_ReqLogin } from "../../../resources/proto/hall";
-import { Packet, TransportData } from "../../../resources/proto/Packet";
 import { UIManagernew } from "../../../UIManagernew";
+import { TransportData } from "../../../resources/proto/Packet";
+import { Error, PushHeartBeat, ReqHeartBeat, SubCmd } from "../../../resources/proto/common";
+import { Hall_PushApiCallBackMessage, Hall_PushLogin, Hall_ReqLogin } from "../../../resources/proto/hall";
+import { Constants } from "../../Constants";
 import { BaseUI } from "../../common/BaseUI";
 import { EventBus } from "../../common/EventBus";
-import {Constants} from "../../Constants";
+import AppBundleConfig from "../../configs/AppBundleConfig";
 import { SocketReqSlotLogin } from "../../models/socket/SocketReqSlotLogin";
 import { StringUtil } from "../../tools/StringUtil";
 import ImMessageDataUtil from "../im/ImMessageDataUtil";
-import ImMessageHelper, { BridgeDataType } from "../im/ImMessageHelper";
 import ImMessageInfo from "../im/ImMessageInfo";
 import { BaseHub } from "./BaseHub";
 // var GameType = require("GameType")
@@ -43,7 +37,7 @@ export class HallHub extends BaseHub {
 
 
     isLogin: boolean = false;
-    sendTime: number=0;
+    sendTime: number = 0;
     receiveTime: number = 0;
     starttime: boolean = false;
     showalertbol: boolean = false;
@@ -67,9 +61,9 @@ export class HallHub extends BaseHub {
         // cc.director.getScheduler().schedule(this.update, this, 1, cc.macro.REPEAT_FOREVER, 0, false);
     }
 
-    onshowtips(bol:boolean){
+    onshowtips(bol: boolean) {
         this.showtipsbol = bol
-        if(bol = true){
+        if (bol = true) {
             this.starttime = false
         }
     }
@@ -77,15 +71,15 @@ export class HallHub extends BaseHub {
     gameshow() {
         cc.log("hall_show")
         cc.game.resume();
-        
-        
-        
+
+
+
     }
 
 
     gamehide() {
         cc.log("hall_hide")
-        if(this.isConnect == false){
+        if (this.isConnect == false) {
             return
         }
         this.sendPing();
@@ -94,44 +88,44 @@ export class HallHub extends BaseHub {
     }
 
     private closeSocketWhenHideTooLong() {
-        
+
     }
 
     /**
      * 连接socket
      * @param url socket的url
      */
-     public connect() {
+    public connect() {
         // BaseUI.addNetLoading();
         // 检测网络状态
-        if(this.starttime  == false){
+        if (this.starttime == false) {
             cc.director.getScheduler().enableForTarget(this);
             cc.director.getScheduler().schedule(this.update, this, 1, cc.macro.REPEAT_FOREVER, 0, false);
-            this.starttime  = true
+            this.starttime = true
         }
-        
+
         // this.deleteSocket()
         this.connectingTime = new Date().getTime();
-        
+
         return this.connectSocket(Constants.getInstance().m_hallSocketHost.getHostUrl(), this.socketOnOpen.bind(this), this.socketOnMessage.bind(this), this.socketOnError.bind(this), this.socketOnClose.bind(this));
         // return this.connectSocket("ws://slotcenter20200.fanyouonline.cloud:8081/ws", this.socketOnOpen.bind(this), this.socketOnMessage.bind(this), this.socketOnError.bind(this), this.socketOnClose.bind(this));
     }
 
-    
-    onbackHall(){
-        let  SceneName = cc.director.getScene().name
-        if(SceneName.localeCompare("CoreLoadScene")!=0 ){
+
+    onbackHall() {
+        let SceneName = cc.director.getScene().name
+        if (SceneName.localeCompare("CoreLoadScene") != 0) {
             // cc.director.loadScene("CoreLoadScene") 
-            
+
             // this.starttime  = false
             this.closeSocket();
             // cc.game.restart();
             cc.director.loadScene("CoreLoadScene")
         }
-        
+
     }
 
-    deleteSocket () {
+    deleteSocket() {
         this.onDestroy()
 
         this.isConnect = false;
@@ -143,7 +137,7 @@ export class HallHub extends BaseHub {
     }
 
 
-    update(dt:number){
+    update(dt: number) {
         // cc.log("hall dt=",dt)
         if ((this.connectingTime != 0) && !this.isConnect) {
             // 连接socket超时Z
@@ -161,7 +155,7 @@ export class HallHub extends BaseHub {
                     this.sendTime = new Date().getTime();
                     this.sendPing()
                 }
-                // cc.log("this.receiveTime : " + this.receiveTime);
+                console.log("this.receiveTime : " + this.receiveTime);
                 // 心跳回调检测
                 if (new Date().getTime() - this.receiveTime > this.SOCKET_MSG_WAITTIME * 1000) {
                     // 服务器长时间没有回复,重连
@@ -170,28 +164,28 @@ export class HallHub extends BaseHub {
                     cc.log("update2222")
                 }
 
-                
+
             }
         }
     }
 
-    closeSocket () {
+    closeSocket() {
         this.isLogin = false;
         this.deleteSocket();
-        this.starttime  = false
+        this.starttime = false
         cc.director.getScheduler().unschedule(this.update, this);
     }
 
     //重置重连状态
-    resetstatus(){
+    resetstatus() {
         this.iscannect = false;
         this.closeSocket()
-        
+
     }
 
     // 重连
-    reconnect () {
-        if(this.showtipsbol == true){
+    reconnect() {
+        if (this.showtipsbol == true) {
             this.starttime = false
             this.closeSocket()
             this.isConnect = false
@@ -206,19 +200,19 @@ export class HallHub extends BaseHub {
             this.reconnectCount = this.reconnectCount + 1;
             this.connect();
             // if (this.isLogin) {
-                
+
             // } else {
-                if(this.showalertbol == false &&Constants.getInstance().IsGameEnd == true){
-                    BaseUI.addNetLoading();
-                }
-                
+            if (this.showalertbol == false && Constants.getInstance().IsGameEnd == true) {
+                BaseUI.addNetLoading();
+            }
+
             // }
         }
     }
 
     // 连接出错
-    socketError () {
-        if (this.reconnectCount >= this.SOCKET_RECONNECT_COUNT&&Constants.getInstance().IsGameEnd == true) {
+    socketError() {
+        if (this.reconnectCount >= this.SOCKET_RECONNECT_COUNT && Constants.getInstance().IsGameEnd == true) {
             // 断开socket，等待手动重连
             //this.deleteSocket();
             this.reconnectCount = 0;
@@ -228,10 +222,10 @@ export class HallHub extends BaseHub {
         }
     }
 
-    showAlert () {
+    showAlert() {
         this.showtipsbol = true
-        let  SceneName = cc.director.getScene().name
-        if(SceneName.localeCompare("CoreLoadScene")!=0 ){
+        let SceneName = cc.director.getScene().name
+        if (SceneName.localeCompare("CoreLoadScene") != 0) {
             let sureCallback = (() => {
                 cc.log("sureCallback!!!")
                 this.showalertbol = false
@@ -241,7 +235,7 @@ export class HallHub extends BaseHub {
             let msg1 = {
                 name: "MessageBoxView",
                 sureCallback: sureCallback,
-                bundleIndex: "gameprefab",
+                bundleIndex: AppBundleConfig.BUNDLE_HALL,
                 btnOkText: "Disconnect, please login again.",
                 btnCount: 1,
                 zorder: 10000
@@ -249,7 +243,7 @@ export class HallHub extends BaseHub {
             UIManagernew.openUI(msg1)
         }
         BaseUI.removeNetLoading()
-        
+
         this.showalertbol = true
     }
 
@@ -278,15 +272,15 @@ export class HallHub extends BaseHub {
             socketReqSlotLogin.m_maskingKey = 10;
             this.sendMsgUserLogin(socketReqSlotLogin);
         }
-        
+
     }
 
-    isConnecting () {
+    isConnecting() {
         return this.isConnect;
     }
 
     reLoadGame() {
-        
+
     }
 
 
@@ -320,7 +314,7 @@ export class HallHub extends BaseHub {
     public socketOnClose(evt: Event) {
         this.isConnect = false;
 
-        if(this.iscannect == false){
+        if (this.iscannect == false) {
             return
         }
         // 断socket写死登出
@@ -332,9 +326,9 @@ export class HallHub extends BaseHub {
         }, this.SOCKET_RECONNECT_TIME * 1000);
     }
 
-   /**
-     * 发送玩家登录socket
-     */
+    /**
+      * 发送玩家登录socket
+      */
     public sendMsgUserLogin(slotData: SocketReqSlotLogin) {
         //统计请求次数
         this.m_requestCount++;

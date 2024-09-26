@@ -101,7 +101,12 @@ android {
 
 android.applicationVariants.all { variant ->
     // delete previous files first
-    delete "${buildDir}/intermediates/merged_assets/${variant.dirName}"
+    //delete "${buildDir}/intermediates/merged_assets/${variant.dirName}"
+    //方案1
+    //delete "${buildDir}/intermediates/assets/${variant.dirName}"
+    //方案2
+    //delete variant.mergeAssets.outputDir
+    delete variant.mergeAssetsProvider.get().outputDir
 
     variant.mergeAssets.doLast {
         def sourceDir = "${buildDir}/../../../../.."

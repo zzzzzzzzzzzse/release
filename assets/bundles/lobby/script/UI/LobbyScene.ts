@@ -2,6 +2,7 @@ import { Constants } from "../../../../Script/Constants";
 import CoinFlyPool from "../../../../Script/UI/dialog/CoinFlyPool";
 import { BaseUI } from "../../../../Script/common/BaseUI";
 import { EventBusEnum } from "../../../../Script/common/EventBus";
+import AppBundleConfig from "../../../../Script/configs/AppBundleConfig";
 import AppLanguageConfig from "../../../../Script/configs/AppLanguageConfig";
 import AppPlatformConfig, { AppPlatformType } from "../../../../Script/configs/AppPlatformConfig";
 import { EVENT } from "../../../../Script/configs/ConstDefine";
@@ -1080,7 +1081,7 @@ export default class LobbyScene extends cc.Component {
                 let msg1 = {
                     name: "MessageBoxView",
                     sureCallback: sureCallback,
-                    bundleIndex: "gameprefab",
+                    bundleIndex: AppBundleConfig.BUNDLE_HALL,
                     btnOkText: "Disconnect, please login again.",
                     btnCount: 1,
                     zorder: 10000
@@ -1543,6 +1544,11 @@ export default class LobbyScene extends cc.Component {
                     }
                     Constants.getInstance().m_LoginUserSession.userWalletInfo.m_gameCoin += BigInt(rewardList[0].m_value);
                     this.masknod.active = false
+
+                    let gold = Number(cc.sys.localStorage.getItem('gold')) || 10000000;
+                    gold += 1000;
+                    cc.sys.localStorage.setItem('gold', gold);
+                    console.log('getCollectReward gold:', gold);
                     this.profileView.bindViewData();
                 });
             }
@@ -1660,7 +1666,7 @@ export default class LobbyScene extends cc.Component {
         } else {
             let msg = {
                 name: "MessageBoxView",
-                bundleIndex: "gameprefab",
+                bundleIndex: AppBundleConfig.BUNDLE_HALL,
                 btnOkText: "thirdPartyLogin server err:1000 plese login again",
                 btnCount: 1,
                 zorder: 10000
@@ -1759,6 +1765,7 @@ class UserProfileView {
 
 
     private updateGold(gold: number): void {
+        Constants.getInstance().gold = gold;
         this.coinText.string = StringUtil.showMoneyType(+gold);
     }
 
@@ -1769,6 +1776,7 @@ class UserProfileView {
             // this.coinText.string = StringUtil.showMoneyType(Constants.getInstance().m_LoginUserSession.userWalletInfo.m_gameCoin);
             const gold = cc.sys.localStorage.getItem('gold') || 10000000;
             cc.sys.localStorage.setItem('gold', gold);
+            Constants.getInstance().gold = gold;
             this.coinText.string = StringUtil.showMoneyType(+gold);
             this.diamondText.string = StringUtil.showMoneyType(Constants.getInstance().m_LoginUserSession.userWalletInfo.m_goldCoin);
         }
