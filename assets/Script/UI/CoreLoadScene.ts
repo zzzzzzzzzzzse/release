@@ -150,25 +150,25 @@ export default class CoreLoadScene extends cc.Component {
             Constants.getInstance().m_httpHost.m_hostList[0] = AppPlatformConfig.getWebTestUrl();
             AppPlatformConfig.TEST_HTTPURLJAVA = "http://192.168.42.120:9011/v01/apps/";
             this.node.getChildByName('test').active = true;
-            if (cc.sys.os == cc.sys.OS_OSX) {
-                //mac 直接连接正式服,网页测试
-                AppPlatformConfig.TEST_HTTPURLJAVA = "";
-                let baseApi: string = LocalStorageTool.getBaseApiHost();
-                console.log("baseApisss ", baseApi);
-                LocalStorageTool.setBaseApiHost(AppPlatformConfig.getHttpUrl());
-                Constants.getInstance().m_httpHost.m_hostList[0] = AppPlatformConfig.getHttpUrl();
+            // if (cc.sys.os == cc.sys.OS_OSX) {
+            //mac 直接连接正式服,网页测试
+            AppPlatformConfig.TEST_HTTPURLJAVA = "";
+            let baseApi: string = LocalStorageTool.getBaseApiHost();
+            console.log("baseApisss ", baseApi);
+            LocalStorageTool.setBaseApiHost(AppPlatformConfig.getHttpUrl());
+            Constants.getInstance().m_httpHost.m_hostList[0] = AppPlatformConfig.getHttpUrl();
 
-                let coreRoutResult = await CoreApi.coreRout();
-                if (coreRoutResult.succ) {
-                    //网页不检测大版本更新,直接进入大厅.
-                    this.loginSignName = "testSign12";
-                    this.loginUdid = "a51223a7311ad033f50";
-                    this.loginIdfa = "84ca45c4-5356-4acd-a8b8-03362bffc7e2";
-                    this.goToHall();
-                } else {
-                    this.setShowTips("Init err! Pleaser restart game");
-                }
+            let coreRoutResult = await CoreApi.coreRout();
+            if (coreRoutResult.succ) {
+                //网页不检测大版本更新,直接进入大厅.
+                this.loginSignName = "testSign12";
+                this.loginUdid = "a51223a7311ad033f50";
+                this.loginIdfa = "84ca45c4-5356-4acd-a8b8-03362bffc7e2";
+                this.goToHall();
+            } else {
+                this.setShowTips("Init err! Pleaser restart game");
             }
+            // }
         }
 
         // Constants.getInstance().UserPoint = true
