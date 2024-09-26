@@ -2,7 +2,7 @@ package org.cocos2dx.javascript.dataPool.sp;
 
 import org.cocos2dx.javascript.tools.StringUtil;
 
-public class AppData extends SharedPreferencesCache{
+public class AppData extends SharedPreferencesUtil {
     private static final String  TAG = "app_user";
     /**
      * 设置idfa

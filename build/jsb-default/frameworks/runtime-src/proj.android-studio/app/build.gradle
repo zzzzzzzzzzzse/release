@@ -132,9 +132,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
     implementation fileTree(dir: "../../../cocos2d-x/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
-//    implementation project(':instantapp')
-
     implementation 'com.google.code.gson:gson:2.8.9'
-    implementation 'com.alibaba:fastjson:1.2.78'
-    implementation 'com.google.android.gms:play-services-ads-identifier:18.1.0'
 }

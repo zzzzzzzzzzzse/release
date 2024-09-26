@@ -17,27 +17,6 @@ import java.util.Locale;
 public class DeviceUtils
 {
     private static final String packetName = "rooollerslot";
-
-    /**
-     * 获取设备标识
-     */
-    public static String getAndroidDeviceInfo()
-    {
-//        //todo 初始化activity
-//        final Activity activity = (Activity) SDKWrapper.getInstance().getContext();
-//        DeviceInfo deviceInfo = DeviceInfoTool.getDeviceInfo(activity);
-//        if (deviceInfo != null) {
-//            if (deviceInfo != null) {
-//                //转化成字符串
-//                String deviceStr = deviceInfo.getAJsonStr();
-//                if (!StringUtil.StringEmpty(deviceStr)) {
-//                    return deviceStr;
-//                }
-//            }
-//        }
-        return "";
-    }
-
     /**
      * 获取android
      * @return

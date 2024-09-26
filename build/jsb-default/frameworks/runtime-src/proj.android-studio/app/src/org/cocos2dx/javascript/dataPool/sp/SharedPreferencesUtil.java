@@ -10,7 +10,7 @@ import org.cocos2dx.javascript.SDKWrapper;
 /**
  * 应用数据
  */
-public abstract class SharedPreferencesCache {
+public abstract class SharedPreferencesUtil {
     public static Context getAppDataContent()
     {
         return SDKWrapper.getInstance().getContext();

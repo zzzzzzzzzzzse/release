@@ -85,12 +85,6 @@ public class Native {
     }
 
     //获取device id
-    public static String getDeviceId() {
-        String deviceId = DeviceInfoTool.getDeviceInfo((Activity) SDKWrapper.getInstance().getContext());
-        return deviceId;
-    }
-
-    //获取device id
     public static String getUserAgent() {
         Log.d("abcxxxx ", DeviceUtils.getAndroidUA());
         return DeviceUtils.getAndroidUA();
