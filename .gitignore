@@ -59,3 +59,6 @@ build/jsb-default/js backups (useful for debugging)/
 build/jsb-default/manifest/
 *.class
 *.o
+
+build/jsb-default/assets/
+build/jsb-default/frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/build/
