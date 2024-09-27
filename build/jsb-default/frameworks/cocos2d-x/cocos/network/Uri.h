@@ -92,14 +92,10 @@ public:
     const std::string& getPassword() const { return _password; }
     /**
      * Get host part of URI. If host is an IPv6 address, square brackets will be
-     * returned, for example: "[::1]".
+     * returned, 
      */
     const std::string& getHost() const { return _host; }
     /**
-     * Get host part of URI. If host is an IPv6 address, square brackets will not
-     * be returned, for exmaple "::1"; otherwise it returns the same thing as
-     * getHost().
-     *
      * getHostName() is what one needs to call if passing the host to any other tool
      * or API that connects to that host/port; e.g. getaddrinfo() only understands
      * IPv6 host without square brackets
