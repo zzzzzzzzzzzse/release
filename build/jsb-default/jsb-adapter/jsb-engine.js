@@ -216,33 +216,30 @@ cc.Assembler2D.prototype.updateWorldVerts = function (comp) {
   var local = this._local;
   var verts = this._renderData.vDatas[0];
   var vl = local[0],
-      vr = local[2],
-      vb = local[1],
-      vt = local[3];
+    vr = local[2],
+    vb = local[1],
+    vt = local[3];
   var floatsPerVert = this.floatsPerVert;
-  var vertexOffset = 0; // left bottom
-
+  var vertexOffset = 0;
+  // left bottom
   verts[vertexOffset] = vl;
   verts[vertexOffset + 1] = vb;
-  vertexOffset += floatsPerVert; // right bottom
-
+  vertexOffset += floatsPerVert;
+  // right bottom
   verts[vertexOffset] = vr;
   verts[vertexOffset + 1] = vb;
-  vertexOffset += floatsPerVert; // left top
-
+  vertexOffset += floatsPerVert;
+  // left top
   verts[vertexOffset] = vl;
   verts[vertexOffset + 1] = vt;
-  vertexOffset += floatsPerVert; // right top
-
+  vertexOffset += floatsPerVert;
+  // right top
   verts[vertexOffset] = vr;
   verts[vertexOffset + 1] = vt;
 };
-
 var _updateColor = cc.Assembler2D.prototype.updateColor;
-
 cc.Assembler2D.prototype.updateColor = function (comp, color) {
   this._dirtyPtr[0] |= cc.Assembler.FLAG_VERTICES_OPACITY_CHANGED;
-
   _updateColor.call(this, comp, color);
 };
 
@@ -251,32 +248,35 @@ cc.Assembler2D.prototype.updateColor = function (comp, color) {
 
 (function () {
   if (!cc.Assembler3D) return;
-
   cc.Assembler3D.updateWorldVerts = function (comp) {
     var local = this._local;
     var world = this._renderData.vDatas[0];
     var vl = local[0],
-        vr = local[2],
-        vb = local[1],
-        vt = local[3]; // left bottom
+      vr = local[2],
+      vb = local[1],
+      vt = local[3];
 
+    // left bottom
     var floatsPerVert = this.floatsPerVert;
     var offset = 0;
     world[offset] = vl;
     world[offset + 1] = vb;
     world[offset + 2] = 0;
-    offset += floatsPerVert; // right bottom
+    offset += floatsPerVert;
 
+    // right bottom
     world[offset] = vr;
     world[offset + 1] = vb;
     world[offset + 2] = 0;
-    offset += floatsPerVert; // left top
+    offset += floatsPerVert;
 
+    // left top
     world[offset] = vl;
     world[offset + 1] = vt;
     world[offset + 2] = 0;
-    offset += floatsPerVert; // right top
+    offset += floatsPerVert;
 
+    // right top
     world[offset] = vr;
     world[offset + 1] = vt;
     world[offset + 2] = 0;
@@ -310,6 +310,7 @@ cc.Assembler2D.prototype.updateColor = function (comp, color) {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 var RenderFlow = cc.RenderFlow;
 var originInit = cc.Assembler.prototype.init;
 var FLAG_VERTICES_OPACITY_CHANGED = 1 << 0;
@@ -338,7 +339,6 @@ var Assembler = {
   init: function init(renderComp) {
     this._effect = [];
     originInit.call(this, renderComp);
-
     if (renderComp.node && renderComp.node._proxy) {
       renderComp.node._proxy.setAssembler(this);
     }
@@ -347,10 +347,9 @@ var Assembler = {
     if (!this._renderComp || !this._renderComp.isValid) return;
     this.updateRenderData(this._renderComp);
     var materials = this._renderComp._materials;
-
     for (var i = 0; i < materials.length; i++) {
-      var m = materials[i]; // TODO: find why material can be null
-
+      var m = materials[i];
+      // TODO: find why material can be null
       if (!m) continue;
       m.getHash();
       this.updateMaterial(i, m);
@@ -361,7 +360,6 @@ var Assembler = {
   },
   updateMaterial: function updateMaterial(iaIndex, material) {
     var effect = material && material.effect;
-
     if (this._effect[iaIndex] !== effect) {
       this._effect[iaIndex] = effect;
       this.updateEffect(iaIndex, effect ? effect._nativeObj : null);
@@ -389,13 +387,10 @@ module.exports = Assembler;
 
 var proto = cc.Graphics.__assembler__.prototype;
 var _init = proto.init;
-
 proto.init = function (renderComp) {
   _init.call(this, renderComp);
-
   this.ignoreOpacityFlag();
 };
-
 proto.genBuffer = function (graphics, cverts) {
   var buffers = this.getBuffers();
   var buffer = buffers[this._bufferOffset];
@@ -405,31 +400,22 @@ proto.genBuffer = function (graphics, cverts) {
   meshbuffer.setNativeAssembler(this);
   return buffer;
 };
-
 var _stroke = proto.stroke;
-
 proto.stroke = function (graphics) {
   _stroke.call(this, graphics);
-
   var buffer = this._buffer;
   buffer.meshbuffer.used(buffer.vertexStart, buffer.indiceStart);
 };
-
 var _fill = proto.fill;
-
 proto.fill = function (graphics) {
   _fill.call(this, graphics);
-
   var buffer = this._buffer;
   buffer.meshbuffer.used(buffer.vertexStart, buffer.indiceStart);
 };
-
 var _updateIADatas = proto.updateIADatas;
-
 proto.updateIADatas = function (iaIndex, meshIndex) {
-  _updateIADatas.call(this, iaIndex, meshIndex); // Reset vertexStart and indiceStart when buffer is switched.
-
-
+  _updateIADatas.call(this, iaIndex, meshIndex);
+  // Reset vertexStart and indiceStart when buffer is switched.
   this._buffer.vertexStart = 0;
   this._buffer.indiceStart = 0;
 };
@@ -461,13 +447,13 @@ proto.updateIADatas = function (iaIndex, meshIndex) {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 var originReserveQuads = cc.Label.__assembler__.Bmfont.prototype._reserveQuads;
 Object.assign(cc.Label.__assembler__.Bmfont.prototype, {
   updateWorldVerts: function updateWorldVerts(comp) {
     var local = this._local;
     var world = this._renderData.vDatas[0];
     var floatsPerVert = this.floatsPerVert;
-
     for (var offset = 0, l = local.length; offset < l; offset += floatsPerVert) {
       world[offset] = local[offset];
       world[offset + 1] = local[offset + 1];
@@ -486,7 +472,6 @@ Object.assign(cc.Label.__assembler__.Bmfont.prototype, {
       var local = this._local;
       var world = this._renderData.vDatas[0];
       var floatsPerVert = this.floatsPerVert;
-
       for (var offset = 0, l = world.length; offset < l; offset += floatsPerVert) {
         world[offset] = local[offset];
         world[offset + 1] = local[offset + 1];
@@ -507,7 +492,6 @@ Object.assign(cc.Label.__assembler__.Bmfont.prototype, {
       var local = this._local;
       var world = this._renderData.vDatas[0];
       var floatsPerVert = this.floatsPerVert;
-
       for (var offset = 0, l = world.length; offset < l; offset += floatsPerVert) {
         world[offset] = local[offset];
         world[offset + 1] = local[offset + 1];
@@ -555,12 +539,10 @@ Object.assign(cc.Label.__assembler__.Bmfont.prototype, {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 require('./2d/bmfont.js');
-
 require('./3d/bmfont.js');
-
 require('./3d/ttf.js');
-
 require('./3d/letter.js');
 
 },{"./2d/bmfont.js":6,"./3d/bmfont.js":7,"./3d/letter.js":8,"./3d/ttf.js":9}],11:[function(require,module,exports){
@@ -590,13 +572,14 @@ require('./3d/letter.js');
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 var Mask = cc.Mask;
 var RenderFlow = cc.RenderFlow;
 var spriteAssembler = cc.Sprite.__assembler__.Simple.prototype;
 var graphicsAssembler = cc.Graphics.__assembler__.prototype;
 var proto = cc.Mask.__assembler__.prototype;
-var _updateRenderData = proto.updateRenderData; // Avoid constructor being overridden.
-
+var _updateRenderData = proto.updateRenderData;
+// Avoid constructor being overridden.
 renderer.MaskAssembler.prototype.constructor = cc.Mask.__assembler__;
 cc.js.mixin(proto, {
   _extendNative: function _extendNative() {
@@ -608,17 +591,13 @@ cc.js.mixin(proto, {
   },
   updateRenderData: function updateRenderData(mask) {
     _updateRenderData.call(this, mask);
-
     mask._clearGraphics._assembler.updateMaterial(0, mask._clearMaterial);
-
     this.setMaskInverted(mask.inverted);
     this.setUseModel(mask._type !== Mask.Type.IMAGE_STENCIL);
     this.setImageStencil(mask._type === Mask.Type.IMAGE_STENCIL);
-
     if (mask._graphics) {
       mask._graphics._assembler.setUseModel(mask._type !== Mask.Type.IMAGE_STENCIL);
     }
-
     mask.node._renderFlag |= cc.RenderFlow.FLAG_UPDATE_RENDER_DATA;
   }
 }, renderer.MaskAssembler.prototype);
@@ -627,36 +606,29 @@ var originRemoveGraphics = cc.Mask.prototype._removeGraphics;
 cc.js.mixin(cc.Mask.prototype, {
   _createGraphics: function _createGraphics() {
     originCreateGraphics.call(this);
-
     if (this._graphics) {
       this._assembler.setRenderSubHandle(this._graphics._assembler);
-    } // TODO: remove clearGraphics
+    }
 
-
+    // TODO: remove clearGraphics
     if (!this._clearGraphics) {
       this._clearGraphics = new cc.Graphics();
       cc.Assembler.init(this._clearGraphics);
       this._clearGraphics.node = new cc.Node();
-
       this._clearGraphics._activateMaterial();
-
       this._clearGraphics.lineWidth = 0;
-
       this._clearGraphics.rect(-1, -1, 2, 2);
-
       this._clearGraphics.fill();
-
       this._clearGraphics._assembler.ignoreWorldMatrix();
-
       this._assembler.setClearSubHandle(this._clearGraphics._assembler);
     }
   },
   _removeGraphics: function _removeGraphics() {
-    originRemoveGraphics.call(this); // TODO: remove clearGraphics
+    originRemoveGraphics.call(this);
 
+    // TODO: remove clearGraphics
     if (this._clearGraphics) {
       this._clearGraphics.destroy();
-
       this._clearGraphics = null;
     }
   }
@@ -677,7 +649,6 @@ cc.js.mixin(cc.Mask.prototype, {
     },
     init: function init(comp) {
       _init.call(this, comp);
-
       this.updateMeshData(true);
     },
     setRenderNode: function setRenderNode(node) {
@@ -692,10 +663,8 @@ cc.js.mixin(cc.Mask.prototype, {
       var mesh = comp.mesh;
       if (!mesh || !mesh.loaded) return;
       var subdatas = comp.mesh.subDatas;
-
       for (var i = 0, len = subdatas.length; i < len; i++) {
         var data = subdatas[i];
-
         if (force || data.vDirty || data.iDirty) {
           this.updateIAData(i, data.vfm._nativeObj, data.vData, data.iData);
           data.vDirty = false;
@@ -715,19 +684,16 @@ var _update = proto.update;
 cc.js.mixin(proto, {
   init: function init(comp) {
     _init.call(this, comp);
-
     this.setUseModel(false);
     this.ignoreWorldMatrix();
     this.ignoreOpacityFlag();
   },
   update: function update(comp, dt) {
     _update.call(this, comp, dt);
-
     var _this$_renderData$_fl = this._renderData._flexBuffer,
-        iData = _this$_renderData$_fl.iData,
-        usedVertices = _this$_renderData$_fl.usedVertices;
+      iData = _this$_renderData$_fl.iData,
+      usedVertices = _this$_renderData$_fl.usedVertices;
     var indiceOffset = 0;
-
     for (var i = 0, l = usedVertices; i < l; i += 2) {
       iData[indiceOffset++] = i;
       iData[indiceOffset++] = i + 2;
@@ -755,7 +721,6 @@ cc.js.mixin(proto, {
     },
     init: function init(comp) {
       _init.call(this, comp);
-
       this._renderDataList = new renderer.RenderDataList();
       this.setRenderDataList(this._renderDataList);
       this.ignoreOpacityFlag();
@@ -764,7 +729,6 @@ cc.js.mixin(proto, {
     },
     updateRenderData: function updateRenderData(comp) {
       _updateRenderData.call(this, comp);
-
       if (comp._vertsDirty) {
         this.updateMeshData();
         comp._vertsDirty = false;
@@ -777,20 +741,15 @@ cc.js.mixin(proto, {
       if (!this._model) {
         return;
       }
-
       var subdatas = this._model._subDatas;
-
       for (var i = 0, len = subdatas.length; i < len; i++) {
         var data = subdatas[i];
-
         if (data.vDirty && data.enable) {
           this._renderDataList.updateMesh(i, data.vData, data.iData);
         }
       }
-
       this.setVertexFormat(subdatas[0].vfm._nativeObj);
       this.setSimulationSpace(this._particleSystem.simulationSpace);
-
       if (subdatas[1] && subdatas[1].enable) {
         this.setTrailVertexFormat(subdatas[1].vfm._nativeObj);
         this.setTrailModuleSpace(this._particleSystem.trailModule.space);
@@ -835,12 +794,12 @@ cc.js.mixin(proto, {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 Object.assign(cc.Sprite.__assembler__.Mesh.prototype, {
   updateWorldVerts: function updateWorldVerts(sprite) {
     var local = this._local;
     var world = this._renderData.vDatas[0];
     var floatsPerVert = this.floatsPerVert;
-
     for (var i = 0, l = local.length / 2; i < l; i++) {
       world[i * floatsPerVert] = local[i * 2];
       world[i * floatsPerVert + 1] = local[i * 2 + 1];
@@ -875,12 +834,12 @@ Object.assign(cc.Sprite.__assembler__.Mesh.prototype, {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 Object.assign(cc.Sprite.__assembler__.RadialFilled.prototype, {
   updateWorldVerts: function updateWorldVerts(sprite) {
     var local = this._local;
     var world = this._renderData.vDatas[0];
     var floatsPerVert = this.floatsPerVert;
-
     for (var offset = 0, l = world.length; offset < l; offset += floatsPerVert) {
       world[offset] = local[offset];
       world[offset + 1] = local[offset + 1];
@@ -917,15 +876,12 @@ Object.assign(cc.Sprite.__assembler__.RadialFilled.prototype, {
  ****************************************************************************/
 var proto = cc.Sprite.__assembler__.Simple.prototype;
 var nativeProto = renderer.SimpleSprite2D.prototype;
-
 proto.updateWorldVerts = function (comp) {
   this._dirtyPtr[0] |= cc.Assembler.FLAG_VERTICES_DIRTY;
 };
-
 proto._extendNative = function () {
   nativeProto.ctor.call(this);
 };
-
 proto.initLocal = function () {
   this._local = new Float32Array(4);
   nativeProto.setLocalData.call(this, this._local);
@@ -958,17 +914,15 @@ proto.initLocal = function () {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 var proto = cc.Sprite.__assembler__.Sliced.prototype;
 var nativeProto = renderer.SlicedSprite2D.prototype;
-
 proto.updateWorldVerts = function (comp) {
   this._dirtyPtr[0] |= cc.Assembler.FLAG_VERTICES_DIRTY;
 };
-
 proto._extendNative = function () {
   nativeProto.ctor.call(this);
 };
-
 proto.initLocal = function () {
   this._local = new Float32Array(8);
   nativeProto.setLocalData.call(this, this._local);
@@ -1001,39 +955,39 @@ proto.initLocal = function () {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
   updateWorldVerts: function updateWorldVerts(sprite) {
     var renderData = this._renderData;
     var local = this._local;
     var localX = local.x,
-        localY = local.y;
+      localY = local.y;
     var world = renderData.vDatas[0];
     var row = this.row,
-        col = this.col;
+      col = this.col;
     var x, x1, y, y1;
     var floatsPerVert = this.floatsPerVert;
     var vertexOffset = 0;
-
     for (var yindex = 0, ylength = row; yindex < ylength; ++yindex) {
       y = localY[yindex];
       y1 = localY[yindex + 1];
-
       for (var xindex = 0, xlength = col; xindex < xlength; ++xindex) {
         x = localX[xindex];
-        x1 = localX[xindex + 1]; // lb
+        x1 = localX[xindex + 1];
 
+        // lb
         world[vertexOffset] = x;
         world[vertexOffset + 1] = y;
-        vertexOffset += floatsPerVert; // rb
-
+        vertexOffset += floatsPerVert;
+        // rb
         world[vertexOffset] = x1;
         world[vertexOffset + 1] = y;
-        vertexOffset += floatsPerVert; // lt
-
+        vertexOffset += floatsPerVert;
+        // lt
         world[vertexOffset] = x;
         world[vertexOffset + 1] = y1;
-        vertexOffset += floatsPerVert; // rt
-
+        vertexOffset += floatsPerVert;
+        // rt
         world[vertexOffset] = x1;
         world[vertexOffset + 1] = y1;
         vertexOffset += floatsPerVert;
@@ -1064,8 +1018,7 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
       var local = this._local;
       var world = this._renderData.vDatas[0];
       var floatsPerVert = this.floatsPerVert,
-          offset = 0;
-
+        offset = 0;
       for (var i = 0, j = 0, l = local.length / 2; i < l; i++, offset += floatsPerVert) {
         j = i * 2;
         world[offset] = local[j];
@@ -1087,7 +1040,6 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
       var local = this._local;
       var world = this._renderData.vDatas[0];
       var floatsPerVert = this.floatsPerVert;
-
       for (var offset = 0, l = world.length; offset < l; offset += floatsPerVert) {
         world[offset] = local[offset];
         world[offset + 1] = local[offset + 1];
@@ -1131,37 +1083,39 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
     updateWorldVerts: function updateWorldVerts(sprite) {
       var local = this._local;
       var localX = local.x,
-          localY = local.y;
+        localY = local.y;
       var world = this._renderData.vDatas[0];
       var row = this.row,
-          col = this.col;
+        col = this.col;
       var x, x1, y, y1;
       var vertexOffset = 0;
-
       for (var yindex = 0, ylength = row; yindex < ylength; ++yindex) {
         y = localY[yindex];
         y1 = localY[yindex + 1];
-
         for (var xindex = 0, xlength = col; xindex < xlength; ++xindex) {
           x = localX[xindex];
-          x1 = localX[xindex + 1]; // left bottom
+          x1 = localX[xindex + 1];
 
+          // left bottom
           var padding = 6;
           world[vertexOffset] = x;
           world[vertexOffset + 1] = y;
           world[vertexOffset + 2] = 0;
-          vertexOffset += padding; // right bottom
+          vertexOffset += padding;
 
+          // right bottom
           world[vertexOffset] = x1;
           world[vertexOffset + 1] = y;
           world[vertexOffset + 2] = 0;
-          vertexOffset += padding; // left top
+          vertexOffset += padding;
 
+          // left top
           world[vertexOffset] = x;
           world[vertexOffset + 1] = y1;
           world[vertexOffset + 2] = 0;
-          vertexOffset += padding; // right top
+          vertexOffset += padding;
 
+          // right top
           world[vertexOffset] = x1;
           world[vertexOffset + 1] = y1;
           world[vertexOffset + 2] = 0;
@@ -1199,26 +1153,17 @@ Object.assign(cc.Sprite.__assembler__.Tiled.prototype, {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 require('./2d/sliced.js');
-
 require('./2d/tiled.js');
-
 require('./2d/radial-filled.js');
-
 require('./2d/simple.js');
-
 require('./2d/mesh.js');
-
 require('./3d/sliced.js');
-
 require('./3d/simple.js');
-
 require('./3d/tiled.js');
-
 require('./3d/mesh.js');
-
 require('./3d/bar-filled.js');
-
 require('./3d/radial-filled.js');
 
 },{"./2d/mesh.js":15,"./2d/radial-filled.js":16,"./2d/simple.js":17,"./2d/sliced.js":18,"./2d/tiled.js":19,"./3d/bar-filled.js":20,"./3d/mesh.js":21,"./3d/radial-filled.js":22,"./3d/simple.js":23,"./3d/sliced.js":24,"./3d/tiled.js":25}],27:[function(require,module,exports){
@@ -1248,77 +1193,44 @@ require('./3d/radial-filled.js');
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 require('./jsb-sys.js');
-
 require('./jsb-game.js');
-
 if (window.oh) require('./jsb-videoplayer-openharmony.js');else require('./jsb-videoplayer.js');
-
 {};
-
 require('./jsb-audio.js');
-
 require('./jsb-loader.js');
-
 require('./jsb-editbox.js');
-
 require('./jsb-reflection.js');
-
 require('./jsb-assets-manager.js');
-
 require('./jsb-safearea.js');
-
 if (CC_NATIVERENDERER) {
   require('./jsb-effect.js');
-
   require('./jsb-effect-variant.js');
-
   require('./scene/camera.js');
-
   require('./scene/light.js');
-
   require('./scene/node-proxy.js');
-
-  require('./scene/render-flow.js'); // must be required after render flow
-
-
+  require('./scene/render-flow.js');
+  // must be required after render flow
   require('./scene/node.js');
-
   cc.game.on(cc.game.EVENT_ENGINE_INITED, function () {
     require('./scene/mesh-buffer.js');
-
     require('./scene/quad-buffer.js');
-
     require('./scene/render-data.js');
-
     require('./assemblers/assembler.js');
-
     require('./assemblers/assembler-2d.js');
-
     require('./assemblers/assembler-3d.js');
-
     require('./assemblers/sprite/index.js');
-
     require('./assemblers/label/index.js');
-
     require('./assemblers/mask-assembler.js');
-
     require('./assemblers/graphics-assembler.js');
-
     require('./assemblers/motion-streak.js');
-
     require('./assemblers/mesh-renderer.js');
-
     require('./assemblers/particle-3d-assembler.js');
-
     require('./jsb-dragonbones.js');
-
     require('./jsb-spine-skeleton.js');
-
     require('./jsb-particle.js');
-
     require('./jsb-tiledmap.js');
-
     require('./jsb-skin-mesh.js');
   });
 }
@@ -1347,6 +1259,7 @@ if (CC_NATIVERENDERER) {
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 if (jsb.AssetsManager) {
   jsb.AssetsManager.State = {
     UNINITED: 0,
@@ -1412,14 +1325,12 @@ if (jsb.AssetsManager) {
  THE SOFTWARE.
  ****************************************************************************/
 var cacheManager = require('./jsb-cache-manager');
-
 var Audio = cc._Audio = function (src) {
   this.src = src;
   this.volume = 1;
   this.loop = false;
   this.id = -1;
 };
-
 var handleVolume = function handleVolume(volume) {
   if (volume === undefined) {
     // set default volume as 1
@@ -1427,74 +1338,59 @@ var handleVolume = function handleVolume(volume) {
   } else if (typeof volume === 'string') {
     volume = Number.parseFloat(volume);
   }
-
   return volume;
 };
-
 (function (proto, audioEngine) {
-  if (!audioEngine) return; // Using the new audioEngine
+  if (!audioEngine) return;
 
+  // Using the new audioEngine
   cc.audioEngine = audioEngine;
-
   audioEngine.setMaxWebAudioSize = function () {};
-
   Audio.State = audioEngine.AudioState;
-
   proto.play = function () {
     audioEngine.stop(this.id);
     var clip = this.src;
     this.id = audioEngine.play(clip, this.loop, this.volume);
   };
-
   proto.pause = function () {
     audioEngine.pause(this.id);
   };
-
   proto.resume = function () {
     audioEngine.resume(this.id);
   };
-
   proto.stop = function () {
     audioEngine.stop(this.id);
   };
-
   proto.destroy = function () {};
-
   proto.setLoop = function (loop) {
     this.loop = loop;
     audioEngine.setLoop(this.id, loop);
   };
-
   proto.getLoop = function () {
     return this.loop;
   };
-
   proto.setVolume = function (volume) {
     volume = handleVolume(volume);
     this.volume = volume;
     return audioEngine.setVolume(this.id, volume);
   };
-
   proto.getVolume = function () {
     return this.volume;
   };
-
   proto.setCurrentTime = function (time) {
     audioEngine.setCurrentTime(this.id, time);
   };
-
   proto.getCurrentTime = function () {
     return audioEngine.getCurrentTime(this.id);
   };
-
   proto.getDuration = function () {
     return audioEngine.getDuration(this.id);
   };
-
   proto.getState = function () {
     return audioEngine.getState(this.id);
-  }; // polyfill audioEngine
+  };
 
+  // polyfill audioEngine
 
   var _music = {
     id: -1,
@@ -1505,14 +1401,11 @@ var handleVolume = function handleVolume(volume) {
   var _effect = {
     volume: 1
   };
-
   audioEngine.play = function (clip, loop, volume) {
     if (typeof volume !== 'number') {
       volume = 1;
     }
-
     var audioFilePath;
-
     if (typeof clip === 'string') {
       // backward compatibility since 1.10
       cc.warnID(8401, 'cc.audioEngine', 'cc.AudioClip', 'AudioClip', 'cc.AudioClip', 'audio');
@@ -1526,10 +1419,8 @@ var handleVolume = function handleVolume(volume) {
         clip.loaded = true;
       }
     }
-
     return audioEngine.play2d(audioFilePath, loop, volume);
   };
-
   audioEngine.playMusic = function (clip, loop) {
     audioEngine.stop(_music.id);
     _music.id = audioEngine.play(clip, loop, _music.volume);
@@ -1537,99 +1428,79 @@ var handleVolume = function handleVolume(volume) {
     _music.clip = clip;
     return _music.id;
   };
-
   audioEngine.stopMusic = function () {
     audioEngine.stop(_music.id);
   };
-
   audioEngine.pauseMusic = function () {
     audioEngine.pause(_music.id);
     return _music.id;
   };
-
   audioEngine.resumeMusic = function () {
     audioEngine.resume(_music.id);
     return _music.id;
   };
-
   audioEngine.getMusicVolume = function () {
     return _music.volume;
   };
-
   audioEngine.setMusicVolume = function (volume) {
     _music.volume = handleVolume(volume);
     audioEngine.setVolume(_music.id, _music.volume);
     return volume;
   };
-
   audioEngine.isMusicPlaying = function () {
     return audioEngine.getState(_music.id) === audioEngine.AudioState.PLAYING;
   };
-
   audioEngine.playEffect = function (filePath, loop) {
     return audioEngine.play(filePath, loop || false, _effect.volume);
   };
-
   audioEngine.setEffectsVolume = function (volume) {
     _effect.volume = handleVolume(volume);
   };
-
   audioEngine.getEffectsVolume = function () {
     return _effect.volume;
   };
-
   audioEngine.pauseEffect = function (audioID) {
     return audioEngine.pause(audioID);
   };
-
   audioEngine.pauseAllEffects = function () {
     var musicPlay = audioEngine.getState(_music.id) === audioEngine.AudioState.PLAYING;
     audioEngine.pauseAll();
-
     if (musicPlay) {
       audioEngine.resume(_music.id);
     }
   };
-
   audioEngine.resumeEffect = function (id) {
     audioEngine.resume(id);
   };
-
   audioEngine.resumeAllEffects = function () {
     var musicPaused = audioEngine.getState(_music.id) === audioEngine.AudioState.PAUSED;
     audioEngine.resumeAll();
-
     if (musicPaused && audioEngine.getState(_music.id) === audioEngine.AudioState.PLAYING) {
       audioEngine.pause(_music.id);
     }
   };
-
   audioEngine.stopEffect = function (id) {
     return audioEngine.stop(id);
   };
-
   audioEngine.stopAllEffects = function () {
     var musicPlaying = audioEngine.getState(_music.id) === audioEngine.AudioState.PLAYING;
     var currentTime = audioEngine.getCurrentTime(_music.id);
     audioEngine.stopAll();
-
     if (musicPlaying) {
       _music.id = audioEngine.play(_music.clip, _music.loop);
       audioEngine.setCurrentTime(_music.id, currentTime);
     }
-  }; // Unnecessary on native platform
+  };
 
-
+  // Unnecessary on native platform
   audioEngine._break = function () {};
+  audioEngine._restore = function () {};
 
-  audioEngine._restore = function () {}; // deprecated
-
+  // deprecated
 
   audioEngine._uncache = audioEngine.uncache;
-
   audioEngine.uncache = function (clip) {
     var path;
-
     if (typeof clip === 'string') {
       // backward compatibility since 1.10
       cc.warnID(8401, 'cc.audioEngine', 'cc.AudioClip', 'AudioClip', 'cc.AudioClip', 'audio');
@@ -1638,18 +1509,13 @@ var handleVolume = function handleVolume(volume) {
       if (!clip) {
         return;
       }
-
       path = clip._nativeAsset;
     }
-
     audioEngine._uncache(path);
   };
-
   audioEngine._preload = audioEngine.preload;
-
   audioEngine.preload = function (filePath, callback) {
     cc.warn('`cc.audioEngine.preload` is deprecated, use `cc.assetManager.loadRes(url, cc.AudioClip)` instead please.');
-
     audioEngine._preload(filePath, callback);
   };
 })(Audio.prototype, jsb.AudioEngine);
@@ -1682,14 +1548,13 @@ var handleVolume = function handleVolume(volume) {
  THE SOFTWARE.
  ****************************************************************************/
 var _require = require('./jsb-fs-utils'),
-    getUserDataPath = _require.getUserDataPath,
-    readJsonSync = _require.readJsonSync,
-    makeDirSync = _require.makeDirSync,
-    writeFileSync = _require.writeFileSync,
-    writeFile = _require.writeFile,
-    deleteFile = _require.deleteFile,
-    rmdirSync = _require.rmdirSync;
-
+  getUserDataPath = _require.getUserDataPath,
+  readJsonSync = _require.readJsonSync,
+  makeDirSync = _require.makeDirSync,
+  writeFileSync = _require.writeFileSync,
+  writeFile = _require.writeFile,
+  deleteFile = _require.deleteFile,
+  rmdirSync = _require.rmdirSync;
 var writeCacheFileList = null;
 var startWrite = false;
 var nextCallbacks = [];
@@ -1714,7 +1579,6 @@ var cacheManager = {
     this.cacheDir = getUserDataPath() + '/' + this.cacheDir;
     var cacheFilePath = this.cacheDir + '/' + this.cachedFileName;
     var result = readJsonSync(cacheFilePath);
-
     if (result instanceof Error || !result.version || result.version !== this.version) {
       if (!(result instanceof Error)) rmdirSync(this.cacheDir, true);
       this.cachedFiles = new cc.AssetManager.Cache();
@@ -1741,11 +1605,9 @@ var cacheManager = {
       version: this.version
     }), 'utf8', function () {
       startWrite = false;
-
       for (var i = 0, j = callbacks.length; i < j; i++) {
         callbacks[i]();
       }
-
       callbacks.length = 0;
       callbacks.push.apply(callbacks, nextCallbacks);
       nextCallbacks.length = 0;
@@ -1754,7 +1616,6 @@ var cacheManager = {
   writeCacheFile: function writeCacheFile(cb) {
     if (!writeCacheFileList) {
       writeCacheFileList = setTimeout(this._write.bind(this), this.writeFileInterval);
-
       if (startWrite === true) {
         cb && nextCallbacks.push(cb);
       } else {
@@ -1774,7 +1635,6 @@ var cacheManager = {
   },
   clearCache: function clearCache() {
     var _this = this;
-
     rmdirSync(this.cacheDir, true);
     this.cachedFiles = new cc.AssetManager.Cache();
     makeDirSync(this.cacheDir, true);
@@ -1789,7 +1649,6 @@ var cacheManager = {
   },
   clearLRU: function clearLRU() {
     var _this2 = this;
-
     if (cleaning) return;
     cleaning = true;
     var caches = [];
@@ -1807,23 +1666,19 @@ var cacheManager = {
     });
     caches.length = Math.floor(caches.length / 3);
     if (caches.length === 0) return;
-
     for (var i = 0, l = caches.length; i < l; i++) {
       this.cachedFiles.remove(caches[i].originUrl);
     }
-
     this.writeCacheFile(function () {
       function deferredDelete() {
         var item = caches.pop();
         deleteFile(item.url);
-
         if (caches.length > 0) {
           setTimeout(deferredDelete, self.deleteInterval);
         } else {
           cleaning = false;
         }
       }
-
       setTimeout(deferredDelete, self.deleteInterval);
     });
   },
@@ -1846,7 +1701,6 @@ cc.assetManager.cacheManager = module.exports = cacheManager;
 "use strict";
 
 var _constants = require("constants");
-
 /****************************************************************************
  Copyright (c) 2018 Xiamen Yaji Software Co., Ltd.
 
@@ -1872,11 +1726,11 @@ var _constants = require("constants");
  THE SOFTWARE.
  ****************************************************************************/
 var cacheManager = require('./jsb-cache-manager');
-
 (function () {
   if (window.dragonBones === undefined || window.middleware === undefined) return;
-  if (dragonBones.DragonBonesAtlasAsset === undefined) return; // dragonbones global time scale.
+  if (dragonBones.DragonBonesAtlasAsset === undefined) return;
 
+  // dragonbones global time scale.
   Object.defineProperty(dragonBones, 'timeScale', {
     get: function get() {
       return this._timeScale;
@@ -1889,19 +1743,16 @@ var cacheManager = require('./jsb-cache-manager');
     configurable: true
   });
   jsb.generateGetSet(dragonBones);
-
   var _slotColor = cc.color(0, 0, 255, 255);
-
   var _boneColor = cc.color(255, 0, 0, 255);
+  var _originColor = cc.color(0, 255, 0, 255);
 
-  var _originColor = cc.color(0, 255, 0, 255); ////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////
   // override dragonBones library by native dragonBones
   ////////////////////////////////////////////////////////////
   //--------------------
   // adapt event name
   //--------------------
-
-
   dragonBones.EventObject.START = "start";
   dragonBones.EventObject.LOOP_COMPLETE = "loopComplete";
   dragonBones.EventObject.COMPLETE = "complete";
@@ -1914,91 +1765,78 @@ var cacheManager = require('./jsb-cache-manager');
   dragonBones.DragonBones = {
     ANGLE_TO_RADIAN: Math.PI / 180,
     RADIAN_TO_ANGLE: 180 / Math.PI
-  }; //-------------------
+  };
+
+  //-------------------
   // native factory
   //-------------------
 
   var factoryProto = dragonBones.CCFactory.prototype;
-
   factoryProto.createArmatureNode = function (comp, armatureName, node) {
     node = node || new cc.Node();
     var display = node.getComponent(dragonBones.ArmatureDisplay);
-
     if (!display) {
       display = node.addComponent(dragonBones.ArmatureDisplay);
     }
-
     node.name = armatureName;
     display._armatureName = armatureName;
     display._N$dragonAsset = comp.dragonAsset;
     display._N$dragonAtlasAsset = comp.dragonAtlasAsset;
-
     display._init();
-
     return display;
   };
-
   var _replaceSkin = factoryProto.replaceSkin;
-
   factoryProto.replaceSkin = function (armatrue, skinData, isOverride, exclude) {
     if (isOverride == undefined) isOverride = false;
     exclude = exclude || [];
-
     _replaceSkin.call(this, armatrue, skinData, isOverride, exclude);
   };
-
   var _changeSkin = factoryProto.changeSkin;
-
   factoryProto.changeSkin = function (armatrue, skinData, exclude) {
     _changeSkin.call(this, armatrue, skinData, exclude);
-  }; //-------------------
+  };
+
+  //-------------------
   // native animation state
   //-------------------
-
-
   var animationStateProto = dragonBones.AnimationState.prototype;
   var _isPlaying = animationStateProto.isPlaying;
   Object.defineProperty(animationStateProto, 'isPlaying', {
     get: function get() {
       return _isPlaying.call(this);
     }
-  }); //-------------------
+  });
+
+  //-------------------
   // native armature
   //-------------------
-
   var armatureProto = dragonBones.Armature.prototype;
-
   armatureProto.addEventListener = function (eventType, listener, target) {
     if (!this.__persistentDisplay__) {
       this.__persistentDisplay__ = this.getDisplay();
     }
-
     this.__persistentDisplay__.on(eventType, listener, target);
   };
-
   armatureProto.removeEventListener = function (eventType, listener, target) {
     if (!this.__persistentDisplay__) {
       this.__persistentDisplay__ = this.getDisplay();
     }
-
     this.__persistentDisplay__.off(eventType, listener, target);
-  }; //--------------------------
+  };
+
+  //--------------------------
   // native CCArmatureDisplay
   //--------------------------
-
-
   var nativeArmatureDisplayProto = dragonBones.CCArmatureDisplay.prototype;
   Object.defineProperty(nativeArmatureDisplayProto, "node", {
     get: function get() {
       return this;
     }
   });
-
   nativeArmatureDisplayProto.getRootNode = function () {
     var rootDisplay = this.getRootDisplay();
     return rootDisplay && rootDisplay._ccNode;
   };
-
   nativeArmatureDisplayProto.convertToWorldSpace = function (point) {
     var newPos = this.convertToRootSpace(point);
     newPos = cc.v2(newPos.x, newPos.y);
@@ -2007,114 +1845,90 @@ var cacheManager = require('./jsb-cache-manager');
     var finalPos = ccNode.convertToWorldSpaceAR(newPos);
     return finalPos;
   };
-
   nativeArmatureDisplayProto.initEvent = function () {
     if (this._eventTarget) {
       return;
     }
-
     this._eventTarget = new cc.EventTarget();
     this.setDBEventCallback(function (eventObject) {
       this._eventTarget.emit(eventObject.type, eventObject);
     });
   };
-
   nativeArmatureDisplayProto.on = function (type, listener, target) {
     this.initEvent();
-
     this._eventTarget.on(type, listener, target);
-
     this.addDBEventListener(type, listener);
   };
-
   nativeArmatureDisplayProto.off = function (type, listener, target) {
     this.initEvent();
-
     this._eventTarget.off(type, listener, target);
-
     this.removeDBEventListener(type, listener);
   };
-
   nativeArmatureDisplayProto.once = function (type, listener, target) {
     this.initEvent();
-
     this._eventTarget.once(type, listener, target);
-
     this.addDBEventListener(type, listener);
-  }; ////////////////////////////////////////////////////////////
+  };
+
+  ////////////////////////////////////////////////////////////
   // override DragonBonesAtlasAsset
   ////////////////////////////////////////////////////////////
-
-
   var dbAtlas = dragonBones.DragonBonesAtlasAsset.prototype;
   var _gTextureIdx = 1;
   var _textureKeyMap = {};
-
   var _textureMap = new WeakMap();
-
   var _textureIdx2Name = {};
-
   dbAtlas.removeRecordTexture = function (texture) {
     if (!texture) return;
     delete _textureIdx2Name[texture.url];
     var index = texture.__textureIndex__;
-
     if (index) {
       var texKey = _textureKeyMap[index];
-
       if (texKey && _textureMap.has(texKey)) {
         _textureMap["delete"](texKey);
-
         delete _textureKeyMap[index];
       }
     }
   };
-
   dbAtlas.recordTexture = function () {
     if (this._texture && this._oldTexture !== this._texture) {
       this.removeRecordTexture(this._oldTexture);
       var texKey = _textureKeyMap[_gTextureIdx] = {
         key: _gTextureIdx
       };
-
       _textureMap.set(texKey, this._texture);
-
       this._oldTexture = this._texture;
       this._texture.__textureIndex__ = _gTextureIdx;
       _gTextureIdx++;
     }
   };
-
   dbAtlas.getTextureByIndex = function (textureIdx) {
     var texKey = _textureKeyMap[textureIdx];
     if (!texKey) return;
     return _textureMap.get(texKey);
   };
-
   dbAtlas.updateTextureAtlasData = function (factory) {
     var url = this._texture.url;
     var preAtlasInfo = _textureIdx2Name[url];
-    var index; // If the texture has store the atlas info before,then get native atlas object,and 
-    // update script texture map.
+    var index;
 
+    // If the texture has store the atlas info before,then get native atlas object,and 
+    // update script texture map.
     if (preAtlasInfo) {
       index = preAtlasInfo.index;
       this._textureAtlasData = factory.getTextureAtlasDataByIndex(preAtlasInfo.name, index);
       var texKey = _textureKeyMap[preAtlasInfo.index];
-
       _textureMap.set(texKey, this._texture);
-
-      this._texture.__textureIndex__ = index; // If script has store the atlas info,but native has no atlas object,then
+      this._texture.__textureIndex__ = index;
+      // If script has store the atlas info,but native has no atlas object,then
       // still new native texture2d object,but no call recordTexture to increase
       // textureIndex.
-
       if (this._textureAtlasData) {
         return;
       }
     } else {
       this.recordTexture();
     }
-
     index = this._texture.__textureIndex__;
     this.jsbTexture = new middleware.Texture2D();
     this.jsbTexture.setRealTextureIndex(index);
@@ -2127,148 +1941,117 @@ var cacheManager = require('./jsb-cache-manager');
       index: index
     };
   };
-
   dbAtlas.init = function (factory) {
-    this._factory = factory; // If create by manual, uuid is empty.
+    this._factory = factory;
 
+    // If create by manual, uuid is empty.
     if (!this._uuid) {
       var atlasJsonObj = JSON.parse(this.atlasJson);
       this._uuid = atlasJsonObj.name;
     }
-
     if (this._textureAtlasData) {
       factory.addTextureAtlasData(this._textureAtlasData, this._uuid);
     } else {
       this.updateTextureAtlasData(factory);
     }
   };
-
   dbAtlas._clear = function (dontRecordTexture) {
     if (this._factory) {
       this._factory.removeTextureAtlasData(this._uuid, true);
-
       this._factory.removeDragonBonesDataByUUID(this._uuid, true);
     }
-
     this._textureAtlasData = null;
-
     if (!dontRecordTexture) {
       this.recordTexture();
     }
   };
-
   dbAtlas.destroy = function () {
     this.removeRecordTexture(this._texture);
-
     this._clear(true);
-
     cc.Asset.prototype.destroy.call(this);
-  }; ////////////////////////////////////////////////////////////
+  };
+
+  ////////////////////////////////////////////////////////////
   // override DragonBonesAsset
   ////////////////////////////////////////////////////////////
-
-
   var dbAsset = dragonBones.DragonBonesAsset.prototype;
-
   dbAsset.init = function (factory, atlasUUID) {
-    this._factory = factory; // If create by manual, uuid is empty.
-    // Only support json format, if remote load dbbin, must set uuid by manual.
+    this._factory = factory;
 
+    // If create by manual, uuid is empty.
+    // Only support json format, if remote load dbbin, must set uuid by manual.
     if (!this._uuid && this.dragonBonesJson) {
       var rawData = JSON.parse(this.dragonBonesJson);
       this._uuid = rawData.name;
     }
-
     var armatureKey = this._uuid + "#" + atlasUUID;
-
     var dragonBonesData = this._factory.getDragonBonesData(armatureKey);
-
     if (dragonBonesData) return armatureKey;
     var filePath = null;
-
     if (this.dragonBonesJson) {
       filePath = this.dragonBonesJson;
     } else {
       filePath = cacheManager.getCache(this.nativeUrl) || this.nativeUrl;
     }
-
     this._factory.parseDragonBonesDataByPath(filePath, armatureKey);
-
     return armatureKey;
   };
-
   var armatureCacheMgr = dragonBones.ArmatureCacheMgr.getInstance();
   dragonBones.armatureCacheMgr = armatureCacheMgr;
-
   dbAsset._clear = function () {
     if (this._factory) {
       this._factory.removeDragonBonesDataByUUID(this._uuid, true);
     }
-
     armatureCacheMgr.removeArmatureCache(this._uuid);
-  }; ////////////////////////////////////////////////////////////
+  };
+
+  ////////////////////////////////////////////////////////////
   // adapt attach util
   ////////////////////////////////////////////////////////////
 
-
   var attachUtilProto = dragonBones.AttachUtil.prototype;
   var _attachUtilInit = attachUtilProto.init;
-
   attachUtilProto.init = function (armatureDisplay) {
     _attachUtilInit.call(this, armatureDisplay);
-
     this._nativeDisplay = armatureDisplay._nativeDisplay;
     this._attachUtilNative = null;
   };
-
   var _generateAllAttachedNodes = attachUtilProto.generateAllAttachedNodes;
-
   attachUtilProto.generateAllAttachedNodes = function () {
     var res = _generateAllAttachedNodes.call(this);
-
     this._associateAttachedNode();
-
     return res;
   };
-
   var _generateAttachedNodes = attachUtilProto.generateAttachedNodes;
-
   attachUtilProto.generateAttachedNodes = function (boneName) {
     var res = _generateAttachedNodes.call(this, boneName);
-
     this._associateAttachedNode();
-
     return res;
   };
-
   var _associateAttachedNode = attachUtilProto._associateAttachedNode;
-
   attachUtilProto._associateAttachedNode = function () {
     if (!this._inited) return;
-
     var rootNode = this._armatureNode.getChildByName('ATTACHED_NODE_TREE');
+    if (!rootNode || !rootNode.isValid) return;
 
-    if (!rootNode || !rootNode.isValid) return; // associate js
+    // associate js
+    _associateAttachedNode.call(this);
 
-    _associateAttachedNode.call(this); // associate native
-
-
+    // associate native
     if (!this._attachUtilNative) {
       if (this._armatureDisplay.isAnimationCached()) {
         this._attachUtilNative = new dragonBones.CacheModeAttachUtil();
       } else {
         this._attachUtilNative = new dragonBones.RealTimeAttachUtil();
       }
-
       this._nativeDisplay.setAttachUtil(this._attachUtilNative);
     }
-
     this._attachUtilNative.associateAttachedNode(this._armature, this._armatureNode._proxy);
-  }; ////////////////////////////////////////////////////////////
+  };
+
+  ////////////////////////////////////////////////////////////
   // override ArmatureDisplay
   ////////////////////////////////////////////////////////////
-
-
   dragonBones.ArmatureDisplay._assembler = null;
   var armatureDisplayProto = dragonBones.ArmatureDisplay.prototype;
   var renderCompProto = cc.RenderComponent.prototype;
@@ -2280,29 +2063,21 @@ var cacheManager = require('./jsb-cache-manager');
     set: function set(value) {
       this._armatureName = value;
       var animNames = this.getAnimationNames(this._armatureName);
-
       if (!this.animationName || animNames.indexOf(this.animationName) < 0) {
         this.animationName = '';
       }
-
       var oldArmature = this._armature;
-
       if (this._armature) {
         if (!this.isAnimationCached()) {
           this._factory.remove(this._armature);
         }
-
         this._armature = null;
       }
-
       this._nativeDisplay = null;
-
       this._refresh();
-
       if (oldArmature && oldArmature != this._armature) {
         oldArmature.dispose();
       }
-
       if (this._armature && !this.isAnimationCached()) {
         this._factory.add(this._armature);
       }
@@ -2314,163 +2089,120 @@ var cacheManager = require('./jsb-cache-manager');
       if (this._premultipliedAlpha === undefined) {
         return false;
       }
-
       return this._premultipliedAlpha;
     },
     set: function set(value) {
       this._premultipliedAlpha = value;
-
       if (this._nativeDisplay) {
         this._nativeDisplay.setOpacityModifyRGB(this._premultipliedAlpha);
       }
     }
   });
   var _initDebugDraw = armatureDisplayProto._initDebugDraw;
-
   armatureDisplayProto._initDebugDraw = function () {
     _initDebugDraw.call(this);
-
     if (this._armature && !this.isAnimationCached()) {
       this._nativeDisplay.setDebugBonesEnabled(this.debugBones);
     }
   };
-
   var _updateBatch = armatureDisplayProto._updateBatch;
-
   armatureDisplayProto._updateBatch = function () {
     _updateBatch.call(this);
-
     if (this._nativeDisplay) {
       this._nativeDisplay.setBatchEnabled(this.enableBatch);
     }
-
     this._assembler && this._assembler.clearEffect();
   };
-
   armatureDisplayProto._clearRenderData = function () {
     this._nativeDisplay = null;
   };
-
   armatureDisplayProto._resetAssembler = function () {
     this._assembler = new renderer.CustomAssembler();
-
     this.node._proxy.setAssembler(this._assembler);
   };
-
   var _updateMaterial = armatureDisplayProto._updateMaterial;
   var _materialHash2IDMap = {};
   var _materialId = 1;
-
   armatureDisplayProto._updateMaterial = function () {
     _updateMaterial.call(this);
-
     this._assembler && this._assembler.clearEffect();
     var baseMaterial = this.getMaterial(0);
-
     if (this._nativeDisplay && baseMaterial) {
       var originHash = baseMaterial.effect.getHash();
       var id = _materialHash2IDMap[originHash] || _materialId++;
       _materialHash2IDMap[originHash] = id;
       baseMaterial.effect.updateHash(id);
       var nativeEffect = baseMaterial.effect._nativeObj;
-
       this._nativeDisplay.setEffect(nativeEffect);
     }
   };
-
   armatureDisplayProto._buildArmature = function () {
     if (!this.dragonAsset || !this.dragonAtlasAsset || !this.armatureName) {
       this._clearRenderData();
-
       return;
     }
-
     if (this._nativeDisplay) {
       this._nativeDisplay.dispose();
-
       this._nativeDisplay._comp = null;
       this._nativeDisplay = null;
     }
-
     var atlasUUID = this.dragonAtlasAsset._uuid;
     this._armatureKey = this.dragonAsset.init(this._factory, atlasUUID);
-
     if (this.isAnimationCached()) {
       this._nativeDisplay = new dragonBones.CCArmatureCacheDisplay(this.armatureName, this._armatureKey, atlasUUID, this._cacheMode == AnimationCacheMode.SHARED_CACHE);
       this._armature = this._nativeDisplay.armature();
     } else {
       this._nativeDisplay = this._factory.buildArmatureDisplay(this.armatureName, this._armatureKey, "", atlasUUID);
-
       if (!this._nativeDisplay) {
         this._clearRenderData();
-
         return;
       }
-
       this._nativeDisplay.setDebugBonesEnabled(this.debugBones);
-
       this._armature = this._nativeDisplay.armature();
       this._armature.animation.timeScale = this.timeScale;
-
       this._factory.add(this._armature);
-    } // add all event into native display
+    }
 
-
-    var callbackTable = this._eventTarget._callbackTable; // just use to adapt to native api
-
+    // add all event into native display
+    var callbackTable = this._eventTarget._callbackTable;
+    // just use to adapt to native api
     var emptyHandle = function emptyHandle() {};
-
     for (var key in callbackTable) {
       var list = callbackTable[key];
       if (!list || !list.callbackInfos || !list.callbackInfos.length) continue;
-
       if (this.isAnimationCached()) {
         this._nativeDisplay.addDBEventListener(key);
       } else {
         this._nativeDisplay.addDBEventListener(key, emptyHandle);
       }
     }
-
     this._preCacheMode = this._cacheMode;
     this._nativeDisplay._ccNode = this.node;
     this._nativeDisplay._comp = this;
     this._nativeDisplay._eventTarget = this._eventTarget;
-
     this._nativeDisplay.bindNodeProxy(this.node._proxy);
-
     this._nativeDisplay.setOpacityModifyRGB(this.premultipliedAlpha);
-
     this._nativeDisplay.setBatchEnabled(this.enableBatch);
-
     this._nativeDisplay.setColor(this.node.color);
-
     this._nativeDisplay.setDBEventCallback(function (eventObject) {
       this._eventTarget.emit(eventObject.type, eventObject);
     });
-
     this.attachUtil.init(this);
-
     this.attachUtil._associateAttachedNode();
-
     if (this.animationName) {
       this.playAnimation(this.animationName, this.playTimes);
     }
-
     this._updateMaterial();
-
     this.markForRender(true);
   };
-
   armatureDisplayProto._updateColor = function () {
     if (this._nativeDisplay) {
       this._nativeDisplay.setColor(this.node.color);
     }
   };
-
   armatureDisplayProto.playAnimation = function (animName, playTimes) {
     this.playTimes = playTimes === undefined ? -1 : playTimes;
     this.animationName = animName;
-
     if (this._nativeDisplay) {
       if (this.isAnimationCached()) {
         return this._nativeDisplay.playAnimation(animName, this.playTimes);
@@ -2480,13 +2212,10 @@ var cacheManager = require('./jsb-cache-manager');
         }
       }
     }
-
     return null;
   };
-
   armatureDisplayProto.updateAnimationCache = function (animName) {
     if (!this.isAnimationCached()) return;
-
     if (this._nativeDisplay) {
       if (animName) {
         this._nativeDisplay.updateAnimationCache(animName);
@@ -2495,39 +2224,30 @@ var cacheManager = require('./jsb-cache-manager');
       }
     }
   };
-
   armatureDisplayProto.invalidAnimationCache = function () {
     if (!this.isAnimationCached()) return;
-
     if (this._nativeDisplay) {
       this._nativeDisplay.updateAllAnimationCache();
     }
   };
-
   armatureDisplayProto.onEnable = function () {
     renderCompProto.onEnable.call(this);
-
     if (this._armature && !this.isAnimationCached()) {
       this._factory.add(this._armature);
     }
   };
-
   armatureDisplayProto.onDisable = function () {
     renderCompProto.onDisable.call(this);
-
     if (this._armature && !this.isAnimationCached()) {
       this._factory.remove(this._armature);
     }
   };
-
   var _onLoad = armatureDisplayProto.onLoad;
-
   armatureDisplayProto.onLoad = function () {
     if (_onLoad) {
       _onLoad.call(this);
     }
   };
-
   armatureDisplayProto.once = function (eventType, listener, target) {
     if (this._nativeDisplay) {
       if (this.isAnimationCached()) {
@@ -2536,10 +2256,8 @@ var cacheManager = require('./jsb-cache-manager');
         this._nativeDisplay.addDBEventListener(eventType, listener);
       }
     }
-
     this._eventTarget.once(eventType, listener, target);
   };
-
   armatureDisplayProto.addEventListener = function (eventType, listener, target) {
     if (this._nativeDisplay) {
       if (this.isAnimationCached()) {
@@ -2548,10 +2266,8 @@ var cacheManager = require('./jsb-cache-manager');
         this._nativeDisplay.addDBEventListener(eventType, listener);
       }
     }
-
     this._eventTarget.on(eventType, listener, target);
   };
-
   armatureDisplayProto.removeEventListener = function (eventType, listener, target) {
     if (this._nativeDisplay) {
       if (this.isAnimationCached()) {
@@ -2560,31 +2276,23 @@ var cacheManager = require('./jsb-cache-manager');
         this._nativeDisplay.removeDBEventListener(eventType, listener);
       }
     }
-
     this._eventTarget.off(eventType, listener, target);
   };
-
   var _onDestroy = armatureDisplayProto.onDestroy;
-
   armatureDisplayProto.onDestroy = function () {
     _onDestroy.call(this);
-
     if (this._nativeDisplay) {
       this._nativeDisplay.dispose();
-
       this._nativeDisplay._comp = null;
       this._nativeDisplay = null;
     }
-
     this._materialCache = null;
   };
-
   armatureDisplayProto.update = function () {
     var nativeDisplay = this._nativeDisplay;
     if (!nativeDisplay) return;
     var node = this.node;
     if (!node) return;
-
     if (!this.isAnimationCached() && this._debugDraw && this.debugBones) {
       var _nativeDisplay = this._nativeDisplay;
       this._debugData = this._debugData || _nativeDisplay.getDebugData();
@@ -2598,20 +2306,20 @@ var cacheManager = require('./jsb-cache-manager');
       graphics.fillColor = _slotColor; // Root bone color is same as slot color.
 
       var debugBonesLen = debugData[debugIdx++];
-
       for (var i = 0; i < debugBonesLen; i += 4) {
         var bx = debugData[debugIdx++];
         var by = debugData[debugIdx++];
         var x = debugData[debugIdx++];
-        var y = debugData[debugIdx++]; // Bone lengths.
+        var y = debugData[debugIdx++];
 
+        // Bone lengths.
         graphics.moveTo(bx, by);
         graphics.lineTo(x, y);
-        graphics.stroke(); // Bone origins.
+        graphics.stroke();
 
+        // Bone origins.
         graphics.circle(bx, by, Math.PI * 2);
         graphics.fill();
-
         if (i === 0) {
           graphics.fillColor = _originColor;
         }
@@ -2647,11 +2355,11 @@ var cacheManager = require('./jsb-cache-manager');
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 (function () {
   if (!(cc && cc.EditBox)) {
     return;
   }
-
   var EditBox = cc.EditBox;
   var js = cc.js;
   var KeyboardReturnType = EditBox.KeyboardReturnType;
@@ -2659,58 +2367,44 @@ var cacheManager = require('./jsb-cache-manager');
   var InputFlag = EditBox.InputFlag;
   var MAX_VALUE = 65535;
   var worldMat = new cc.Mat4(),
-      cameraMat = new cc.Mat4();
-
+    cameraMat = new cc.Mat4();
   function getInputType(type) {
     switch (type) {
       case InputMode.EMAIL_ADDR:
         return 'email';
-
       case InputMode.NUMERIC:
       case InputMode.DECIMAL:
         return 'number';
-
       case InputMode.PHONE_NUMBER:
         return 'phone';
-
       case InputMode.URL:
         return 'url';
-
       case InputMode.SINGLE_LINE:
       case InputMode.ANY:
       default:
         return 'text';
     }
   }
-
   function getKeyboardReturnType(type) {
     switch (type) {
       case KeyboardReturnType.DEFAULT:
       case KeyboardReturnType.DONE:
         return 'done';
-
       case KeyboardReturnType.SEND:
         return 'send';
-
       case KeyboardReturnType.SEARCH:
         return 'search';
-
       case KeyboardReturnType.GO:
         return 'go';
-
       case KeyboardReturnType.NEXT:
         return 'next';
     }
-
     return 'done';
   }
-
   var BaseClass = EditBox._ImplClass;
-
   function JsbEditBoxImpl() {
     BaseClass.call(this);
   }
-
   js.extend(JsbEditBoxImpl, BaseClass);
   EditBox._ImplClass = JsbEditBoxImpl;
   Object.assign(JsbEditBoxImpl.prototype, {
@@ -2719,54 +2413,43 @@ var cacheManager = require('./jsb-cache-manager');
         cc.error('EditBox init failed');
         return;
       }
-
       this._delegate = delegate;
     },
     _onResize: function _onResize() {
       var _this$_getRect = this._getRect(),
-          x = _this$_getRect.x,
-          y = _this$_getRect.y,
-          width = _this$_getRect.width,
-          height = _this$_getRect.height;
-
+        x = _this$_getRect.x,
+        y = _this$_getRect.y,
+        width = _this$_getRect.width,
+        height = _this$_getRect.height;
       jsb.inputBox.updateRect(x, y, width, height);
     },
     beginEditing: function beginEditing() {
       var self = this;
       var delegate = this._delegate;
       var multiline = delegate.inputMode === InputMode.ANY;
-
       var rect = this._getRect();
-
       var maxLength = delegate.maxLength < 0 ? MAX_VALUE : delegate.maxLength;
       var inputTypeString = getInputType(delegate.inputMode);
-
       if (delegate.inputFlag === InputFlag.PASSWORD) {
         inputTypeString = 'password';
       }
-
       function onConfirm(res) {
         delegate.editBoxEditingReturn();
       }
-
       function onInput(res) {
         if (delegate._string !== res.value) {
           delegate.editBoxTextChanged(res.value);
         }
       }
-
       function onComplete(res) {
         self.endEditing();
       }
-
       jsb.inputBox.onInput(onInput);
       jsb.inputBox.onConfirm(onConfirm);
       jsb.inputBox.onComplete(onComplete);
-
       if (!cc.sys.isMobile) {
         this._delegate._hideLabels();
       }
-
       jsb.inputBox.show({
         defaultValue: delegate._string,
         maxLength: maxLength,
@@ -2781,7 +2464,6 @@ var cacheManager = require('./jsb-cache-manager');
       });
       this._editing = true;
       delegate.editBoxEditingDidBegan();
-
       if (!cc.sys.isMobile) {
         cc.view.on('canvas-resize', this._onResize, this);
       }
@@ -2791,31 +2473,25 @@ var cacheManager = require('./jsb-cache-manager');
       jsb.inputBox.offInput();
       jsb.inputBox.offComplete();
       this._editing = false;
-
       if (!cc.sys.isMobile) {
         this._delegate._showLabels();
       }
-
       jsb.inputBox.hide();
-
       this._delegate.editBoxEditingDidEnded();
-
       if (!cc.sys.isMobile) {
         cc.view.off('canvas-resize', this._onResize, this);
       }
     },
     _getRect: function _getRect() {
       var node = this._delegate.node,
-          viewScaleX = cc.view._scaleX,
-          viewScaleY = cc.view._scaleY;
+        viewScaleX = cc.view._scaleX,
+        viewScaleY = cc.view._scaleY;
       var dpr = cc.view._devicePixelRatio;
       node.getWorldMatrix(worldMat);
       var camera = cc.Camera.findCamera(node);
-
       if (!camera) {
         return new cc.Rect();
       }
-
       camera.getWorldToScreenMatrix2D(cameraMat);
       cc.Mat4.multiply(cameraMat, cameraMat, worldMat);
       var contentSize = node._contentSize;
@@ -2829,7 +2505,7 @@ var cacheManager = require('./jsb-cache-manager');
       var finaleScaleY = cameraMat.m[5] * viewScaleY;
       var viewportRect = cc.view._viewportRect;
       var offsetX = viewportRect.x / dpr,
-          offsetY = viewportRect.y / dpr;
+        offsetY = viewportRect.y / dpr;
       return {
         x: cameraMat.m[12] * viewScaleX + offsetX,
         y: cameraMat.m[13] * viewScaleY + offsetY,
@@ -2851,12 +2527,10 @@ var cacheManager = require('./jsb-cache-manager');
   Object.assign(EffectVariant.prototype, {
     init: function init(effect) {
       _init.call(this, effect);
-
       this._nativeObj = new renderer.EffectVariant(effect._nativeObj);
     },
     _onEffectChanged: function _onEffectChanged() {
       var nativeEffect = this._effect ? this._effect._nativeObj : null;
-
       this._nativeObj.setEffect(nativeEffect);
     },
     updateHash: function updateHash(hash) {
@@ -2869,8 +2543,10 @@ var cacheManager = require('./jsb-cache-manager');
 "use strict";
 
 // Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-var gfx = window.gfx; // Effect
 
+var gfx = window.gfx;
+
+// Effect
 var Effect = cc.Effect;
 var _init = Effect.prototype.init;
 var _clone = Effect.prototype.clone;
@@ -2878,32 +2554,26 @@ var _switchTechnique = Effect.prototype.switchTechnique;
 Object.assign(Effect.prototype, {
   init: function init(name, techniques, techniqueIndex, asset, createNative) {
     _init.call(this, name, techniques, techniqueIndex, asset);
-
     if (createNative) {
       this._nativeObj = new renderer.EffectNative();
-
       this._nativeObj.init(techniques);
-
       this._nativePtr = this._nativeObj.self();
     }
   },
   clone: function clone() {
     var effect = _clone.call(this);
-
     effect._nativeObj = new renderer.EffectNative();
-
     effect._nativeObj.copy(this._nativeObj);
-
     effect._nativePtr = effect._nativeObj.self();
     return effect;
   },
   switchTechnique: function switchTechnique(techniqueIndex) {
     _switchTechnique.call(this, techniqueIndex);
-
     this._nativeObj.switchTechnique(techniqueIndex);
   }
-}); // EffectBase
+});
 
+// EffectBase
 var EffectBase = cc.EffectBase;
 var _setCullMode = EffectBase.prototype.setCullMode;
 var _setBlend = EffectBase.prototype.setBlend;
@@ -2916,9 +2586,7 @@ Object.assign(EffectBase.prototype, {
   setCullMode: function setCullMode() {
     var cullMode = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : gfx.CULL_BACK;
     var passIdx = arguments.length > 1 ? arguments[1] : undefined;
-
     _setCullMode.call(this, cullMode, passIdx);
-
     this._nativeObj.setCullMode(cullMode, passIdx === undefined ? -1 : passIdx);
   },
   setBlend: function setBlend() {
@@ -2931,19 +2599,15 @@ Object.assign(EffectBase.prototype, {
     var blendDstAlpha = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : gfx.BLEND_ONE_MINUS_SRC_ALPHA;
     var blendColor = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 0xffffffff;
     var passIdx = arguments.length > 8 ? arguments[8] : undefined;
-
     _setBlend.call(this, enabled, blendEq, blendSrc, blendDst, blendAlphaEq, blendSrcAlpha, blendDstAlpha, blendColor, passIdx);
-
     this._nativeObj.setBlend(enabled, blendEq, blendSrc, blendDst, blendAlphaEq, blendSrcAlpha, blendDstAlpha, blendColor, passIdx === undefined ? -1 : passIdx);
   },
   setDepth: function setDepth(depthTest, depthWrite, depthFunc, passIdx) {
     _setDepth.call(this, depthTest, depthWrite, depthFunc, passIdx);
-
     this._nativeObj.setDepth(depthTest, depthWrite, depthFunc, passIdx === undefined ? -1 : passIdx);
   },
   setStencilEnabled: function setStencilEnabled(enabled, passIdx) {
     _setStencilEnabled.call(this, enabled, passIdx);
-
     this._nativeObj.setStencilTest(enabled, passIdx === undefined ? -1 : passIdx);
   },
   setStencil: function setStencil() {
@@ -2956,14 +2620,11 @@ Object.assign(EffectBase.prototype, {
     var stencilZPassOp = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : gfx.STENCIL_OP_KEEP;
     var stencilWriteMask = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 0xff;
     var passIdx = arguments.length > 8 ? arguments[8] : undefined;
-
     _setStencil.call(this, enabled, stencilFunc, stencilRef, stencilMask, stencilFailOp, stencilZFailOp, stencilZPassOp, stencilWriteMask, passIdx);
-
     this._nativeObj.setStencil(stencilFunc, stencilRef, stencilMask, stencilFailOp, stencilZFailOp, stencilZPassOp, stencilWriteMask, passIdx === undefined ? -1 : passIdx);
   },
   define: function define(name, value, passIdx, force) {
     _define.call(this, name, value, passIdx, force);
-
     this._nativeObj.define(name, value, passIdx === undefined ? -1 : passIdx);
   },
   updateHash: function updateHash(hash) {
@@ -2971,9 +2632,7 @@ Object.assign(EffectBase.prototype, {
   },
   setProperty: function setProperty(name, val, passIdx, directly) {
     _setProperty.call(this, name, val, passIdx);
-
     var prop = this.getProperty(name);
-
     if (prop !== undefined) {
       this._nativeObj.setProperty(name, prop, passIdx === undefined ? -1 : passIdx, directly);
     }
@@ -3023,27 +2682,21 @@ var fsUtils = {
     !fs.isDirectoryExist(tempDir) && fs.createDirectory(tempDir);
     jsb_downloader.setOnFileTaskSuccess(function (task) {
       if (!downloading.has(task.requestURL)) return;
-
       var _downloading$remove = downloading.remove(task.requestURL),
-          onComplete = _downloading$remove.onComplete;
-
+        onComplete = _downloading$remove.onComplete;
       onComplete && onComplete(null, task.storagePath);
     });
     jsb_downloader.setOnTaskError(function (task, errorCode, errorCodeInternal, errorStr) {
       if (!downloading.has(task.requestURL)) return;
-
       var _downloading$remove2 = downloading.remove(task.requestURL),
-          onComplete = _downloading$remove2.onComplete;
-
+        onComplete = _downloading$remove2.onComplete;
       cc.error("Download file failed: path: ".concat(task.requestURL, " message: ").concat(errorStr, ", ").concat(errorCode));
       onComplete(new Error(errorStr), null);
     });
     jsb_downloader.setOnTaskProgress(function (task, bytesReceived, totalBytesReceived, totalBytesExpected) {
       if (!downloading.has(task.requestURL)) return;
-
       var _downloading$get = downloading.get(task.requestURL),
-          onProgress = _downloading$get.onProgress;
-
+        onProgress = _downloading$get.onProgress;
       onProgress && onProgress(totalBytesReceived, totalBytesExpected);
     });
   },
@@ -3055,12 +2708,10 @@ var fsUtils = {
       cc.warn('can not get the file system!');
       return false;
     }
-
     return true;
   },
   deleteFile: function deleteFile(filePath, onComplete) {
     var result = fs.removeFile(filePath);
-
     if (result === true) {
       onComplete && onComplete(null);
     } else {
@@ -3081,51 +2732,42 @@ var fsUtils = {
     var err = null;
     var result = fs.writeDataToFile(fs.getDataFromFile(srcPath), destPath);
     fs.removeFile(srcPath);
-
     if (!result) {
       err = new Error("Save file failed: path: ".concat(srcPath));
       cc.warn(err.message);
     }
-
     onComplete && onComplete(err);
   },
   copyFile: function copyFile(srcPath, destPath, onComplete) {
     var err = null;
     var result = fs.writeDataToFile(fs.getDataFromFile(srcPath), destPath);
-
     if (!result) {
       err = new Error("Copy file failed: path: ".concat(srcPath));
       cc.warn(err.message);
     }
-
     onComplete && onComplete(err);
   },
   writeFile: function writeFile(path, data, encoding, onComplete) {
     var result = null;
     var err = null;
-
     if (encoding === 'utf-8' || encoding === 'utf8') {
       result = fs.writeStringToFile(data, path);
     } else {
       result = fs.writeDataToFile(data, path);
     }
-
     if (!result) {
       err = new Error("Write file failed: path: ".concat(path));
       cc.warn(err.message);
     }
-
     onComplete && onComplete(err);
   },
   writeFileSync: function writeFileSync(path, data, encoding) {
     var result = null;
-
     if (encoding === 'utf-8' || encoding === 'utf8') {
       result = fs.writeStringToFile(data, path);
     } else {
       result = fs.writeDataToFile(data, path);
     }
-
     if (!result) {
       cc.warn("Write file failed: path: ".concat(path));
       return new Error("Write file failed: path: ".concat(path));
@@ -3133,32 +2775,27 @@ var fsUtils = {
   },
   readFile: function readFile(filePath, encoding, onComplete) {
     var content = null,
-        err = null;
-
+      err = null;
     if (encoding === 'utf-8' || encoding === 'utf8') {
       content = fs.getStringFromFile(filePath);
     } else {
       content = fs.getDataFromFile(filePath);
     }
-
     if (!content) {
       err = new Error("Read file failed: path: ".concat(filePath));
       cc.warn(err.message);
     }
-
     onComplete && onComplete(err, content);
   },
   readDir: function readDir(filePath, onComplete) {
     var files = null,
-        err = null;
-
+      err = null;
     try {
       files = fs.listFiles(filePath);
     } catch (e) {
       cc.warn("Read dir failed: path: ".concat(filePath, " message: ").concat(e.message));
       err = new Error(e.message);
     }
-
     onComplete && onComplete(err, files);
   },
   readText: function readText(filePath, onComplete) {
@@ -3170,7 +2807,6 @@ var fsUtils = {
   readJson: function readJson(filePath, onComplete) {
     fsUtils.readFile(filePath, 'utf8', function (err, text) {
       var out = null;
-
       if (!err) {
         try {
           out = JSON.parse(text);
@@ -3179,7 +2815,6 @@ var fsUtils = {
           err = new Error(e.message);
         }
       }
-
       onComplete && onComplete(err, out);
     });
   },
@@ -3194,7 +2829,6 @@ var fsUtils = {
   },
   makeDirSync: function makeDirSync(path, recursive) {
     var result = fs.createDirectory(path);
-
     if (!result) {
       cc.warn("Make directory failed: path: ".concat(path));
       return new Error("Make directory failed: path: ".concat(path));
@@ -3202,7 +2836,6 @@ var fsUtils = {
   },
   rmdirSync: function rmdirSync(dirPath, recursive) {
     var result = fs.removeDirectory(dirPath);
-
     if (!result) {
       cc.warn("rm directory failed: path: ".concat(dirPath));
       return new Error("rm directory failed: path: ".concat(dirPath));
@@ -3245,32 +2878,25 @@ window.fsUtils = module.exports = fsUtils;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 cc.game.restart = function () {
   // Need to clear scene, or native object destructor won't be invoke.
   cc.director.getScene().destroy();
-
   cc.Object._deferredDestroy();
-
   cc.game.pause();
-
   __restartVM();
 };
-
 jsb.onError(function (location, message, stack) {
   console.error(location, message, stack);
 });
-
 jsb.onPause = function () {
   cc.game.emit(cc.game.EVENT_HIDE);
 };
-
 jsb.onResume = function () {
   cc.game.emit(cc.game.EVENT_SHOW);
 };
-
 jsb.onResize = function (size) {
   if (size.width === 0 || size.height === 0) return;
-
   if (globalThis.oh) {
     size.width /= globalThis.oh.devicePixelRatio;
     size.height /= globalThis.oh.devicePixelRatio;
@@ -3278,7 +2904,6 @@ jsb.onResize = function (size) {
     size.width /= window.devicePixelRatio;
     size.height /= window.devicePixelRatio;
   }
-
   window.resize(size.width, size.height);
 };
 
@@ -3308,18 +2933,17 @@ jsb.onResize = function (size) {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 'use strict';
 
 var cacheManager = require('./jsb-cache-manager');
-
 var _require = require('./jsb-fs-utils'),
-    downloadFile = _require.downloadFile,
-    readText = _require.readText,
-    readArrayBuffer = _require.readArrayBuffer,
-    readJson = _require.readJson,
-    getUserDataPath = _require.getUserDataPath,
-    initJsbDownloader = _require.initJsbDownloader;
-
+  downloadFile = _require.downloadFile,
+  readText = _require.readText,
+  readArrayBuffer = _require.readArrayBuffer,
+  readJson = _require.readJson,
+  getUserDataPath = _require.getUserDataPath,
+  initJsbDownloader = _require.initJsbDownloader;
 var REGEX = /^\w+:\/\/.*/;
 var downloader = cc.assetManager.downloader;
 var parser = cc.assetManager.parser;
@@ -3338,13 +2962,11 @@ var remoteBundles = {};
 var failureMap = {};
 var maxRetryCountFromBreakpoint = 5;
 var loadedScripts = {};
-
 function downloadScript(url, options, onComplete) {
   if (typeof options === 'function') {
     onComplete = options;
     options = null;
   }
-
   if (loadedScripts[url]) return onComplete && onComplete();
   download(url, function (src, options, onComplete) {
     if (globalThis.oh) {
@@ -3352,15 +2974,12 @@ function downloadScript(url, options, onComplete) {
     } else {
       window.require(src);
     }
-
     loadedScripts[url] = true;
     onComplete && onComplete(null);
   }, options, options.onFileProgress, onComplete);
 }
-
 function download(url, func, options, onFileProgress, onComplete) {
   var result = transformUrl(url, options);
-
   if (result.inLocal) {
     func(result.url, options, onComplete);
   } else if (result.inCache) {
@@ -3369,14 +2988,12 @@ function download(url, func, options, onFileProgress, onComplete) {
       if (err) {
         cacheManager.removeCache(url);
       }
-
       onComplete(err, data);
     });
   } else {
     var time = Date.now();
     var storagePath = '';
     var failureRecord = failureMap[url];
-
     if (failureRecord) {
       storagePath = failureRecord.storagePath;
     } else if (options.__cacheBundleRoot__) {
@@ -3384,12 +3001,10 @@ function download(url, func, options, onFileProgress, onComplete) {
     } else {
       storagePath = "".concat(time).concat(suffix++).concat(cc.path.extname(url));
     }
-
     downloadFile(url, "".concat(cacheManager.cacheDir, "/").concat(storagePath), options.header, onFileProgress, function (err, path) {
       if (err) {
         if (failureRecord) {
           failureRecord.retryCount++;
-
           if (failureRecord.retryCount >= maxRetryCountFromBreakpoint) {
             delete failureMap[url];
           }
@@ -3399,27 +3014,22 @@ function download(url, func, options, onFileProgress, onComplete) {
             storagePath: storagePath
           };
         }
-
         onComplete(err, null);
         return;
       }
-
       delete failureMap[url];
       func(path, options, function (err, data) {
         if (!err) {
           cacheManager.cacheFile(url, storagePath, options.__cacheBundleRoot__);
         }
-
         onComplete(err, data);
       });
     });
   }
 }
-
 function transformUrl(url, options) {
   var inLocal = false;
   var inCache = false;
-
   if (REGEX.test(url)) {
     if (options.reload) {
       return {
@@ -3427,7 +3037,6 @@ function transformUrl(url, options) {
       };
     } else {
       var cache = cacheManager.getCache(url);
-
       if (cache) {
         inCache = true;
         url = cache;
@@ -3436,66 +3045,52 @@ function transformUrl(url, options) {
   } else {
     inLocal = true;
   }
-
   return {
     url: url,
     inLocal: inLocal,
     inCache: inCache
   };
 }
-
 function doNothing(content, options, onComplete) {
   onComplete(null, content);
 }
-
 function downloadAsset(url, options, onComplete) {
   download(url, doNothing, options, options.onFileProgress, onComplete);
 }
-
 function _getFontFamily(fontHandle) {
   var ttfIndex = fontHandle.lastIndexOf(".ttf");
   if (ttfIndex === -1) return fontHandle;
   var slashPos = fontHandle.lastIndexOf("/");
   var fontFamilyName;
-
   if (slashPos === -1) {
     fontFamilyName = fontHandle.substring(0, ttfIndex) + "_LABEL";
   } else {
     fontFamilyName = fontHandle.substring(slashPos + 1, ttfIndex) + "_LABEL";
   }
-
   if (fontFamilyName.indexOf(' ') !== -1) {
     fontFamilyName = '"' + fontFamilyName + '"';
   }
-
   return fontFamilyName;
 }
-
 function parseText(url, options, onComplete) {
   readText(url, onComplete);
 }
-
 function parseJson(url, options, onComplete) {
   readJson(url, onComplete);
 }
-
 function downloadText(url, options, onComplete) {
   download(url, parseText, options, options.onFileProgress, onComplete);
 }
-
 function parseArrayBuffer(url, options, onComplete) {
   readArrayBuffer(url, onComplete);
 }
-
 function downloadJson(url, options, onComplete) {
   download(url, parseJson, options, options.onFileProgress, onComplete);
 }
-
 function downloadBundle(nameOrUrl, options, onComplete) {
   var bundleName = cc.path.basename(nameOrUrl);
   var version = options.version || cc.assetManager.downloader.bundleVers[bundleName];
   var url;
-
   if (REGEX.test(nameOrUrl) || nameOrUrl.startsWith(getUserDataPath())) {
     url = nameOrUrl;
     cacheManager.makeBundleFolder(bundleName);
@@ -3507,14 +3102,12 @@ function downloadBundle(nameOrUrl, options, onComplete) {
       url = "assets/".concat(bundleName);
     }
   }
-
   var config = "".concat(url, "/config.").concat(version ? version + '.' : '', "json");
   options.__cacheBundleRoot__ = bundleName;
   downloadJson(config, options, function (err, response) {
     if (err) {
       return onComplete(err, null);
     }
-
     var out = response;
     out && (out.base = url + '/');
     var js = "".concat(url, "/index.").concat(version ? version + '.' : '').concat(out.encrypted ? 'jsc' : "js");
@@ -3522,17 +3115,13 @@ function downloadBundle(nameOrUrl, options, onComplete) {
       if (err) {
         return onComplete(err, null);
       }
-
       onComplete(err, out);
     });
   });
 }
-
 ;
-
 function loadFont(url, options, onComplete) {
   var fontFamilyName = _getFontFamily(url);
-
   var fontFace = new FontFace(fontFamilyName, "url('" + url + "')");
   document.fonts.add(fontFace);
   fontFace.load();
@@ -3543,20 +3132,16 @@ function loadFont(url, options, onComplete) {
     onComplete(null, fontFamilyName);
   });
 }
-
 function parsePlist(url, options, onComplete) {
   readText(url, function (err, file) {
     var result = null;
-
     if (!err) {
       result = cc.plistParser.parse(file);
       if (!result) err = new Error('parse failed');
     }
-
     onComplete && onComplete(err, result);
   });
 }
-
 parser.parsePVRTex = downloader.downloadDomImage;
 parser.parsePKMTex = downloader.downloadDomImage;
 parser.parseASTCTex = downloader.downloadDomImage;
@@ -3657,17 +3242,14 @@ parser.register({
 });
 cc.assetManager.transformPipeline.append(function (task) {
   var input = task.output = task.input;
-
   for (var i = 0, l = input.length; i < l; i++) {
     var item = input[i];
-
     if (item.config) {
       item.options.__cacheBundleRoot__ = item.config.name;
     }
   }
 });
 var originInit = cc.assetManager.init;
-
 cc.assetManager.init = function (options) {
   originInit.call(cc.assetManager, options);
   options.remoteBundles && options.remoteBundles.forEach(function (x) {
@@ -3706,12 +3288,12 @@ cc.assetManager.init = function (options) {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 (function () {
   if (window.middleware === undefined) return;
   var ParticleSystem = cc.ParticleSystem;
   if (ParticleSystem === undefined) return;
   var PSProto = ParticleSystem.prototype;
-
   PSProto.initProperties = function () {
     this._simulator = new middleware.ParticleSimulator();
     this._previewTimer = null;
@@ -3719,22 +3301,18 @@ cc.assetManager.init = function (options) {
     this._texture = null;
     this._renderData = null;
     this._simulator.__particleSystem__ = this;
-
     this._simulator.setFinishedCallback(function () {
       var self = this.__particleSystem__;
-
       self._finishedSimulation();
     });
-
     this._simulator.setStopCallback(function () {
       var self = this.__particleSystem__;
       self.stopSystem();
     });
-
     this._initProperties();
-  }; // value type properties
+  };
 
-
+  // value type properties
   var propertiesList = ["positionType", "emissionRate", "totalParticles", "duration", "emitterMode", "life", "lifeVar", "startSize", "startSizeVar", "endSize", "endSizeVar", "startSpin", "startSpinVar", "endSpin", "endSpinVar", "angle", "angleVar", "speed", "speedVar", "radialAccel", "radialAccelVar", "tangentialAccel", "tangentialAccelVar", "rotationIsDir", "startRadius", "startRadiusVar", "endRadius", "endRadiusVar", "rotatePerS", "rotatePerSVar"];
   propertiesList.forEach(function (getSetName) {
     var varName = "_" + getSetName;
@@ -3748,8 +3326,9 @@ cc.assetManager.init = function (options) {
         this._simulator && (this._simulator[getSetName] = val);
       }
     });
-  }); // object type properties
+  });
 
+  // object type properties
   var objPropList = ['gravity', 'sourcePos', 'posVar', 'startColor', 'startColorVar', 'endColor', 'endColorVar'];
   PSProto._initProperties = function () {
     // init properties
@@ -3757,7 +3336,6 @@ cc.assetManager.init = function (options) {
       var propName = propertiesList[key];
       this[propName] = this[propName];
     }
-
     for (var _key in objPropList) {
       var _propName = objPropList[_key];
       this[_propName] = this[_propName];
@@ -3866,7 +3444,6 @@ cc.assetManager.init = function (options) {
       if (!this._simulator) {
         return 0;
       }
-
       return this._simulator.getParticleCount();
     }
   });
@@ -3875,83 +3452,58 @@ cc.assetManager.init = function (options) {
       if (!this._simulator) {
         return false;
       }
-
       return this._simulator.active();
     }
   });
-
   PSProto.onLoad = function () {
     this._simulator.bindNodeProxy(this.node._proxy);
-  }; // shield in native
-
-
-  PSProto.update = null;
-  PSProto.lateUpdate = null;
-
-  PSProto._resetAssembler = function () {
-    this._assembler = new renderer.CustomAssembler();
-
-    this._assembler.setUseModel(true);
-
-    this.node._proxy.setAssembler(this._assembler);
   };
 
+  // shield in native
+  PSProto.update = null;
+  PSProto.lateUpdate = null;
+  PSProto._resetAssembler = function () {
+    this._assembler = new renderer.CustomAssembler();
+    this._assembler.setUseModel(true);
+    this.node._proxy.setAssembler(this._assembler);
+  };
   var _onEnable = PSProto.onEnable;
-
   PSProto.onEnable = function () {
     _onEnable.call(this);
-
     if (this._simulator) {
       this._simulator.onEnable();
     }
   };
-
   var _onDisable = PSProto.onDisable;
-
   PSProto.onDisable = function () {
     _onDisable.call(this);
-
     if (this._simulator) {
       this._simulator.onDisable();
     }
   };
-
   PSProto._onTextureLoaded = function () {
     this._simulator.updateUVs(this._renderSpriteFrame.uv);
-
     this._syncAspect();
-
     this._simulator.aspectRatio = this._aspectRatio || 1.0;
-
     this._updateMaterial();
-
     this.markForRender(true);
   };
-
   var _updateMaterial = PSProto._updateMaterial;
-
   PSProto._updateMaterial = function () {
     _updateMaterial.call(this);
-
     var material = this._materials[0];
-    material && this._simulator.setEffect(material.effect._nativeObj); // upload hash value to native
-
+    material && this._simulator.setEffect(material.effect._nativeObj);
+    // upload hash value to native
     material && material.getHash();
   };
-
   var _initWithDictionary = PSProto._initWithDictionary;
-
   PSProto._initWithDictionary = function (content) {
     _initWithDictionary.call(this, content);
-
     this._initProperties();
   };
-
   var __preload = PSProto.__preload;
-
   PSProto.__preload = function () {
     __preload.call(this);
-
     this._initProperties();
   };
 })();
@@ -3983,6 +3535,7 @@ cc.assetManager.init = function (options) {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 // JS to Native bridges
 if (window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID) {
   jsb.reflection = new JavascriptJavaBridge();
@@ -3995,14 +3548,12 @@ if (window.JavascriptJavaBridge && cc.sys.os == cc.sys.OS_ANDROID) {
 "use strict";
 
 var SafeArea = cc.SafeArea;
-
 if (SafeArea) {
   var _onEnable = SafeArea.prototype.onEnable;
   var _onDisable = SafeArea.prototype.onDisable;
   Object.assign(SafeArea.prototype, {
     onEnable: function onEnable() {
       _onEnable.call(this);
-
       this._adaptSafeAreaChangeWithThis = this.adaptSafeAreaChange.bind(this);
       this._updateAreaWithThis = this.adaptSafeAreaChange.bind(this);
       window.addEventListener('orientationchange', this._adaptSafeAreaChangeWithThis);
@@ -4010,13 +3561,11 @@ if (SafeArea) {
     },
     onDisable: function onDisable() {
       _onDisable.call(this);
-
       window.removeEventListener('orientationchange', this._adaptSafeAreaChangeWithThis);
       window.removeEventListener('safearea-change', this._updateAreaWithThis);
     },
     adaptSafeAreaChange: function adaptSafeAreaChange() {
       var _this = this;
-
       if (CC_JSB && (cc.sys.os === cc.sys.OS_IOS || cc.sys.os === cc.sys.OS_ANDROID)) {
         setTimeout(function () {
           _this.updateArea();
@@ -4068,12 +3617,12 @@ if (SafeArea) {
  THE SOFTWARE.
  ****************************************************************************/
 var cacheManager = require('./jsb-cache-manager');
-
 (function () {
   if (window.sp === undefined || window.spine === undefined || window.middleware === undefined) return;
   sp.VertexEffectDelegate = spine.VertexEffectDelegate;
-  jsb.generateGetSet(spine); // spine global time scale
+  jsb.generateGetSet(spine);
 
+  // spine global time scale
   Object.defineProperty(sp, 'timeScale', {
     get: function get() {
       return this._timeScale;
@@ -4084,95 +3633,71 @@ var cacheManager = require('./jsb-cache-manager');
     },
     configurable: true
   });
-
   var _slotColor = cc.color(0, 0, 255, 255);
-
   var _boneColor = cc.color(255, 0, 0, 255);
-
   var _meshColor = cc.color(255, 255, 0, 255);
-
   var _originColor = cc.color(0, 255, 0, 255);
-
   var skeletonDataProto = sp.SkeletonData.prototype;
   var _gTextureIdx = 1;
   var _textureKeyMap = {};
-
   var _textureMap = new WeakMap();
-
   var skeletonDataMgr = spine.SkeletonDataMgr.getInstance();
   spine.skeletonDataMgr = skeletonDataMgr;
   skeletonDataMgr.setDestroyCallback(function (textureIndex) {
     if (!textureIndex) return;
     var texKey = _textureKeyMap[textureIndex];
-
     if (texKey && _textureMap.has(texKey)) {
       _textureMap["delete"](texKey);
-
       delete _textureKeyMap[textureIndex];
     }
   });
   var skeletonCacheMgr = spine.SkeletonCacheMgr.getInstance();
   spine.skeletonCacheMgr = skeletonCacheMgr;
-
   skeletonDataProto.destroy = function () {
     this.reset();
     skeletonCacheMgr.removeSkeletonCache(this._uuid);
     cc.Asset.prototype.destroy.call(this);
   };
-
   skeletonDataProto.reset = function () {
     if (this._skeletonCache) {
       spine.disposeSkeletonData(this._uuid);
       this._jsbTextures = null;
       this._skeletonCache = null;
     }
-
     this._atlasCache = null;
   };
-
   skeletonDataProto.getRuntimeData = function () {
     if (!this._skeletonCache) {
       this.init();
     }
-
     return this._skeletonCache;
   };
-
   skeletonDataProto.init = function () {
     if (this._skeletonCache) return;
     var uuid = this._uuid;
-
     if (!uuid) {
       cc.errorID(7504);
       return;
     }
-
     var skeletonCache = spine.retainSkeletonData(uuid);
-
     if (skeletonCache) {
       this._skeletonCache = skeletonCache;
       this.width = this._skeletonCache.getWidth();
       this.height = this._skeletonCache.getHeight();
       return;
     }
-
     var atlasText = this.atlasText;
-
     if (!atlasText) {
       cc.errorID(7508, this.name);
       return;
     }
-
     var textures = this.textures;
     var textureNames = this.textureNames;
-
     if (!(textures && textures.length > 0 && textureNames && textureNames.length > 0)) {
       cc.errorID(7507, this.name);
       return;
     }
-
     var jsbTextures = {};
-
     for (var i = 0; i < textures.length; ++i) {
       var texture = textures[i];
       var textureIdx = this.recordTexture(texture);
@@ -4188,63 +3713,54 @@ var cacheManager = require('./jsb-cache-manager');
       spTex.setNativeTexture(texture.getImpl());
       jsbTextures[textureNames[i]] = spTex;
     }
-
     this._jsbTextures = jsbTextures;
     var filePath = null;
-
     if (this.skeletonJsonStr) {
       filePath = this.skeletonJsonStr;
     } else {
       filePath = cacheManager.getCache(this.nativeUrl) || this.nativeUrl;
     }
-
     this._skeletonCache = spine.initSkeletonData(uuid, filePath, atlasText, jsbTextures, this.scale);
-
     if (this._skeletonCache) {
       this.width = this._skeletonCache.getWidth();
       this.height = this._skeletonCache.getHeight();
     }
   };
-
   skeletonDataProto.recordTexture = function (texture) {
     var index = _gTextureIdx;
     var texKey = _textureKeyMap[index] = {
       key: index
     };
-
     _textureMap.set(texKey, texture);
-
     _gTextureIdx++;
     return index;
   };
-
   skeletonDataProto.getTextureByIndex = function (textureIdx) {
     var texKey = _textureKeyMap[textureIdx];
     if (!texKey) return;
     return _textureMap.get(texKey);
   };
-
   var renderCompProto = cc.RenderComponent.prototype;
-  var animation = spine.SkeletonAnimation.prototype; // The methods are added to be compatibility with old versions.
-
+  var animation = spine.SkeletonAnimation.prototype;
+  // The methods are added to be compatibility with old versions.
   animation.setCompleteListener = function (listener) {
     this._compeleteListener = listener;
     this.setCompleteListenerNative(function (trackEntry) {
       var loopCount = Math.floor(trackEntry.trackTime / trackEntry.animationEnd);
       this._compeleteListener && this._compeleteListener(trackEntry, loopCount);
     });
-  }; // The methods are added to be compatibility with old versions.
+  };
 
-
+  // The methods are added to be compatibility with old versions.
   animation.setTrackCompleteListener = function (trackEntry, listener) {
     this._trackCompeleteListener = listener;
     this.setTrackCompleteListenerNative(trackEntry, function (trackEntryNative) {
       var loopCount = Math.floor(trackEntryNative.trackTime / trackEntryNative.animationEnd);
       this._trackCompeleteListener && this._trackCompeleteListener(trackEntryNative, loopCount);
     });
-  }; // Temporary solution before upgrade the Spine API
+  };
 
-
+  // Temporary solution before upgrade the Spine API
   animation.setAnimationListener = function (target, callback) {
     this._target = target;
     this._callback = callback;
@@ -4279,7 +3795,6 @@ var cacheManager = require('./jsb-cache-manager');
       }
     });
   };
-
   sp.Skeleton._assembler = null;
   var skeleton = sp.Skeleton.prototype;
   var AnimationCacheMode = sp.Skeleton.AnimationCacheMode;
@@ -4289,7 +3804,6 @@ var cacheManager = require('./jsb-cache-manager');
     },
     set: function set(value) {
       this._paused = value;
-
       if (this._nativeSkeleton) {
         this._nativeSkeleton.paused(value);
       }
@@ -4300,12 +3814,10 @@ var cacheManager = require('./jsb-cache-manager');
       if (this._premultipliedAlpha === undefined) {
         return true;
       }
-
       return this._premultipliedAlpha;
     },
     set: function set(value) {
       this._premultipliedAlpha = value;
-
       if (this._nativeSkeleton) {
         this._nativeSkeleton.setOpacityModifyRGB(this._premultipliedAlpha);
       }
@@ -4318,133 +3830,97 @@ var cacheManager = require('./jsb-cache-manager');
     },
     set: function set(value) {
       this._timeScale = value;
-
       if (this._nativeSkeleton) {
         this._nativeSkeleton.setTimeScale(this._timeScale);
       }
     }
   });
   var _updateDebugDraw = skeleton._updateDebugDraw;
-
   skeleton._updateDebugDraw = function () {
     _updateDebugDraw.call(this);
-
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setDebugMeshEnabled(this.debugMesh);
-
       this._nativeSkeleton.setDebugSlotsEnabled(this.debugSlots);
-
       this._nativeSkeleton.setDebugBonesEnabled(this.debugBones);
     }
   };
-
   var _updateUseTint = skeleton._updateUseTint;
-
   skeleton._updateUseTint = function () {
     _updateUseTint.call(this);
-
     if (this._nativeSkeleton) {
       this._nativeSkeleton.setUseTint(this.useTint);
     }
-
     this._assembler && this._assembler.clearEffect();
   };
-
   var _updateBatch = skeleton._updateBatch;
-
   skeleton._updateBatch = function () {
     _updateBatch.call(this);
-
     if (this._nativeSkeleton) {
       this._nativeSkeleton.setBatchEnabled(this.enableBatch);
     }
-
     this._assembler && this._assembler.clearEffect();
   };
-
   var _onLoad = skeleton.onLoad;
-
   skeleton.onLoad = function () {
     if (_onLoad) {
       _onLoad.call(this);
     }
   };
-
   skeleton._resetAssembler = function () {
     this._assembler = new renderer.CustomAssembler();
-
     this.node._proxy.setAssembler(this._assembler);
   };
-
   var _updateMaterial = skeleton._updateMaterial;
   var _materialHashMap = {};
   var _materialId = 1;
-
   skeleton._updateMaterial = function () {
     _updateMaterial.call(this);
-
     this._assembler && this._assembler.clearEffect();
     var baseMaterial = this.getMaterial(0);
-
     if (this._nativeSkeleton && baseMaterial) {
       var originHash = baseMaterial.effect.getHash();
       var id = _materialHashMap[originHash] || _materialId++;
       _materialHashMap[originHash] = id;
       baseMaterial.effect.updateHash(id);
       var nativeEffect = baseMaterial.effect._nativeObj;
-
       this._nativeSkeleton.setEffect(nativeEffect);
     }
   };
-
   skeleton.setSkeletonData = function (skeletonData) {
     if (null != skeletonData.width && null != skeletonData.height && 0 !== skeletonData.width && 0 !== skeletonData.height) {
       this.node.setContentSize(skeletonData.width, skeletonData.height);
     }
-
     var uuid = skeletonData._uuid;
-
     if (!uuid) {
       cc.errorID(7504);
       return;
     }
-
     var texValues = skeletonData.textures;
     var texKeys = skeletonData.textureNames;
-
     if (!(texValues && texValues.length > 0 && texKeys && texKeys.length > 0)) {
       cc.errorID(7507, skeletonData.name);
       return;
     }
-
     if (this._nativeSkeleton) {
       this._nativeSkeleton._comp = null;
-
       this._nativeSkeleton.destroy();
-
       this._nativeSkeleton = null;
     }
-
     var nativeSkeleton = null;
-
     if (this.isAnimationCached()) {
       nativeSkeleton = new spine.SkeletonCacheAnimation(uuid, this._cacheMode == AnimationCacheMode.SHARED_CACHE);
     } else {
       nativeSkeleton = new spine.SkeletonAnimation();
-
       try {
         spine.initSkeletonRenderer(nativeSkeleton, uuid);
       } catch (e) {
         cc._throw(e);
-
         return;
       }
-
       nativeSkeleton.setDebugSlotsEnabled(this.debugSlots);
       nativeSkeleton.setDebugMeshEnabled(this.debugMesh);
       nativeSkeleton.setDebugBonesEnabled(this.debugBones);
     }
-
     this._nativeSkeleton = nativeSkeleton;
     nativeSkeleton._comp = this;
     nativeSkeleton.setUseTint(this.useTint);
@@ -4453,61 +3929,51 @@ var cacheManager = require('./jsb-cache-manager');
     nativeSkeleton.setBatchEnabled(this.enableBatch);
     nativeSkeleton.bindNodeProxy(this.node._proxy);
     nativeSkeleton.setColor(this.node.color);
-    this._skeleton = nativeSkeleton.getSkeleton(); // init skeleton listener
+    this._skeleton = nativeSkeleton.getSkeleton();
 
+    // init skeleton listener
     this._startListener && this.setStartListener(this._startListener);
     this._endListener && this.setEndListener(this._endListener);
     this._completeListener && this.setCompleteListener(this._completeListener);
     this._eventListener && this.setEventListener(this._eventListener);
     this._interruptListener && this.setInterruptListener(this._interruptListener);
     this._disposeListener && this.setDisposeListener(this._disposeListener);
-
     this._updateMaterial();
-
     this.markForRender(true);
   };
-
   skeleton._updateColor = function () {
     if (this._nativeSkeleton) {
       this._nativeSkeleton.setColor(this.node.color);
     }
   };
-
   skeleton.setAnimationStateData = function (stateData) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._stateData = stateData;
       return this._nativeSkeleton.setAnimationStateData(stateData);
     }
   };
-
   skeleton.onEnable = function () {
     renderCompProto.onEnable.call(this);
-
     if (this._nativeSkeleton) {
       this._nativeSkeleton.onEnable();
     }
   };
-
   skeleton.onDisable = function () {
     renderCompProto.onDisable.call(this);
-
     if (this._nativeSkeleton) {
       this._nativeSkeleton.onDisable();
     }
   };
-
   skeleton.setVertexEffectDelegate = function (effectDelegate) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setVertexEffectDelegate(effectDelegate);
     }
   };
-
   skeleton.update = function () {
     var nativeSkeleton = this._nativeSkeleton;
     if (!nativeSkeleton) return;
     var node = this.node;
     if (!node) return;
-
     if (!this.isAnimationCached() && (this.debugBones || this.debugSlots || this.debugMesh) && this._debugRenderer) {
       var graphics = this._debugRenderer;
       graphics.clear();
@@ -4515,19 +3981,16 @@ var cacheManager = require('./jsb-cache-manager');
       var debugData = this._debugData || nativeSkeleton.getDebugData();
       if (!debugData) return;
       var debugIdx = 0,
-          debugType = 0,
-          debugLen = 0;
-
+        debugType = 0,
+        debugLen = 0;
       while (true) {
         debugType = debugData[debugIdx++];
         if (debugType == 0) break;
         debugLen = debugData[debugIdx++];
-
         switch (debugType) {
           case 1:
             // slots
             graphics.strokeColor = _slotColor;
-
             for (var i = 0; i < debugLen; i += 8) {
               graphics.moveTo(debugData[debugIdx++], debugData[debugIdx++]);
               graphics.lineTo(debugData[debugIdx++], debugData[debugIdx++]);
@@ -4536,13 +3999,10 @@ var cacheManager = require('./jsb-cache-manager');
               graphics.close();
               graphics.stroke();
             }
-
             break;
-
           case 2:
             // mesh
             graphics.strokeColor = _meshColor;
-
             for (var _i = 0; _i < debugLen; _i += 6) {
               graphics.moveTo(debugData[debugIdx++], debugData[debugIdx++]);
               graphics.lineTo(debugData[debugIdx++], debugData[debugIdx++]);
@@ -4550,74 +4010,63 @@ var cacheManager = require('./jsb-cache-manager');
               graphics.close();
               graphics.stroke();
             }
-
             break;
-
           case 3:
             // bones
             graphics.strokeColor = _boneColor;
             graphics.fillColor = _slotColor; // Root bone color is same as slot color.
-
             for (var _i2 = 0; _i2 < debugLen; _i2 += 4) {
               var bx = debugData[debugIdx++];
               var by = debugData[debugIdx++];
               var x = debugData[debugIdx++];
-              var y = debugData[debugIdx++]; // Bone lengths.
+              var y = debugData[debugIdx++];
 
+              // Bone lengths.
               graphics.moveTo(bx, by);
               graphics.lineTo(x, y);
-              graphics.stroke(); // Bone origins.
+              graphics.stroke();
 
+              // Bone origins.
               graphics.circle(bx, by, Math.PI * 1.5);
               graphics.fill();
-
               if (_i2 === 0) {
                 graphics.fillColor = _originColor;
               }
             }
-
             break;
-
           default:
             return;
         }
       }
     }
   };
-
   skeleton.updateWorldTransform = function () {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.updateWorldTransform();
     }
   };
-
   skeleton.setToSetupPose = function () {
     if (this._nativeSkeleton) {
       this._nativeSkeleton.setToSetupPose();
     }
   };
-
   skeleton.setBonesToSetupPose = function () {
     if (this._nativeSkeleton) {
       this._nativeSkeleton.setBonesToSetupPose();
     }
   };
-
   skeleton.setSlotsToSetupPose = function () {
     if (this._nativeSkeleton) {
       this._nativeSkeleton.setSlotsToSetupPose();
     }
   };
-
   skeleton.setSlotsRange = function (startSlotIndex, endSlotIndex) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setSlotsRange(startSlotIndex, endSlotIndex);
     }
   };
-
   skeleton.updateAnimationCache = function (animName) {
     if (!this.isAnimationCached()) return;
-
     if (this._nativeSkeleton) {
       if (animName) {
         this._nativeSkeleton.updateAnimationCache(animName);
@@ -4626,50 +4075,40 @@ var cacheManager = require('./jsb-cache-manager');
       }
     }
   };
-
   skeleton.invalidAnimationCache = function () {
     if (!this.isAnimationCached()) return;
-
     if (this._nativeSkeleton) {
       this._nativeSkeleton.updateAllAnimationCache();
     }
   };
-
   skeleton.findBone = function (boneName) {
     if (this._nativeSkeleton) return this._nativeSkeleton.findBone(boneName);
     return null;
   };
-
   skeleton.findSlot = function (slotName) {
     if (this._nativeSkeleton) return this._nativeSkeleton.findSlot(slotName);
     return null;
   };
-
   skeleton.setSkin = function (skinName) {
     if (this._nativeSkeleton) return this._nativeSkeleton.setSkin(skinName);
     return null;
   };
-
   skeleton.getAttachment = function (slotName, attachmentName) {
     if (this._nativeSkeleton) return this._nativeSkeleton.getAttachment(slotName, attachmentName);
     return null;
   };
-
   skeleton.setAttachment = function (slotName, attachmentName) {
     this._nativeSkeleton && this._nativeSkeleton.setAttachment(slotName, attachmentName);
   };
-
   skeleton.getTextureAtlas = function (regionAttachment) {
     cc.warn("sp.Skeleton getTextureAtlas not support in native");
     return null;
   };
-
   skeleton.setMix = function (fromAnimation, toAnimation, duration) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setMix(fromAnimation, toAnimation, duration);
     }
   };
-
   skeleton.setAnimation = function (trackIndex, name, loop) {
     if (this._nativeSkeleton) {
       if (this.isAnimationCached()) {
@@ -4678,52 +4117,41 @@ var cacheManager = require('./jsb-cache-manager');
         return this._nativeSkeleton.setAnimation(trackIndex, name, loop);
       }
     }
-
     return null;
   };
-
   skeleton.addAnimation = function (trackIndex, name, loop, delay) {
     if (this._nativeSkeleton) {
       delay = delay || 0;
-
       if (this.isAnimationCached()) {
         return this._nativeSkeleton.addAnimation(name, loop, delay);
       } else {
         return this._nativeSkeleton.addAnimation(trackIndex, name, loop, delay);
       }
     }
-
     return null;
   };
-
   skeleton.findAnimation = function (name) {
     if (this._nativeSkeleton) return this._nativeSkeleton.findAnimation(name);
     return null;
   };
-
   skeleton.getCurrent = function (trackIndex) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       return this._nativeSkeleton.getCurrent(trackIndex);
     }
-
     return null;
   };
-
   skeleton.clearTracks = function () {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.clearTracks();
     }
   };
-
   skeleton.clearTrack = function (trackIndex) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.clearTrack(trackIndex);
     }
   };
-
   skeleton.setStartListener = function (listener) {
     this._startListener = listener;
-
     if (this._nativeSkeleton) {
       if (this.isAnimationCached()) {
         this._nativeSkeleton.setStartListener(function (animationName) {
@@ -4736,18 +4164,14 @@ var cacheManager = require('./jsb-cache-manager');
       }
     }
   };
-
   skeleton.setInterruptListener = function (listener) {
     this._interruptListener = listener;
-
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setInterruptListener(listener);
     }
   };
-
   skeleton.setEndListener = function (listener) {
     this._endListener = listener;
-
     if (this._nativeSkeleton) {
       if (this.isAnimationCached()) {
         this._nativeSkeleton.setEndListener(function (animationName) {
@@ -4760,18 +4184,14 @@ var cacheManager = require('./jsb-cache-manager');
       }
     }
   };
-
   skeleton.setDisposeListener = function (listener) {
     this._disposeListener = listener;
-
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setDisposeListener(listener);
     }
   };
-
   skeleton.setCompleteListener = function (listener) {
     this._completeListener = listener;
-
     if (this._nativeSkeleton) {
       if (this.isAnimationCached()) {
         this._nativeSkeleton.setCompleteListener(function (animationName) {
@@ -4784,155 +4204,120 @@ var cacheManager = require('./jsb-cache-manager');
       }
     }
   };
-
   skeleton.setEventListener = function (listener) {
     this._eventListener = listener;
-
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setEventListener(listener);
     }
   };
-
   skeleton.setTrackStartListener = function (entry, listener) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setTrackStartListener(entry, listener);
     }
   };
-
   skeleton.setTrackInterruptListener = function (entry, listener) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setTrackInterruptListener(entry, listener);
     }
   };
-
   skeleton.setTrackEndListener = function (entry, listener) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setTrackEndListener(entry, listener);
     }
   };
-
   skeleton.setTrackDisposeListener = function (entry, listener) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setTrackDisposeListener(entry, listener);
     }
   };
-
   skeleton.setTrackCompleteListener = function (entry, listener) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setTrackCompleteListener(entry, listener);
     }
   };
-
   skeleton.setTrackEventListener = function (entry, listener) {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       this._nativeSkeleton.setTrackEventListener(entry, listener);
     }
   };
-
   skeleton.getState = function () {
     if (this._nativeSkeleton && !this.isAnimationCached()) {
       return this._nativeSkeleton.getState();
     }
   };
-
   skeleton._ensureListener = function () {
     cc.warn("sp.Skeleton _ensureListener not need in native");
   };
-
   skeleton._updateSkeletonData = function () {
     if (this.skeletonData) {
       this.skeletonData.init();
       this.setSkeletonData(this.skeletonData);
       this.attachUtil.init(this);
-
       this.attachUtil._associateAttachedNode();
-
       this._preCacheMode = this._cacheMode;
       this.defaultSkin && this._nativeSkeleton.setSkin(this.defaultSkin);
       this.animation = this.defaultAnimation;
     } else {
       if (this._nativeSkeleton) {
         this._nativeSkeleton._comp = null;
-
         this._nativeSkeleton.destroy();
-
         this._nativeSkeleton = null;
       }
     }
   };
-
   var _onDestroy = skeleton.onDestroy;
-
   skeleton.onDestroy = function () {
     _onDestroy.call(this);
-
     if (this._nativeSkeleton) {
       this._nativeSkeleton._comp = null;
-
       this._nativeSkeleton.destroy();
-
       this._nativeSkeleton = null;
     }
-
     this._stateData = null;
     this._materialCache = null;
-  }; ////////////////////////////////////////////////////////////
+  };
+
+  ////////////////////////////////////////////////////////////
   // adapt attach util
   ////////////////////////////////////////////////////////////
 
-
   var attachUtilProto = sp.AttachUtil.prototype;
   var _attachUtilInit = attachUtilProto.init;
-
   attachUtilProto.init = function (skeletonComp) {
     _attachUtilInit.call(this, skeletonComp);
-
     this._nativeSkeleton = skeletonComp._nativeSkeleton;
     this._attachUtilNative = null;
   };
-
   var _generateAllAttachedNodes = attachUtilProto.generateAllAttachedNodes;
-
   attachUtilProto.generateAllAttachedNodes = function () {
     var res = _generateAllAttachedNodes.call(this);
-
     this._associateAttachedNode();
-
     return res;
   };
-
   var _generateAttachedNodes = attachUtilProto.generateAttachedNodes;
-
   attachUtilProto.generateAttachedNodes = function (boneName) {
     var res = _generateAttachedNodes.call(this, boneName);
-
     this._associateAttachedNode();
-
     return res;
   };
-
   var _associateAttachedNode = attachUtilProto._associateAttachedNode;
-
   attachUtilProto._associateAttachedNode = function () {
     if (!this._inited) return;
-
     var rootNode = this._skeletonNode.getChildByName('ATTACHED_NODE_TREE');
+    if (!rootNode || !rootNode.isValid) return;
 
-    if (!rootNode || !rootNode.isValid) return; // associate js
+    // associate js
+    _associateAttachedNode.call(this);
 
-    _associateAttachedNode.call(this); // associate native
-
-
+    // associate native
     if (!this._attachUtilNative) {
       if (this._skeletonComp.isAnimationCached()) {
         this._attachUtilNative = new spine.CacheModeAttachUtil();
       } else {
         this._attachUtilNative = new spine.RealTimeAttachUtil();
       }
-
       this._nativeSkeleton.setAttachUtil(this._attachUtilNative);
     }
-
     this._attachUtilNative.associateAttachedNode(this._skeleton, this._skeletonNode._proxy);
   };
 })();
@@ -4971,15 +4356,16 @@ sys.getBatteryLevel = jsb.Device.getBatteryLevel;
 sys.garbageCollect = jsb.garbageCollect;
 sys.restartVM = __restartVM;
 sys.isObjectValid = __isObjectValid;
-
 sys.getSafeAreaRect = function () {
   // x(top), y(left), z(bottom), w(right)
   var edge = jsb.Device.getSafeAreaEdge();
-  var screenSize = cc.view.getFrameSize(); // Get leftBottom and rightTop point in UI coordinates
+  var screenSize = cc.view.getFrameSize();
 
+  // Get leftBottom and rightTop point in UI coordinates
   var leftBottom = new cc.Vec2(edge.y, screenSize.height - edge.z);
-  var rightTop = new cc.Vec2(screenSize.width - edge.w, edge.x); // Returns the real location in view.
+  var rightTop = new cc.Vec2(screenSize.width - edge.w, edge.x);
 
+  // Returns the real location in view.
   var relatedPos = {
     left: 0,
     top: 0,
@@ -4987,12 +4373,10 @@ sys.getSafeAreaRect = function () {
     height: screenSize.height
   };
   cc.view.convertToLocationInView(leftBottom.x, leftBottom.y, relatedPos, leftBottom);
-  cc.view.convertToLocationInView(rightTop.x, rightTop.y, relatedPos, rightTop); // convert view point to design resolution size
-
+  cc.view.convertToLocationInView(rightTop.x, rightTop.y, relatedPos, rightTop);
+  // convert view point to design resolution size
   cc.view._convertPointWithScale(leftBottom);
-
   cc.view._convertPointWithScale(rightTop);
-
   return cc.rect(leftBottom.x, leftBottom.y, rightTop.x - leftBottom.x, rightTop.y - leftBottom.y);
 };
 
@@ -5023,84 +4407,70 @@ sys.getSafeAreaRect = function () {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 (function () {
   if (!cc.TiledMap) return;
-  var RenderFlow = cc.RenderFlow; // tiled layer
+  var RenderFlow = cc.RenderFlow;
 
+  // tiled layer
   var TiledLayer = cc.TiledLayer.prototype;
   var _addUserNode = TiledLayer.addUserNode;
-
   TiledLayer.addUserNode = function (node) {
     var result = _addUserNode.call(this, node);
-
     if (result) {
       var proxy = node._proxy;
       proxy && proxy.enableVisit(false);
     }
   };
-
   var _removeUserNode = TiledLayer.removeUserNode;
-
   TiledLayer.removeUserNode = function (node) {
     var result = _removeUserNode.call(this, node);
-
     if (result) {
       var proxy = node._proxy;
       proxy && proxy.enableVisit(true);
     }
-  }; // override _buildMaterial to upload hash value to native
+  };
 
-
+  // override _buildMaterial to upload hash value to native
   var _buildMaterial = TiledLayer._buildMaterial;
-
   TiledLayer._buildMaterial = function (tilesetIdx) {
     var material = _buildMaterial.call(this, tilesetIdx);
-
     if (material) material.getHash();
-  }; // tiledmap buffer
+  };
 
-
+  // tiledmap buffer
   var TiledMapBuffer = cc.TiledMapBuffer.prototype;
-
   TiledMapBuffer._updateOffset = function () {
     var offsetInfo = this._offsetInfo;
     offsetInfo.vertexOffset = this.vertexOffset;
     offsetInfo.indiceOffset = this.indiceOffset;
     offsetInfo.byteOffset = this.byteOffset;
-  }; // tiledmap render data list
+  };
 
-
+  // tiledmap render data list
   var TiledMapRenderDataList = cc.TiledMapRenderDataList.prototype;
-
   TiledMapRenderDataList._pushRenderData = function () {
     var renderData = {};
     renderData.ia = {};
     renderData.nodesRenderList = [];
-
     this._dataList.push(renderData);
   };
-
   TiledMapRenderDataList.reset = function () {
     this._offset = 0;
     var assembler = this._nativeAssembler;
     assembler._effect.length = 0;
     assembler.reset();
   };
-
   TiledMapRenderDataList.setNativeAssembler = function (assembler) {
     this._nativeAssembler = assembler;
   };
-
   TiledMapRenderDataList.popRenderData = function (buffer) {
     if (this._offset >= this._dataList.length) {
       this._pushRenderData();
     }
-
     var renderData = this._dataList[this._offset];
     renderData.nodesRenderList.length = 0;
-
     this._nativeAssembler.clearNodes(this._offset);
-
     var ia = renderData.ia;
     ia._meshIndex = buffer.getCurMeshIndex();
     ia._start = buffer.indiceOffset;
@@ -5110,26 +4480,21 @@ sys.getSafeAreaRect = function () {
     this._offset++;
     return renderData;
   };
-
   TiledMapRenderDataList.pushNodesList = function (renderData, nodesList) {
     var nodesRenderList = renderData.nodesRenderList;
     nodesRenderList.push(nodesList);
     var nativeNodes = [];
-
     for (var j = 0; j < nodesRenderList.length; j++) {
       var _nodesList = nodesRenderList[j];
       if (!_nodesList) continue;
-
       for (var idx = 0; idx < _nodesList.length; idx++) {
         var dataComp = _nodesList[idx];
         if (!dataComp) continue;
         nativeNodes.push(dataComp.node._id);
       }
     }
-
     this._nativeAssembler.updateNodes(renderData.ia._index, nativeNodes);
   };
-
   var ModelBatcherDelegate = cc.Class({
     ctor: function ctor() {
       this._nativeAssembler = null;
@@ -5143,17 +4508,12 @@ sys.getSafeAreaRect = function () {
     _flushIA: function _flushIA(ia) {
       var iaIndex = ia._index;
       var meshIndex = ia._meshIndex;
-
       this._nativeAssembler.updateMeshIndex(iaIndex, meshIndex);
-
       var verticesStart = ia._verticesStart;
       var verticesOffset = this._buffer.vertexOffset;
       var vertexCount = verticesOffset - verticesStart;
-
       this._nativeAssembler.updateVerticesRange(iaIndex, verticesStart, vertexCount);
-
       this._nativeAssembler.updateIndicesRange(iaIndex, ia._start, ia._count);
-
       this._nativeAssembler.updateMaterial(iaIndex, this.material);
     },
     _flush: function _flush() {}
@@ -5174,18 +4534,12 @@ sys.getSafeAreaRect = function () {
         comp._buffer = new cc.TiledMapBuffer(null, cc.gfx.VertexFormat.XY_UV_Color);
         comp._renderDataList = new cc.TiledMapRenderDataList();
         comp._modelBatcherDelegate = new ModelBatcherDelegate();
-
         comp._buffer.setNativeAssembler(this);
-
         comp._renderDataList.setNativeAssembler(this);
-
         comp._modelBatcherDelegate.setBuffer(comp._buffer);
-
         comp._modelBatcherDelegate.setNativeAssembler(this);
       }
-
       _fillBuffers.call(this, comp, comp._modelBatcherDelegate);
-
       comp.node._renderFlag |= RenderFlow.FLAG_UPDATE_RENDER_DATA;
     }
   }, renderer.TiledMapAssembler.prototype);
@@ -5194,12 +4548,12 @@ sys.getSafeAreaRect = function () {
 },{}],45:[function(require,module,exports){
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /****************************************************************************
  Copyright (c) 2018 Xiamen Yaji Software Co., Ltd.
 
@@ -5224,20 +4578,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 (function () {
   if (!(cc && cc.VideoPlayer && cc.VideoPlayer.Impl)) {
     return;
   }
-
   var vec3 = cc.Vec3;
   var mat4 = cc.Mat4;
-
   var _worldMat = new mat4();
-
   var _topLeft = new vec3();
-
   var _bottomRight = new vec3();
-
   var kVideoTag = 0;
   var videoPlayers = [];
   var VideoEvent = {
@@ -5253,106 +4603,80 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   };
   var _impl = cc.VideoPlayer.Impl;
   var _p = cc.VideoPlayer.Impl.prototype;
-
   _p._bindEvent = function () {
     var video = this._video,
-        self = this;
-
+      self = this;
     if (!video) {
       return;
-    } //binding event
+    }
 
-
+    //binding event
     var cbs = this.__eventListeners;
-
     cbs.loadedmetadata = function () {
       self._loadedmeta = true;
-
       self._dispatchEvent(_impl.EventType.META_LOADED);
-
       if (self._playing) {
         self._video.play();
       }
     };
-
     cbs.ended = function () {
       if (self._video !== video) return;
       self._playing = false;
-
       self._dispatchEvent(_impl.EventType.COMPLETED);
     };
-
     cbs.play = function () {
       if (self._video !== video) return;
       self._playing = true;
-
       self._dispatchEvent(_impl.EventType.PLAYING);
     };
-
     cbs.pause = function () {
       if (self._ignorePause || self._video !== video) return;
       self._playing = false;
-
       self._dispatchEvent(_impl.EventType.PAUSED);
     };
-
     cbs.click = function () {
       self._dispatchEvent(_impl.EventType.CLICKED);
     };
-
     cbs.stoped = function () {
       self._dispatchEvent(_impl.EventType.STOPPED);
-
       self._ignorePause = false;
     };
-
     video.addEventListener("loadedmetadata", cbs.loadedmetadata);
     video.addEventListener("ended", cbs.ended);
     video.addEventListener("play", cbs.play);
     video.addEventListener("pause", cbs.pause);
     video.addEventListener("click", cbs.click);
     video.addEventListener("stoped", cbs.stoped);
-
     function onCanPlay() {
       if (this._loaded) return;
       this._loaded = true;
-
       this._dispatchEvent(_impl.EventType.READY_TO_PLAY);
-
       this._updateVisibility();
     }
-
     cbs.onCanPlay = onCanPlay.bind(this);
     video.addEventListener('canplay', cbs.onCanPlay);
     video.addEventListener('canplaythrough', cbs.onCanPlay);
     video.addEventListener('suspend', cbs.onCanPlay);
   };
-
   _p._updateVisibility = function () {
     if (!this._video) return;
     var video = this._video;
-
     if (this._visible) {
       this._video.setVisible(true);
     } else {
       this._video.setVisible(false);
-
       video.pause();
       this._playing = false;
     }
   };
-
   _p._updateSize = function (width, height) {};
-
   _p.createDomElementIfNeeded = function () {
     if (!this._video) {
       this._video = new VideoPlayer();
     }
   };
-
   _p.removeDom = function () {
     var video = this._video;
-
     if (video) {
       video.stop();
       video.setVisible(false);
@@ -5373,30 +4697,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       cbs.onCanPlay = null;
       video.destroy();
     }
-
     this._video = null;
     this._url = "";
   };
-
   _p.setURL = function (path) {
     var source, extname;
-
     if (this._url === path) {
       return;
     }
-
     this.removeDom();
     this._url = path;
     this.createDomElementIfNeeded();
-
     this._bindEvent();
-
     var video = this._video;
-
     if (!video) {
       return;
     }
-
     video.setVisible(this._visible);
     this._loaded = false;
     this._played = false;
@@ -5405,220 +4721,175 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     video.setURL(this._url);
     this._forceUpdate = true;
   };
-
   _p.getURL = function () {
     return this._url;
   };
-
   _p.play = function () {
     var video = this._video;
     if (!video || !this._visible || this._playing) return;
     video.play();
     this._playing = true;
   };
-
   _p.setStayOnBottom = function (enabled) {};
-
   _p.pause = function () {
     var video = this._video;
     if (!this._playing || !video) return;
     video.pause();
     this._playing = false;
   };
-
   _p.resume = function () {
     var video = this._video;
     if (this._playing || !video) return;
     video.resume();
     this._playing = true;
   };
-
   _p.stop = function () {
     var video = this._video;
-    if (!video || !this._visible) return; // TODO(qgh) : In the openharmony platform, there is no stop event when the video stops, instead a pause event is sent. 
+    if (!video || !this._visible) return;
+    // TODO(qgh) : In the openharmony platform, there is no stop event when the video stops, instead a pause event is sent. 
     // We can't ignore the pause event here.
     // this._ignorePause = true;
-
     video.seekTo(0);
     video.stop();
     this._playing = false;
   };
-
   _p.setVolume = function (volume) {};
-
   _p.seekTo = function (time) {
     var video = this._video;
     if (!video) return;
-
     if (this._loaded) {
       video.seekTo(time);
     } else {
       var cb = function cb() {
         video.seekTo(time);
       };
-
       video.addEventListener(_impl._polyfill.event, cb);
     }
   };
-
   _p.isPlaying = function () {
     return this._playing;
   };
-
   _p.duration = function () {
     var video = this._video;
     var duration = -1;
     if (!video) return duration;
     duration = video.duration();
-
     if (duration <= 0) {
       cc.logID(7702);
     }
-
     return duration;
   };
-
   _p.currentTime = function () {
     var video = this._video;
     if (!video) return -1;
     return video.currentTime();
   };
-
   _p.getFrame = function () {
     var video = this._video;
     if (!video) return;
   };
-
   _p.getFrameChannel = function () {
     var video = this._video;
     if (!video) return 0;
     return 0;
   };
-
   _p.getFrameWidth = function () {
     var video = this._video;
     if (!video) return 0;
     return 0;
   };
-
   _p.getFrameHeight = function () {
     var video = this._video;
     if (!video) return 0;
     return 0;
   };
-
   _p.pushFrameDataToTexture2D = function (tex) {
     var video = this._video;
     if (!video) return;
   };
-
   _p.getVideoTexDataSize = function () {
     var video = this._video;
     if (!video) return 0;
     return 0;
   };
-
   _p.setShowRawFrame = function (show) {
     var video = this._video;
     if (!video) return;
   };
-
   _p.update = function () {
     var video = this._video;
     if (!video) return;
   };
-
   _p.setKeepAspectRatioEnabled = function (isEnabled) {
     if (!this._video) {
       return false;
     }
-
     return this._video.setKeepAspectRatioEnabled(isEnabled);
   };
-
   _p.isKeepAspectRatioEnabled = function () {
     if (!this._video) {
       return false;
     }
-
     return false;
   };
-
   _p.isFullScreenEnabled = function () {
     return this._fullScreenEnabled;
   };
-
   _p.setEventListener = function (event, callback) {
     this._EventList[event] = callback;
   };
-
   _p.removeEventListener = function (event) {
     this._EventList[event] = null;
   };
-
   _p._dispatchEvent = function (event) {
     var callback = this._EventList[event];
     if (callback) callback.call(this, this, this._video.src);
   };
-
   _p.onPlayEvent = function () {
     var callback = this._EventList[_impl.EventType.PLAYING];
     callback.call(this, this, this._video.src);
   };
-
   _p.enable = function () {
     var list = _impl.elements;
     if (list.indexOf(this) === -1) list.push(this);
     this.setVisible(true);
   };
-
   _p.disable = function () {
     var list = _impl.elements;
     var index = list.indexOf(this);
     if (index !== -1) list.splice(index, 1);
     this.setVisible(false);
   };
-
   _p.destroy = function () {
     this.disable();
     this.removeDom();
   };
-
   _p.setVisible = function (visible) {
     if (this._visible !== visible) {
       this._visible = !!visible;
-
       this._updateVisibility();
     }
   };
-
   _p.setFullScreenEnabled = function (enable) {
     var video = this._video;
-
     if (!video) {
       return;
     }
-
     this._fullScreenEnabled = enable;
     video.setFullScreenEnabled(enable);
   };
-
   _p.updateMatrix = function (node) {
     if (!this._video || !this._visible) return;
-
     var camera = cc.Camera.findCamera(node)._camera;
-
     if (!camera) {
       return;
     }
-
     node.getWorldMatrix(_worldMat);
-
     if (!this._forceUpdate && this._m00 === _worldMat.m[0] && this._m01 === _worldMat.m[1] && this._m04 === _worldMat.m[4] && this._m05 === _worldMat.m[5] && this._m12 === _worldMat.m[12] && this._m13 === _worldMat.m[13] && this._w === node._contentSize.width && this._h === node._contentSize.height) {
       return;
-    } // update matrix cache
+    }
 
-
+    // update matrix cache
     this._m00 = _worldMat.m[0];
     this._m01 = _worldMat.m[1];
     this._m04 = _worldMat.m[4];
@@ -5629,24 +4900,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     this._h = node._contentSize.height;
     var canvas_width = cc.game.canvas.width;
     var canvas_height = cc.game.canvas.height;
-    var ap = node._anchorPoint; // Vectors in node space
-
+    var ap = node._anchorPoint;
+    // Vectors in node space
     vec3.set(_topLeft, -ap.x * this._w, (1.0 - ap.y) * this._h, 0);
-    vec3.set(_bottomRight, (1 - ap.x) * this._w, -ap.y * this._h, 0); // Convert to world space
-
+    vec3.set(_bottomRight, (1 - ap.x) * this._w, -ap.y * this._h, 0);
+    // Convert to world space
     vec3.transformMat4(_topLeft, _topLeft, _worldMat);
-    vec3.transformMat4(_bottomRight, _bottomRight, _worldMat); // Convert to Screen space
-
+    vec3.transformMat4(_bottomRight, _bottomRight, _worldMat);
+    // Convert to Screen space
     camera.worldToScreen(_topLeft, _topLeft, canvas_width, canvas_height);
     camera.worldToScreen(_bottomRight, _bottomRight, canvas_width, canvas_height);
     var finalWidth = _bottomRight.x - _topLeft.x;
     var finalHeight = _topLeft.y - _bottomRight.y;
-
     this._video.setFrame(_topLeft.x, canvas_height - _topLeft.y, finalWidth, finalHeight);
-
     this._forceUpdate = false;
   };
-
   _impl.EventType = {
     PLAYING: 0,
     PAUSED: 1,
@@ -5655,20 +4923,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     META_LOADED: 4,
     CLICKED: 5,
     READY_TO_PLAY: 6
-  }; // video 队列，所有 vidoe 在 onEnter 的时候都会插入这个队列
+  };
 
-  _impl.elements = []; // video 在 game_hide 事件中被自动暂停的队列，用于回复的时候重新开始播放
-
+  // video 队列，所有 vidoe 在 onEnter 的时候都会插入这个队列
+  _impl.elements = [];
+  // video 在 game_hide 事件中被自动暂停的队列，用于回复的时候重新开始播放
   _impl.pauseElements = [];
   cc.game.on(cc.game.EVENT_HIDE, function () {
     var list = _impl.elements;
-
     for (var element, i = 0; i < list.length; i++) {
       element = list[i];
-
       if (element.isPlaying()) {
         element.pause();
-
         _impl.pauseElements.push(element);
       }
     }
@@ -5676,13 +4942,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   cc.game.on(cc.game.EVENT_SHOW, function () {
     var list = _impl.pauseElements;
     var element = list.pop();
-
     while (element) {
       element.play();
       element = list.pop();
     }
   });
-
   window.oh.onVideoEvent = function (tag, ev, args) {
     videoPlayers.forEach(function (player) {
       if (player.index == tag) {
@@ -5690,11 +4954,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
     });
   };
-
   var VideoPlayer = /*#__PURE__*/function () {
     function VideoPlayer() {
       _classCallCheck(this, VideoPlayer);
-
       this._events = {};
       this._currentTime = 0;
       this._duration = 0;
@@ -5703,7 +4965,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       window.oh.postMessage("createVideo", this._videoIndex);
       videoPlayers.push(this);
     }
-
     _createClass(VideoPlayer, [{
       key: "index",
       get: function get() {
@@ -5746,7 +5007,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "currentTime",
       value: function currentTime() {
         var _this = this;
-
         window.oh.postSyncMessage("currentTime", this._videoIndex).then(function (result) {
           _this._currentTime = result;
         });
@@ -5769,7 +5029,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "duration",
       value: function duration() {
         var _this2 = this;
-
         window.oh.postSyncMessage("getVideoDuration", this._videoIndex).then(function (result) {
           _this2._duration = result;
         });
@@ -5808,49 +5067,38 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "eventTypeToEventName",
       value: function eventTypeToEventName(ev) {
         var evString;
-
         switch (ev) {
           case VideoEvent.PLAYING:
             evString = "play";
             break;
-
           case VideoEvent.PAUSED:
             evString = "pause";
             break;
-
           case VideoEvent.STOPPED:
             evString = "stoped";
             break;
-
           case VideoEvent.COMPLETED:
             evString = "ended";
             break;
-
           case VideoEvent.META_LOADED:
             evString = "loadedmetadata";
             break;
-
           case VideoEvent.CLICKED:
             evString = "click";
             break;
-
           case VideoEvent.READY_TO_PLAY:
             evString = "suspend";
             break;
-
           case VideoEvent.UPDATE:
             evString = "update";
             break;
-
           case VideoEvent.QUIT_FULLSCREEN:
             evString = "suspend";
             break;
-
           default:
             evString = "none";
             break;
         }
-
         return evString;
       }
     }, {
@@ -5858,7 +5106,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function dispatchEvent(type, args) {
         var eventName = this.eventTypeToEventName(type);
         var listeners = this._events[eventName];
-
         if (listeners) {
           for (var i = 0; i < listeners.length; i++) {
             listeners[i](args);
@@ -5871,14 +5118,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         if (!this._events[name]) {
           this._events[name] = [];
         }
-
         this._events[name].push(listener);
       }
     }, {
       key: "removeEventListener",
       value: function removeEventListener(name, listener) {
         var listeners = this._events[name];
-
         if (listeners && listeners.length > 0) {
           for (var i = listeners.length; i--; i > 0) {
             if (listeners[i] === listener) {
@@ -5889,7 +5134,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
       }
     }]);
-
     return VideoPlayer;
   }();
 })();
@@ -5921,126 +5165,95 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 (function () {
   if (!(cc && cc.VideoPlayer && cc.VideoPlayer.Impl)) {
     return;
   }
-
   var vec3 = cc.Vec3;
-
   var _worldMat = new cc.Mat4();
-
   var _topLeft = new vec3();
-
   var _bottomRight = new vec3();
-
   var _impl = cc.VideoPlayer.Impl;
   var _p = cc.VideoPlayer.Impl.prototype;
-
   _p._bindEvent = function () {
     var video = this._video,
-        self = this;
-
+      self = this;
     if (!video) {
       return;
-    } //binding event
+    }
 
-
+    //binding event
     var cbs = this.__eventListeners;
-
     cbs.loadedmetadata = function () {
       self._loadedmeta = true;
-
       self._dispatchEvent(_impl.EventType.META_LOADED);
-
       if (self._playing) {
         self._video.play();
       }
     };
-
     cbs.ended = function () {
       if (self._video !== video) return;
       self._playing = false;
-
       self._dispatchEvent(_impl.EventType.COMPLETED);
     };
-
     cbs.play = function () {
       if (self._video !== video) return;
       self._playing = true;
-
       self._dispatchEvent(_impl.EventType.PLAYING);
     };
-
     cbs.pause = function () {
       if (self._ignorePause || self._video !== video) return;
       self._playing = false;
-
       self._dispatchEvent(_impl.EventType.PAUSED);
     };
-
     cbs.click = function () {
       self._dispatchEvent(_impl.EventType.CLICKED);
     };
-
     cbs.stoped = function () {
       self._dispatchEvent(_impl.EventType.STOPPED);
-
       self._ignorePause = false;
     };
-
     video.addEventListener("loadedmetadata", cbs.loadedmetadata);
     video.addEventListener("ended", cbs.ended);
     video.addEventListener("play", cbs.play);
     video.addEventListener("pause", cbs.pause);
     video.addEventListener("click", cbs.click);
     video.addEventListener("stoped", cbs.stoped);
-
     function onCanPlay() {
       if (this._loaded) return;
       this._loaded = true;
-
       this._dispatchEvent(_impl.EventType.READY_TO_PLAY);
-
       this._updateVisibility();
     }
-
     cbs.onCanPlay = onCanPlay.bind(this);
     video.addEventListener('canplay', cbs.onCanPlay);
     video.addEventListener('canplaythrough', cbs.onCanPlay);
     video.addEventListener('suspend', cbs.onCanPlay);
   };
-
   _p._updateVisibility = function () {
     if (!this._video) return;
     var video = this._video;
-
     if (this._visible) {
       this._video.setVisible(true);
     } else {
       this._video.setVisible(false);
-
       video.pause();
       this._playing = false;
     }
   };
-
   _p._updateSize = function (width, height) {};
-
   _p.createDomElementIfNeeded = function () {
     if (!jsb.VideoPlayer) {
       cc.warn('VideoPlayer is not supported.');
       return null;
     }
-
     if (!this._video) {
       this._video = new jsb.VideoPlayer();
     }
   };
-
   _p.removeDom = function () {
     var video = this._video;
-
     if (video) {
       video.stop();
       video.setVisible(false);
@@ -6053,30 +5266,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       cbs.onCanPlay = null;
       video.destroy();
     }
-
     this._video = null;
     this._url = "";
   };
-
   _p.setURL = function (path) {
     var source, extname;
-
     if (this._url === path) {
       return;
     }
-
     this.removeDom();
     this._url = path;
     this.createDomElementIfNeeded();
-
     this._bindEvent();
-
     var video = this._video;
-
     if (!video) {
       return;
     }
-
     video.setVisible(this._visible);
     this._loaded = false;
     this._played = false;
@@ -6085,34 +5290,28 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     video.setURL(this._url);
     this._forceUpdate = true;
   };
-
   _p.getURL = function () {
     return this._url;
   };
-
   _p.play = function () {
     var video = this._video;
     if (!video || !this._visible || this._playing) return;
     video.play();
     this._playing = true;
   };
-
   _p.setStayOnBottom = function (enabled) {};
-
   _p.pause = function () {
     var video = this._video;
     if (!this._playing || !video) return;
     video.pause();
     this._playing = false;
   };
-
   _p.resume = function () {
     var video = this._video;
     if (this._playing || !video) return;
     video.resume();
     this._playing = true;
   };
-
   _p.stop = function () {
     var video = this._video;
     if (!video || !this._visible) return;
@@ -6120,186 +5319,147 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     video.stop();
     this._playing = false;
   };
-
   _p.setVolume = function (volume) {};
-
   _p.seekTo = function (time) {
     var video = this._video;
     if (!video) return;
-
     if (this._loaded) {
       video.seekTo(time);
     } else {
       var cb = function cb() {
         video.seekTo(time);
       };
-
       video.addEventListener(_impl._polyfill.event, cb);
     }
   };
-
   _p.isPlaying = function () {
     return this._playing;
   };
-
   _p.duration = function () {
     var video = this._video;
     var duration = -1;
     if (!video) return duration;
     duration = video.duration();
-
     if (duration <= 0) {
       cc.logID(7702);
     }
-
     return duration;
   };
-
   _p.currentTime = function () {
     var video = this._video;
     if (!video) return -1;
     return video.currentTime();
   };
-
   _p.getFrame = function () {
     var video = this._video;
     if (!video) return;
     video.getFrame();
   };
-
   _p.getFrameChannel = function () {
     var video = this._video;
     if (!video) return 0;
     return video.getFrameChannel();
   };
-
   _p.getFrameWidth = function () {
     var video = this._video;
     if (!video) return 0;
     return video.getFrameWidth();
   };
-
   _p.getFrameHeight = function () {
     var video = this._video;
     if (!video) return 0;
     return video.getFrameHeight();
   };
-
   _p.pushFrameDataToTexture2D = function (tex) {
     var video = this._video;
     if (!video) return;
     video.pushFrameDataToTexture2D(tex);
   };
-
   _p.getVideoTexDataSize = function () {
     var video = this._video;
     if (!video) return 0;
     return video.getVideoTexDataSize();
   };
-
   _p.setShowRawFrame = function (show) {
     var video = this._video;
     if (!video) return;
     video.setShowRawFrame(show);
   };
-
   _p.update = function () {
     var video = this._video;
     if (!video) return;
     video.update();
   };
-
   _p.setKeepAspectRatioEnabled = function (isEnabled) {
     if (!this._video) {
       return false;
     }
-
     return this._video.setKeepAspectRatioEnabled(isEnabled);
   };
-
   _p.isKeepAspectRatioEnabled = function () {
     if (!this._video) {
       return false;
     }
-
     return this._video.isKeepAspectRatioEnabled();
   };
-
   _p.isFullScreenEnabled = function () {
     return this._fullScreenEnabled;
   };
-
   _p.setEventListener = function (event, callback) {
     this._EventList[event] = callback;
   };
-
   _p.removeEventListener = function (event) {
     this._EventList[event] = null;
   };
-
   _p._dispatchEvent = function (event) {
     var callback = this._EventList[event];
     if (callback) callback.call(this, this, this._video.src);
   };
-
   _p.onPlayEvent = function () {
     var callback = this._EventList[_impl.EventType.PLAYING];
     callback.call(this, this, this._video.src);
   };
-
   _p.enable = function () {
     var list = _impl.elements;
     if (list.indexOf(this) === -1) list.push(this);
     this.setVisible(true);
   };
-
   _p.disable = function () {
     var list = _impl.elements;
     var index = list.indexOf(this);
     if (index !== -1) list.splice(index, 1);
     this.setVisible(false);
   };
-
   _p.destroy = function () {
     this.disable();
     this.removeDom();
   };
-
   _p.setVisible = function (visible) {
     if (this._visible !== visible) {
       this._visible = !!visible;
-
       this._updateVisibility();
     }
   };
-
   _p.setFullScreenEnabled = function (enable) {
     var video = this._video;
-
     if (!video) {
       return;
     }
-
     this._fullScreenEnabled = enable;
     video.setFullScreenEnabled(enable);
   };
-
   _p.updateMatrix = function (node) {
     if (!this._video || !this._visible) return;
-
     var camera = cc.Camera.findCamera(node)._camera;
-
     if (!camera) {
       return;
     }
-
     node.getWorldMatrix(_worldMat);
-
     if (!this._forceUpdate && this._m00 === _worldMat.m[0] && this._m01 === _worldMat.m[1] && this._m04 === _worldMat.m[4] && this._m05 === _worldMat.m[5] && this._m12 === _worldMat.m[12] && this._m13 === _worldMat.m[13] && this._w === node._contentSize.width && this._h === node._contentSize.height) {
       return;
-    } // update matrix cache
+    }
 
-
+    // update matrix cache
     this._m00 = _worldMat.m[0];
     this._m01 = _worldMat.m[1];
     this._m04 = _worldMat.m[4];
@@ -6310,22 +5470,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     this._h = node._contentSize.height;
     var canvas_width = cc.game.canvas.width;
     var canvas_height = cc.game.canvas.height;
-    var ap = node._anchorPoint; // Vectors in node space
-
+    var ap = node._anchorPoint;
+    // Vectors in node space
     vec3.set(_topLeft, -ap.x * this._w, (1.0 - ap.y) * this._h, 0);
-    vec3.set(_bottomRight, (1 - ap.x) * this._w, -ap.y * this._h, 0); // Convert to world space
-
+    vec3.set(_bottomRight, (1 - ap.x) * this._w, -ap.y * this._h, 0);
+    // Convert to world space
     vec3.transformMat4(_topLeft, _topLeft, _worldMat);
-    vec3.transformMat4(_bottomRight, _bottomRight, _worldMat); // Convert to Screen space
-
+    vec3.transformMat4(_bottomRight, _bottomRight, _worldMat);
+    // Convert to Screen space
     camera.worldToScreen(_topLeft, _topLeft, canvas_width, canvas_height);
     camera.worldToScreen(_bottomRight, _bottomRight, canvas_width, canvas_height);
     var finalWidth = _bottomRight.x - _topLeft.x;
     var finalHeight = _topLeft.y - _bottomRight.y;
-
     this._video.setFrame(_topLeft.x, canvas_height - _topLeft.y, finalWidth, finalHeight);
   };
-
   _impl.EventType = {
     PLAYING: 0,
     PAUSED: 1,
@@ -6334,20 +5492,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     META_LOADED: 4,
     CLICKED: 5,
     READY_TO_PLAY: 6
-  }; // video 队列，所有 vidoe 在 onEnter 的时候都会插入这个队列
+  };
 
-  _impl.elements = []; // video 在 game_hide 事件中被自动暂停的队列，用于回复的时候重新开始播放
-
+  // video 队列，所有 vidoe 在 onEnter 的时候都会插入这个队列
+  _impl.elements = [];
+  // video 在 game_hide 事件中被自动暂停的队列，用于回复的时候重新开始播放
   _impl.pauseElements = [];
   cc.game.on(cc.game.EVENT_HIDE, function () {
     var list = _impl.elements;
-
     for (var element, i = 0; i < list.length; i++) {
       element = list[i];
-
       if (element.isPlaying()) {
         element.pause();
-
         _impl.pauseElements.push(element);
       }
     }
@@ -6355,7 +5511,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   cc.game.on(cc.game.EVENT_SHOW, function () {
     var list = _impl.pauseElements;
     var element = list.pop();
-
     while (element) {
       element.play();
       element = list.pop();
@@ -6390,12 +5545,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 var nativeCameraProto = renderer.Camera.prototype;
 var _setNode = nativeCameraProto.setNode;
 cc.js.mixin(nativeCameraProto, {
   setNode: function setNode(node) {
     this._persistentNode = node;
-
     _setNode.call(this, node);
   }
 });
@@ -6427,12 +5582,12 @@ cc.js.mixin(nativeCameraProto, {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 var nativeLightProto = renderer.Light.prototype;
 var _setNode = nativeLightProto.setNode;
 cc.js.mixin(nativeLightProto, {
   setNode: function setNode(node) {
     this._node = node;
-
     _setNode.call(this, node);
   }
 });
@@ -6467,7 +5622,6 @@ cc.js.mixin(nativeLightProto, {
 (function () {
   if (!cc.MeshBuffer) return;
   var MeshBuffer = cc.MeshBuffer.prototype;
-
   MeshBuffer.init = function (batcher, vertexFormat) {
     this.byteOffset = 0;
     this.indiceOffset = 0;
@@ -6482,7 +5636,6 @@ cc.js.mixin(nativeLightProto, {
     this._uintVData = null;
     this._iData = null;
     this._initVDataCount = 256 * vertexFormat._bytes; // actually 256 * 4 * (vertexFormat._bytes / 4)
-
     this._initIDataCount = 256 * 6;
     this._offsetInfo = {
       byteOffset: 0,
@@ -6490,42 +5643,33 @@ cc.js.mixin(nativeLightProto, {
       indiceOffset: 0
     };
     this._renderDataList = new renderer.RenderDataList();
-
     this._reallocBuffer();
   };
-
   MeshBuffer.setNativeAssembler = function (assembler) {
     if (assembler !== this._nativeAssembler) {
       this._nativeAssembler = assembler;
       assembler.setRenderDataList(this._renderDataList);
     }
   };
-
   MeshBuffer._updateVIDatas = function () {
     var offset = this._arrOffset;
     this._vDatas[offset] = this._vData;
     this._uintVDatas[offset] = this._uintVData;
     this._iDatas[offset] = this._iData;
-
     this._renderDataList.updateMesh(offset, this._vData, this._iData);
   };
-
   MeshBuffer.getNativeAssembler = function () {
     return this._nativeAssembler;
   };
-
   MeshBuffer.getCurMeshIndex = function () {
     return this._arrOffset;
   };
-
   MeshBuffer.uploadData = function () {};
-
   MeshBuffer.switchBuffer = function () {
     var offset = ++this._arrOffset;
     this.byteOffset = 0;
     this.vertexOffset = 0;
     this.indiceOffset = 0;
-
     if (offset < this._vDatas.length) {
       this._vData = this._vDatas[offset];
       this._uintVData = this._uintVDatas[offset];
@@ -6534,7 +5678,6 @@ cc.js.mixin(nativeLightProto, {
       this._reallocBuffer();
     }
   };
-
   MeshBuffer.checkAndSwitchBuffer = function (vertexCount) {
     if (this.vertexOffset + vertexCount > 65535) {
       this.switchBuffer();
@@ -6542,59 +5685,44 @@ cc.js.mixin(nativeLightProto, {
       this._nativeAssembler.updateIADatas && this._nativeAssembler.updateIADatas(this._arrOffset, this._arrOffset);
     }
   };
-
   MeshBuffer.used = function (vertexCount, indiceCount) {
     if (!this._nativeAssembler) return;
-
     this._nativeAssembler.updateVerticesRange(this._arrOffset, 0, vertexCount);
-
     this._nativeAssembler.updateIndicesRange(this._arrOffset, 0, indiceCount);
   };
-
   MeshBuffer.request = function (vertexCount, indiceCount) {
     this.requestStatic(vertexCount, indiceCount);
     return this._offsetInfo;
   };
-
   MeshBuffer._reallocBuffer = function () {
     this._reallocVData(true);
-
     this._reallocIData(true);
-
     this._updateVIDatas();
   };
-
   MeshBuffer._reallocVData = function (copyOldData) {
     var oldVData;
-
     if (this._vData) {
       oldVData = new Uint8Array(this._vData.buffer);
     }
-
     this._vData = new Float32Array(this._initVDataCount);
     this._uintVData = new Uint32Array(this._vData.buffer);
     var newData = new Uint8Array(this._uintVData.buffer);
-
     if (oldVData && copyOldData) {
       for (var i = 0, l = oldVData.length; i < l; i++) {
         newData[i] = oldVData[i];
       }
     }
   };
-
   MeshBuffer._reallocIData = function (copyOldData) {
     var oldIData = this._iData;
     this._iData = new Uint16Array(this._initIDataCount);
-
     if (oldIData && copyOldData) {
       var iData = this._iData;
-
       for (var i = 0, l = oldIData.length; i < l; i++) {
         iData[i] = oldIData[i];
       }
     }
   };
-
   MeshBuffer.reset = function () {
     this._arrOffset = 0;
     this._vData = this._vDatas[0];
@@ -6604,14 +5732,11 @@ cc.js.mixin(nativeLightProto, {
     this.indiceOffset = 0;
     this.vertexOffset = 0;
     if (!this._nativeAssembler) return;
-
     for (var i = 0, len = this._vDatas.length; i < len; i++) {
       this._nativeAssembler.updateVerticesRange(i, 0, 0);
-
       this._nativeAssembler.updateIndicesRange(i, 0, 0);
     }
   };
-
   MeshBuffer.destroy = function () {
     this.reset();
   };
@@ -6644,6 +5769,7 @@ cc.js.mixin(nativeLightProto, {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 var RenderFlow = cc.RenderFlow;
 cc.js.mixin(renderer.NodeProxy.prototype, {
   _ctor: function _ctor() {
@@ -6680,15 +5806,12 @@ cc.js.mixin(renderer.NodeProxy.prototype, {
   },
   destroy: function destroy() {
     this.destroyImmediately();
-
     this._owner.off(cc.Node.EventType.SIBLING_ORDER_CHANGED, this.updateZOrder, this);
-
     this._owner._proxy = null;
     this._owner = null;
   },
   updateParent: function updateParent() {
     var parent = this._owner._parent;
-
     if (parent) {
       var parentSpaceInfo = parent._spaceInfo;
       this._parentPtr[0] = parentSpaceInfo.unitID;
@@ -6700,13 +5823,11 @@ cc.js.mixin(renderer.NodeProxy.prototype, {
       this._parentPtr[0] = 0xffffffff;
       this._parentPtr[1] = 0xffffffff;
     }
-
     this.notifyUpdateParent();
   },
   updateZOrder: function updateZOrder() {
     this._zOrderPtr[0] = this._owner._localZOrder;
     var parent = this._owner._parent;
-
     if (parent && parent._proxy) {
       parent._proxy._dirtyPtr[0] |= RenderFlow.FLAG_REORDER_CHILDREN;
     }
@@ -6729,7 +5850,6 @@ cc.js.mixin(renderer.NodeProxy.prototype, {
     var sky = owner._skewY;
     skewPtr[0] = skx;
     skewPtr[1] = sky;
-
     if (!this._isVisitingTraversal && (skx !== 0 || sky !== 0)) {
       this.switchTraverseToVisit();
       this._isVisitingTraversal = true;
@@ -6762,6 +5882,7 @@ cc.js.mixin(renderer.NodeProxy.prototype, {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 'use strict';
 
 var RenderFlow = cc.RenderFlow;
@@ -6769,34 +5890,27 @@ var LOCAL_TRANSFORM = RenderFlow.FLAG_LOCAL_TRANSFORM;
 var COLOR = RenderFlow.FLAG_COLOR;
 var UPDATE_RENDER_DATA = RenderFlow.FLAG_UPDATE_RENDER_DATA;
 var POSITION_ON = 1 << 0;
-
 cc.Node.prototype.setLocalDirty = function (flag) {
   this._localMatDirty |= flag;
   this._worldMatDirty = true;
   this._dirtyPtr[0] |= RenderFlow.FLAG_TRANSFORM;
 };
-
 cc.js.getset(cc.Node.prototype, "_renderFlag", function () {
   return this._dirtyPtr[0];
 }, function (flag) {
   this._dirtyPtr[0] = flag;
-
   if (flag & UPDATE_RENDER_DATA || flag & COLOR) {
     cc.RenderFlow.register(this);
   }
 });
-
 cc.PrivateNode.prototype._posDirty = function (sendEvent) {
   var parent = this.parent;
-
   if (parent) {
     // Position correction for transform calculation
     this._trs[0] = this._originPos.x - (parent._anchorPoint.x - 0.5) * parent._contentSize.width;
     this._trs[1] = this._originPos.y - (parent._anchorPoint.y - 0.5) * parent._contentSize.height;
   }
-
   this.setLocalDirty(cc.Node._LocalDirtyFlag.POSITION);
-
   if (sendEvent === true && this._eventMask & POSITION_ON) {
     this.emit(cc.Node.EventType.POSITION_CHANGED);
   }
@@ -6832,11 +5946,9 @@ cc.PrivateNode.prototype._posDirty = function (sendEvent) {
 (function () {
   if (!cc.QuadBuffer) return;
   var QuadBuffer = cc.QuadBuffer.prototype;
-
   QuadBuffer._fillQuadBuffer = function () {
     var count = this._initIDataCount / 6;
     var buffer = this._iData;
-
     for (var i = 0, idx = 0; i < count; i++) {
       var vertextID = i * 4;
       buffer[idx++] = vertextID;
@@ -6847,19 +5959,13 @@ cc.PrivateNode.prototype._posDirty = function (sendEvent) {
       buffer[idx++] = vertextID + 2;
     }
   };
-
   QuadBuffer._reallocBuffer = function () {
     this._reallocVData(true);
-
     this._reallocIData();
-
     this._fillQuadBuffer();
-
     this._updateVIDatas();
   };
-
   QuadBuffer.uploadData = function () {};
-
   QuadBuffer.switchBuffer = function () {
     cc.MeshBuffer.prototype.switchBuffer.call(this);
   };
@@ -6869,34 +5975,25 @@ cc.PrivateNode.prototype._posDirty = function (sendEvent) {
 "use strict";
 
 var proto = cc.RenderData.prototype;
-
 cc.RenderData.prototype.init = function (assembler) {
   this._renderDataList = new renderer.RenderDataList();
   assembler.setRenderDataList(this._renderDataList);
   this._nativeAssembler = assembler;
 };
-
 var originClear = proto.clear;
-
 proto.clear = function () {
   originClear.call(this);
-
   this._renderDataList.clear();
 };
-
 var originUpdateMesh = proto.updateMesh;
-
 proto.updateMesh = function (meshIndex, vertices, indices) {
   originUpdateMesh.call(this, meshIndex, vertices, indices);
-
   if (vertices && indices) {
     this._renderDataList.updateMesh(meshIndex, vertices, indices);
   }
 };
-
 proto.updateMeshRange = function (verticesCount, indicesCount) {
   this._nativeAssembler.updateVerticesRange(0, 0, verticesCount);
-
   this._nativeAssembler.updateIndicesRange(0, 0, indicesCount);
 };
 
@@ -6927,6 +6024,7 @@ proto.updateMeshRange = function (verticesCount, indicesCount) {
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 var RenderFlow = cc.RenderFlow;
 RenderFlow.FLAG_REORDER_CHILDREN = 1 << 29;
 RenderFlow.FLAG_WORLD_TRANSFORM_CHANGED = 1 << 30;
@@ -6935,12 +6033,10 @@ var _dirtyTargets = [];
 var _dirtyWaiting = [];
 var _rendering = false;
 var director = cc.director;
-
 RenderFlow.render = function (scene, dt) {
   var camera = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   _rendering = true;
   RenderFlow.validateRenderers();
-
   for (var i = 0, l = _dirtyTargets.length; i < l; i++) {
     var node = _dirtyTargets[i];
     node._inJsbDirtyList = false;
@@ -6949,46 +6045,36 @@ RenderFlow.render = function (scene, dt) {
     var assembler = comp._assembler;
     if (!assembler) continue;
     var flag = node._dirtyPtr[0];
-
     if (flag & RenderFlow.FLAG_UPDATE_RENDER_DATA) {
       node._dirtyPtr[0] &= ~RenderFlow.FLAG_UPDATE_RENDER_DATA;
       assembler._updateRenderData && assembler._updateRenderData();
     }
-
     if (flag & RenderFlow.FLAG_COLOR) {
       node._dirtyPtr[0] &= ~RenderFlow.FLAG_COLOR;
       comp._updateColor && comp._updateColor();
     }
   }
-
   _dirtyTargets.length = 0;
   dt = dt || 0;
-
   this._nativeFlow.render(scene._proxy, dt, camera);
-
   _dirtyTargets = _dirtyWaiting.slice(0);
   _dirtyWaiting.length = 0;
   _rendering = false;
 };
-
 RenderFlow.renderCamera = function (camera, scene) {
   RenderFlow.render(scene, 0, camera);
 };
-
 RenderFlow.init = function (nativeFlow) {
   cc.EventTarget.call(this);
   this._nativeFlow = nativeFlow;
 };
-
 RenderFlow.register = function (target) {
   if (target._inJsbDirtyList) return;
-
   if (_rendering) {
     _dirtyWaiting.push(target);
   } else {
     _dirtyTargets.push(target);
   }
-
   target._inJsbDirtyList = true;
 };
 

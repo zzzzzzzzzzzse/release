@@ -1,0 +1,26 @@
+企业邮箱： doe193918@gmail.com zaq989796 +85269953081 生日：1990.09.11
+godaddy账号：serenewaves06@gmail.com zaq989796
+个人邮箱：serenewaves06@gmail.com zaq989796 +85268452960
+
+应用名:SPIN CRAZE
+
+安卓密钥：
+keyAlias spinecraze
+keyPassword spin23333_2024
+keyPassword spin23333_2024
+
+South Korea意思是韩国
+
+问题：
+1.目前应用未使用广告id，使用谷歌id政策，需要加权限。
+<uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+具体地址： https://support.google.com/googleplay/android-developer/answer/6048248
+2.三方sdk:
+就是国内的好多第三方SDK都不能在Google使用，包括但不限于: TBS、bugly、微信支付&分享(Android版在一起)、QQ分享、微博分享、AliPay、友盟、极光(有专门的海外版)等
+尽量不要使用三方奇怪的SDK。
+
+隐私地址：https://www.game-champion.com/SpinCrazy/policy.html
+
+
+Welcome to Slot Crazy! Our latest slot game offers you an unprecedented gaming experience. Get ready to spin the reels and try your luck to win huge jackpots!
+Line 1: text outside language tags.

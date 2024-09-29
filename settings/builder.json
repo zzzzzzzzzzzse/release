@@ -8,7 +8,7 @@
   },
   "packageName": "org.cocos2d.helloworld",
   "startScene": "350c5cbb-0470-4876-ab59-ed23cd99319a",
-  "title": "JackpotFrenzy",
+  "title": "SPINCRAZE",
   "webOrientation": "auto",
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
@@ -22,7 +22,7 @@
   "zipCompressJs": false,
   "fb-instant-games": {},
   "android": {
-    "packageName": "com.jackpotfrenzy.wordd.com",
+    "packageName": "com.jackpotspine.craze",
     "REMOTE_SERVER_ROOT": ""
   },
   "ios": {

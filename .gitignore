@@ -62,3 +62,7 @@ build/jsb-default/manifest/
 
 build/jsb-default/assets/
 build/jsb-default/frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/build/
+build/jsb-default/frameworks/runtime-src/proj.android-studio/app/release/SPINCRAZE-release.aab
+build/jsb-default/frameworks/runtime-src/proj.android-studio/app/release/SPINCRAZE-release.apk
+info/release/SPINCRAZE-release.aab
+info/release/SPINCRAZE-release.apk
