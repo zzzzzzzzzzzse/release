@@ -51,7 +51,7 @@ export default class CoreLoadScene extends cc.Component {
         if (Constants.getInstance().NATIVE_IOS) {
             this.node.getChildByName("anim").active = false;
         }
-
+        
     }
 
     private init() {
